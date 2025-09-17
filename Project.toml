@@ -1,4 +1,4 @@
-name = "AAS246Julia"
+name = "AAS247Julia"
 [compat]
 julia = "1.11.7"
 DrWatson = "2.19.1"
