@@ -1,5 +1,5 @@
 using DrWatson, Test
-@quickactivate "AAS246Julia"
+@quickactivate "AAS247Julia"
 
 # Here you include files using `srcdir`
 # include(srcdir("file.jl"))
@@ -8,7 +8,7 @@ using DrWatson, Test
 println("Starting tests")
 ti = time()
 
-@testset "AAS246Julia tests" begin
+@testset "AAS247Julia tests" begin
     @test 1 == 1
 end
 

@@ -1,5 +1,5 @@
 using DrWatson
-@quickactivate "AAS246Julia"
+@quickactivate "AAS247Julia"
 
 # Here you may include files from the source directory
 include(srcdir("dummy_src_file.jl"))
