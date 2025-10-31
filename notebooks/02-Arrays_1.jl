@@ -59,6 +59,9 @@ end
 # ╔═╡ 0fe8eafe-871b-40a2-ad45-3a27e0566533
 TableOfContents(title = notebookName, depth = 6)
 
+# ╔═╡ 2a1327da-b77f-4ebb-8627-d786de6c69dc
+# is this change uploading?
+
 # ╔═╡ b3c88a20-d092-40e8-9e01-95f093048318
 md"""
 ###### Cell width sliders
@@ -574,10 +577,11 @@ end
 
 # ╔═╡ Cell order:
 # ╟─f7cd76de-4427-4dc3-9d12-9931b27a2956
-# ╠═e984391b-0c01-4dc8-85aa-3593027e8530
+# ╟─e984391b-0c01-4dc8-85aa-3593027e8530
 # ╠═0fe8eafe-871b-40a2-ad45-3a27e0566533
-# ╠═c10a2907-d677-4280-81fe-4f438a0023c6
+# ╟─c10a2907-d677-4280-81fe-4f438a0023c6
 # ╠═533bf41f-0dc3-42e3-af5c-344163e950b1
+# ╠═2a1327da-b77f-4ebb-8627-d786de6c69dc
 # ╟─1c4e354c-ddd8-4a6b-bbe6-d8d3b917955d
 # ╟─650767d3-3e8e-4351-a249-8e11c1037385
 # ╟─b3c88a20-d092-40e8-9e01-95f093048318
