@@ -18,21 +18,25 @@ end
 
 # ╔═╡ c10a2907-d677-4280-81fe-4f438a0023c6
 begin
+	import Pkg;
+	Pkg.add("DrWatson")
 	using DrWatson
 	md" ###### `using` DrWatson"
 end
 
 # ╔═╡ 533bf41f-0dc3-42e3-af5c-344163e950b1
 begin
-	# projectDir = "Gitted/Illustris/Fractals_DrW"  # first DrW project directory
-	projectDir = "Gitted/AAS247Julia"
-	project_path = joinpath(homedir(), projectDir)
-	cd(project_path)
-	quickactivate(project_path)
+	projectDir = "AAS247Julia"
+	# project_path = joinpath(homedir(), projectDir)
+	# cd(project_path)
+	@quickactivate "AAS247Julia"
 end
 
 # ╔═╡ 1c4e354c-ddd8-4a6b-bbe6-d8d3b917955d
 begin # using packages
+	Pkg.add("PlutoUI")
+	Pkg.add("HypertextLiteral")
+	Pkg.add("Revise")
 	using PlutoUI
 	using HypertextLiteral
 	using Revise
@@ -570,10 +574,10 @@ end
 
 # ╔═╡ Cell order:
 # ╟─f7cd76de-4427-4dc3-9d12-9931b27a2956
-# ╟─e984391b-0c01-4dc8-85aa-3593027e8530
-# ╟─0fe8eafe-871b-40a2-ad45-3a27e0566533
-# ╟─c10a2907-d677-4280-81fe-4f438a0023c6
-# ╟─533bf41f-0dc3-42e3-af5c-344163e950b1
+# ╠═e984391b-0c01-4dc8-85aa-3593027e8530
+# ╠═0fe8eafe-871b-40a2-ad45-3a27e0566533
+# ╠═c10a2907-d677-4280-81fe-4f438a0023c6
+# ╠═533bf41f-0dc3-42e3-af5c-344163e950b1
 # ╟─1c4e354c-ddd8-4a6b-bbe6-d8d3b917955d
 # ╟─650767d3-3e8e-4351-a249-8e11c1037385
 # ╟─b3c88a20-d092-40e8-9e01-95f093048318
