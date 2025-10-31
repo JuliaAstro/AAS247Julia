@@ -120,7 +120,7 @@ md"""
 	
 	- A 3D array is a cube of numbers, but of course one can keep going to 4D, 5D, or any number of dimensions.
 	
-	We interact with these using square brackets [] for indexing, e.g., A[2] gets the second element of a vector. M[2, 3] gets the element at the second row, third column of a matrix.
+	We interact with these using square brackets `[]` for indexing, e.g., `A[2]` gets the second element of a vector. `M[2, 3]` gets the element at the second row, third column of a matrix.
 
 """
 
@@ -133,11 +133,11 @@ md"""
 	A) 1-Based Indexing
 	The first element of an array is at index 1.
 	
-	- my_vector[1] is the first element.
+	- `my_vector[1]` is the first element.
 	
-	- my_matrix[1, 1] is the top-left element.
+	- `my_matrix[1, 1]` is the top-left element.
 
-	Python and C use 0-based indexing (where my\_array[0] is the first element). This 1-based system may be more intuitive for mathematicians and scientists who are used to notation such as A_{ij}, where $i$ and $j$ start at 1.
+	Python and C use 0-based indexing (where `my_array[0]` is the first element). This 1-based system may be more intuitive for mathematicians and scientists who are used to notation such as ``A_{ij}``, where $i$ and $j$ start at 1.
 
 	B) Column-Major Order
 	This is the secret to Julia's performance. It describes how arrays are physically laid out in your computer's memory.
@@ -167,17 +167,17 @@ end
 # ╔═╡ 11832b60-4906-4d22-960b-0b16b6634011
 md"""
 !!! note "3. Array Creation"
-	You can create arrays with functions like zeros(2, 3) or rand(3, 3). But for literal arrays, we use [] with two simple rules:
+	You can create arrays with functions like `zeros(2, 3)` or `rand(3, 3)`. But for literal arrays, we use `[]` with two simple rules:
 	
-	1a) Commas (,) separate elements in a 1D Vector.
+	1a) Commas (`,`) separate elements in a 1D Vector.
 	
 	1b) Spaces separate elements in a row (i.e., new columns).
 	
-	2) Semicolons (;) separate rows.
+	2) Semicolons (`;`) separate rows.
 	
 	The four following examples show array creation.
 	!!! warning ""
-		Notice that [1, 2, 3], with commas, gives a 1D Vector, while [1; 2; 3], with semicolons, gives a 2D, 3x1 Matrix. The 1D Vector is "dimensionless" and often acts like a column vector in math operations, which is very convenient.
+		Notice that `[1, 2, 3]`, with commas, gives a 1D Vector, while `[1; 2; 3]`, with semicolons, gives a 2D, 3×1 Matrix. The 1D Vector is "dimensionless" and often acts like a column vector in math operations, which is very convenient.
 """
 
 # ╔═╡ 5a1ad46c-d500-4762-920f-812ebff350e4
@@ -217,13 +217,13 @@ md"""
 !!! note "4. Array Broadcasting (The Dot: ".")"
 	This is arguably the most important feature for clean, fast array code.
 
-	What if you have a vector A = [1, 2, 3] and you want to add 1 to every element? Or what if you want to find the sine of every element?
+	What if you have a vector `A = [1, 2, 3]` and you want to add 1 to every element? Or what if you want to find the sine of every element?
 
-	The dot (.) operator tells Julia: "Apply this operation to _every single element_ of the array." We call using the dot operator "broadcasting".
+	The dot (`.`) operator tells Julia: "Apply this operation to _every single element_ of the array." We call using the dot operator "broadcasting".
 
-	- A .+ 1 means [A[1]+1, A[2]+1, A[3]+1] $\rightarrow$ [2, 3, 4]sin.
-	- (A) means [sin(A[1]), sin(A[2]), sin(A[3])]
-	- A .* B means element-by-element multiplication.
+	- `A .+ 1` means `[A[1]+1, A[2]+1, A[3]+1]` $\rightarrow$ `[2, 3, 4]`
+	- `sin.(A)` means `[sin(A[1]), sin(A[2]), sin(A[3])]`
+	- `A .* B` means element-by-element multiplication.
 
 	You can "dot" any function, including your own: my\_function.(my_array).
 
@@ -240,16 +240,16 @@ md"""
 	```
 	Let's compare how Python (with NumPy) and Julia handle this.
 	
-	In Python (NumPy): D = A * B + C
+	In Python (NumPy): `D = A * B + C`
 	
-	1. Python first calculates T = A * B. It creates a new temporary array T in memory to store this result.
-	1. Then, it calculates D = T + C. It creates the final array D.
+	1. Python first calculates `T = A * B`. It creates a new temporary array T in memory to store this result.
+	1. Then, it calculates `D = T + C`. It creates the final array D.
 	1. This took two passes over the data and allocated a temporary array T of 1000 elements, which is then thrown away. This is slow and memory-intensive.
 	
 	In Julia: ```julia D = A .* B .+ C```
 	
 	1. Julia sees the "chain of dots" and performs loop fusion.
-	1. It knows you want to do D[i] = A[i] * B[i] + C[i] for every element.
+	1. It knows you want to do `D[i] = A[i] * B[i] + C[i]` for every element.
 	1. It compiles this down to a single, efficient for-loop:
 	```julia
 	# This is what Julia effectively runs:
@@ -263,11 +263,11 @@ md"""
 # ╔═╡ 65151aba-d946-401d-8cca-1874f38146f2
 md"""
 !!! note "6. Matrix Multiplication (*)"
-	We just learned that A .* B is the element-wise product.
+	We just learned that `A .* B` is the element-wise product.
 	
 	So, how do we do standard, linear algebra matrix multiplication?
 	
-	We use the asterisk (*) operator without the dot.
+	We use the asterisk (`*`) operator without the dot.
 
 	```julia
 	A = [1 2; 3 4]
@@ -317,63 +317,63 @@ md"""
 md"""
 !!! warning "Problem 1: Creation and Indexing (Column-Major)"
 
-	1. Create a 3x3 matrix named M containing the numbers 1 through 9. Important: The numbers should fill the matrix column-by-column (i.e., 1, 2, 3 should be in the first column).
-	    - Hint: The function reshape(A, rows, cols) is your friend here. Try reshape(1:9, 3, 3).
+	1. Create a 3×3 matrix named `M` containing the numbers 1 through 9. Important: The numbers should fill the matrix column-by-column (i.e., 1, 2, 3 should be in the first column).
+	    - Hint: The function `reshape(A, rows, cols)` is your friend here. Try `reshape(1:9, 3, 3)`.
 	2. Print the element at the 1st row, 3rd column. (What do you expect it to be?)
-	3. Print the entire 2nd column of M.
-	    - Hint: The : operator means "all". M[row_index, col_index].
+	3. Print the entire 2nd column of `M`.
+	    - Hint: The `:` operator means "all". `M[row_index, col_index]`.
 """
 
 # ╔═╡ ff17e921-4522-4ab3-8282-9d9aafecdbe9
 md"""
 !!! warning "Problem 2: Broadcasting and Fusion"
 	1. Create a 1D vector x containing five evenly spaced points from 0 to $\pi$, inclusive.
-	    - Hint: pi is a built-in constant. The range() function might be useful: range(start, stop, length). Or just type it manually.
-	1. Define a simple function my_poly(x) = x^2 - 2*x + 1.
-	1. Using broadcasting, apply your function my_poly to every element in x. Store the result in y.
-	1. Print both x and y.
+	    - Hint: `pi` is a built-in constant. The `range()` function might be useful: `range(start, stop, length)`. Or just type it manually.
+	1. Define a simple function `my_poly(x) = x^2 - 2*x + 1`.
+	1. Using broadcasting, apply your function `my_poly` to every element in `x`. Store the result in `y`.
+	1. Print both `x` and `y`.
 
 """
 
 # ╔═╡ 23069d06-9d74-4a39-912e-e6372ac03abb
 md"""
 !!! warning "Problem 3: Array Creation and Slicing"
-	1. Create a 4x2 matrix named A containing the numbers 1-8, filling by columns. (Again, reshape is great for this).	
-	1. Create a 1D Vector named v containing the elements 10, 20, 30 using comma (,) syntax.
-	1. Create a 2x1 Matrix (a column matrix) named c containing the elements 40 and 50 using semicolon (;) syntax.
-	1. Create a new matrix B that consists of the last two rows of A.
-	    - Hint: You can use the end keyword for indexing, like A[end-1, :].
+	1. Create a 4×2 matrix named `A` containing the numbers 1-8, filling by columns. (Again, `reshape` is great for this).	
+	1. Create a 1D Vector named `v` containing the elements 10, 20, 30 using comma (`,`) syntax.
+	1. Create a 2×1 Matrix (a column matrix) named `c` containing the elements 40 and 50 using semicolon (`;`) syntax.
+	1. Create a new matrix `B` that consists of the last two rows of `A`.
+	    - Hint: You can use the `end` keyword for indexing, like `A[end-1, :]`.
 """
 
 
 # ╔═╡ e022f21e-7f18-4690-99d4-0141403b3b38
 md"""
 !!! warning "Problem 4: Matrix Math vs. Element-wise Math"
-	1. Create two 2x2 matrices:
-	- X = [1 2; 3 4]
-	- Y = [2 0; 0 2] # This is a scaling matrix.
-	2. Calculate the matrix multiplication M = X * Y.
-	1. Calculate the element-wise multiplication E = X .* Y.
-	1. Print both M and E. Look at M[1, 1] and E[1, 1]. Why are they different? (You just need to think about this, no need to write the answer).
+	1. Create two 2×2 matrices:
+	   - `X = [1 2; 3 4]`
+	   - `Y = [2 0; 0 2] # This is a scaling matrix.`
+	2. Calculate the matrix multiplication `M = X * Y`.
+	3. Calculate the element-wise multiplication `E = X .* Y`.
+	4. Print both `M` and `E`. Look at `M[1, 1]` and `E[1, 1]`. Why are they different? (You just need to think about this, no need to write the answer).
 
 """
 
 # ╔═╡ 1416a80e-dbda-4185-8984-7f5de3c58f02
 md"""
 !!! warning "Problem 5: Broadcasting and Fusion"
-	1.Create three 1D vectors, a, b, and c, each of length 4.
-	  - a = [1.0, 2.0, 3.0, 4.0]
-	  - b = [0.1, 0.2, 0.3, 0.4]
-	  - c = [10.0, 10.0, 10.0, 10.0]
+	1. Create three 1D vectors, `a`, `b`, and `c`, each of length 4.
+	   - `a = [1.0, 2.0, 3.0, 4.0]`
+	   - `b = [0.1, 0.2, 0.3, 0.4]`
+	   - `c = [10.0, 10.0, 10.0, 10.0]`
 	2. Using a single, "fused" broadcast expression, calculate the value y for each element according to the formula: $y = {(a^2 + b)}/{c}$
-	3. Print the resulting vector y.
-	   - Hint: Remember to "dot" (.) every operation (^, +, /) to apply it element-wise.
+	3. Print the resulting vector `y`.
+	   - Hint: Remember to "dot" (`.`) every operation (`^`, `+`, `/`) to apply it element-wise.
 """
 
 # ╔═╡ cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
 md"""
 !!! warning "Problem 6: Column-Major Thinking (A Thought Experiment)"
-	1. Imagine you have a 10,000 x 10,000 matrix called DATA.
+	1. Imagine you have a 10,000 × 10,000 matrix called `DATA`.
 	1. You need to write a for loop to calculate the sum of every element in the second column.
 	1. Write this loop.
 	   - Hint: You only need one loop. Which index (row or column) should be fixed? Which one should your loop iterate over? Will this loop be fast or slow according to Julia's memory layout?
