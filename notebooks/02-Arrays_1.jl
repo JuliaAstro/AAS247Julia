@@ -39,7 +39,7 @@ begin # using packages
 end
 
 # ╔═╡ f7cd76de-4427-4dc3-9d12-9931b27a2956
-md" [Julia Markdown Doc](https://docs.julialang.org/en/v1/stdlib/Markdown/#Bold)"
+md" [Julia Markdown Doc](https://docs.julialang.org/en/v1/stdlib/Markdown)"
 
 # ╔═╡ e984391b-0c01-4dc8-85aa-3593027e8530
 begin
