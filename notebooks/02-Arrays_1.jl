@@ -23,12 +23,7 @@ begin
 end
 
 # ╔═╡ 533bf41f-0dc3-42e3-af5c-344163e950b1
-begin
-	projectDir = "AAS247Julia"
-	# project_path = joinpath(homedir(), projectDir)
-	# cd(project_path)
-	@quickactivate "AAS247Julia"
-end
+@quickactivate "AAS247Julia"
 
 # ╔═╡ 1c4e354c-ddd8-4a6b-bbe6-d8d3b917955d
 begin # using packages
@@ -43,12 +38,10 @@ md" [Julia Markdown Doc](https://docs.julialang.org/en/v1/stdlib/Markdown)"
 # ╔═╡ e984391b-0c01-4dc8-85aa-3593027e8530
 begin
     notebookName = "02-Arrays_1"
-    note_content =
 	"""
     !!! note "$notebookName"
         - ###### Origin Date: 29 October 2025
-    """
-    Markdown.parse(note_content)
+    """ |> Markdown.parse
 end
 
 # ╔═╡ 0fe8eafe-871b-40a2-ad45-3a27e0566533
