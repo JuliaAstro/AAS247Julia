@@ -41,18 +41,19 @@ jobs:
           key: ${{ runner.os }}-pluto_state_cache-v2-${{ hashFiles('**/Project.toml', '**/Manifest.toml', '.github/workflows/*' ) }}-${{ hashFiles('**/*jl') }}
           restore-keys: ${{ runner.os }}-pluto_state_cache-v2-${{ hashFiles('**/Project.toml', '**/Manifest.toml', '.github/workflows/*' ) }}
 
+      - name: Install DrWatson.jl and PlutoSliderServer.jl in runner environment
+        shell: julia --color=yes {0}
+        run: using Pkg; Pkg.add(["DrWatson.jl","PlutoSliderServer"]);
+
       - name: Instantiate shared notebook environment
         shell: julia --color=yes --project {0}
         run: using Pkg; Pkg.instantiate();
 
       - name: Run & export Pluto notebooks
-        shell: julia --color=yes --project=@temp {0}
+        shell: julia --color=yes {0}
         run: |
-          using Pkg
-          Pkg.add(name="PlutoSliderServer", version="1")
-
           import PlutoSliderServer
-          PlutoSliderServer.github_action(".";
+          PlutoSliderServer.github_action("notebooks";
             Export_cache_dir="pluto_state_cache",
             Export_baked_notebookfile=false,
             Export_baked_state=false,
