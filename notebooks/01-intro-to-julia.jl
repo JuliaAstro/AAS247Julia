@@ -4,6 +4,12 @@
 using Markdown
 using InteractiveUtils
 
+# ╔═╡ b34e164a-da63-4636-b2d3-1d9efc9ae8d6
+using DrWatson
+
+# ╔═╡ 040b953f-8873-441c-a97f-48c1cf45ef03
+@quickactivate "AAS247Julia"
+
 # ╔═╡ 1e47e383-b735-4c57-a300-2afe8491b49a
 using PlutoUI; TableOfContents()
 
@@ -1303,6 +1309,8 @@ A vector and matrix are just aliases for one and two dimensional arrays. To perf
 """
 
 # ╔═╡ Cell order:
+# ╟─b34e164a-da63-4636-b2d3-1d9efc9ae8d6
+# ╟─040b953f-8873-441c-a97f-48c1cf45ef03
 # ╟─1e47e383-b735-4c57-a300-2afe8491b49a
 # ╟─09193424-25b9-45ce-840f-f24bbcc46c9d
 # ╟─38ead816-0375-4605-a833-6464485aa0d6
