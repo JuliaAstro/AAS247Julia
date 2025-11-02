@@ -247,11 +247,11 @@ md"""
 	
 	In Python (NumPy): `D = A * B + C`
 	
-	1. Python first calculates `T = A * B`. It creates a new temporary array T in memory to store this result.
-	1. Then, it calculates `D = T + C`. It creates the final array D.
-	1. This took two passes over the data and allocated a temporary array T of 1000 elements, which is then thrown away. This is slow and memory-intensive.
+	1. Python first calculates `T = A * B`. It creates a new temporary array `T` in memory to store this result.
+	1. Then, it calculates `D = T + C`. It creates the final array `D`.
+	1. This took two passes over the data and allocated a temporary array `T` of 1000 elements, which is then thrown away. This is slow and memory-intensive.
 	
-	In Julia: ```julia D = A .* B .+ C```
+	In Julia: `D = A .* B .+ C`
 	
 	1. Julia sees the "chain of dots" and performs loop fusion.
 	1. It knows you want to do `D[i] = A[i] * B[i] + C[i]` for every element.
@@ -299,17 +299,17 @@ begin
 	B = [5 6; 7 8]
 	C = A .* B
 	println(C)
-	D= A*B
+	D = A*B
 end
 
 # ╔═╡ 29e28885-d969-4e27-b5d3-866eb25302ab
 md"""
 !!! note "Summary"
-	a) .$\star$ (dot): Broadcasting, i.e., use for element-wide operations.
+	a) `.*` (dot): Broadcasting, i.e., use for element-wide operations.
 	
-	b)  $\star$ (no dot): use for Linear Algebra / Matrix Multiplication.
+	b) `*` (no dot): use for Linear Algebra / Matrix Multiplication.
 
-	c) (But also use $\star$ to join strings.)
+	c) (But also use `*` to join strings.)
 """
 
 # ╔═╡ 974bb44d-420c-460d-b626-707909568554
