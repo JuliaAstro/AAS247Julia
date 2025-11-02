@@ -37,11 +37,11 @@ md" [Julia Markdown Doc](https://docs.julialang.org/en/v1/stdlib/Markdown)"
 
 # ╔═╡ e984391b-0c01-4dc8-85aa-3593027e8530
 begin
-    notebookName = "02-Arrays_1"
+	notebookName = "02-Arrays_1"
 	"""
-    !!! note "$notebookName"
-        - ###### Origin Date: 29 October 2025
-    """ |> Markdown.parse
+	!!! note "$notebookName"
+		- ###### Origin Date: 29 October 2025
+	""" |> Markdown.parse
 end
 
 # ╔═╡ 0fe8eafe-871b-40a2-ad45-3a27e0566533
@@ -381,20 +381,20 @@ md"""
 # ╠═╡ skip_as_script = true
 #=╠═╡
 begin
-		# 1. Create the matrix
-		M = reshape(1:9, 3, 3)
-		# 3×3 Matrix{Int64}:
-		#  1  4  7
-		#  2  5  8
-		#  3  6  9
+	# 1. Create the matrix
+	M = reshape(1:9, 3, 3)
+	# 3×3 Matrix{Int64}:
+	#  1  4  7
+	#  2  5  8
+	#  3  6  9
 
-		# 2. Print element at (1, 3)
-		# println(M[1, 3])
-		# Output: 7
+	# 2. Print element at (1, 3)
+	# println(M[1, 3])
+	# Output: 7
 
-		# 3. Print the 2nd column
-		# println(M[:, 2])
-		# Output: [4, 5, 6]
+	# 3. Print the 2nd column
+	# println(M[:, 2])
+	# Output: [4, 5, 6]
 
 	# Note how M[1, 3] is 7, not 3, because the matrix filled by columns.
 
@@ -546,7 +546,7 @@ let
 	# The loop to sum the *second column*:
 	total = 0.0
 	for i in 1:size(DATA, 1) # Loop over all ROWS (i)
-	    total += DATA[i, 2]   # ...but keep the COLUMN (j) fixed at 2
+		total += DATA[i, 2]   # ...but keep the COLUMN (j) fixed at 2
 	end
 
 	# println("The total is: ", total)
