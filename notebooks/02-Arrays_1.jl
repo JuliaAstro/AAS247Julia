@@ -158,7 +158,7 @@ end
 
 # ╔═╡ 11832b60-4906-4d22-960b-0b16b6634011
 md"""
-### 3. Array Creation
+#### 3. Array Creation
 	You can create arrays with functions like `zeros(2, 3)` or `rand(3, 3)`. But for literal arrays, we use `[]` with two simple rules:
 
 	1a) Commas (`,`) separate elements in a 1D Vector.
@@ -168,8 +168,8 @@ md"""
 	2) Semicolons (`;`) separate rows.
 
 	The four following examples show array creation.
-!!! warning ""
-	Notice that `[1, 2, 3]`, with commas, gives a 1D Vector, while `[1; 2; 3]`, with semicolons, gives a 2D, 3×1 Matrix. The 1D Vector is "dimensionless" and often acts like a column vector in math operations, which is very convenient.
+!!! note ""
+	`[1, 2, 3]`, with commas, gives a 1D Vector, while `[1; 2; 3]`, with semicolons, gives a 2D, 3×1 Matrix. The 1D Vector is "dimensionless" and often acts like a column vector in math operations, which is very convenient.
 """
 
 # ╔═╡ 5a1ad46c-d500-4762-920f-812ebff350e4
