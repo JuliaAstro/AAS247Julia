@@ -47,6 +47,14 @@ end
 # ╔═╡ 0fe8eafe-871b-40a2-ad45-3a27e0566533
 TableOfContents(title = notebookName, depth = 6)
 
+# ╔═╡ b3c88a20-d092-40e8-9e01-95f093048318
+md"""
+###### Cell width sliders
+`cellWidth` $(@bind cellWidth Slider(500:25:1500, show_value=true, default=800))
+
+`Left-Margin` $(@bind leftMargin Slider(-250:25:100, show_value=true, default=25))
+"""
+
 # ╔═╡ 650767d3-3e8e-4351-a249-8e11c1037385
 begin
 	@bind screenWidth @htl("""
@@ -70,19 +78,12 @@ begin
 	""")
 end
 
-# ╔═╡ b3c88a20-d092-40e8-9e01-95f093048318
-md"""
-###### Cell width sliders
-`cellWidth` $(@bind cellWidth Slider(500:25:1500, show_value=true, default=800))
-
-`Left-Margin` $(@bind leftMargin Slider(-250:25:100, show_value=true, default=25))
-"""
-
 # ╔═╡ e133c0fe-39b7-400e-9e20-f7506603e17d
 md" ##### Begin New Coding Here."
 
 # ╔═╡ b28ecc8b-c27f-4446-961d-a187f28cf97a
 md"""
+### 0. Array Topics
 !!! note ""
 	Julia is built for high-performance scientific computing, and at the heart of that is its array implementation. Understanding how Julia thinks about arrays will make your code simpler, more readable, and fast.
 
@@ -103,7 +104,7 @@ md"""
 
 # ╔═╡ 2675d602-810c-4320-971c-902c3327a5cb
 md"""
-!!! note "1. Multidimensional Arrays"
+### 1. Multidimensional Arrays
 	In Julia, an array is a collection of objects stored in a multi-dimensional grid.
 
 	- A 1D array is a Vector, i.e., as a single list or column of numbers.
@@ -118,7 +119,7 @@ md"""
 
 # ╔═╡ 346cb64d-3c89-44d1-9edb-06354152243a
 md"""
-!!! note "2. The Julia "Mathematics Protocol""
+### 2. The Julia "Mathematics Protocol"
 
 	Julia's arrays behave differently from arrays in languages like Python, C, or Java. Julia's design follows the conventions of mathematics and linear algebra, which has two major consequences.
 
@@ -158,7 +159,7 @@ end
 
 # ╔═╡ 11832b60-4906-4d22-960b-0b16b6634011
 md"""
-#### 3. Array Creation
+### 3. Array Creation
 	You can create arrays with functions like `zeros(2, 3)` or `rand(3, 3)`. But for literal arrays, we use `[]` with two simple rules:
 
 	1a) Commas (`,`) separate elements in a 1D Vector.
@@ -177,7 +178,9 @@ begin
 	display(md"1: A 1D Vector (using commas) produces a 3-element Vector{Int64}, v = [1, 2, 3], yields")
 	println()
 	v = [1, 2, 3]
-	println("$v\n", typeof(v))
+	display(v)
+	println()
+	println("typeof(v) = $(typeof(v)))")
 end
 
 # ╔═╡ 40481932-af01-4981-8911-e6e35121ff9e
@@ -185,7 +188,9 @@ begin
 	display(md"2: A 2D Matrix (using spaces for columns and semicolons for rows) produces a 2×3 Matrix{Int64}: m = [1 2 3; 4 5 6] yields ")
 	println()
 	m = [1 2 3; 4 5 6]
-	println("$m\ntypeof(m) = ", typeof(m))
+	display(m)
+	println()
+	println("typeof(m) =  $(typeof(m))")
 end
 
 # ╔═╡ 8e2946d7-bdd1-4c87-9831-2b4bf2d53a0f
@@ -193,7 +198,9 @@ begin
 	display(md"3: A 1x3 Row Vector (Matrix) produces a 1×3 Matrix{Int64}: row_vec = [1 2 3] yields")
 	println()
 	row_vec = [1 2 3]
-	println("$m\ntypeof(row_vec) = ", typeof(row_vec))
+	display(row_vec)
+	println()
+	println("typeof(row_vec) = ", typeof(row_vec))
 end
 
 # ╔═╡ 3230a371-8901-41a0-8bd8-36965851eaca
@@ -201,20 +208,22 @@ begin
 		display(md"4: A 3x1 Column Vector (Matrix) produces a 3×1 Matrix{Int64}: col_vec = [1; 2; 3] yields")
 		println()
 		col_vec = [1; 2; 3]
-		println("$m\ntypeof(col_vec) = ", typeof(col_vec))
+		display(col_vec)
+		println()
+		println("typeof(col_vec) = ", typeof(col_vec))
 end
 
 # ╔═╡ d5268417-62f9-4fa8-beac-c4d4b9007223
 md"""
-!!! note "4. Array Broadcasting (The Dot: ".")"
+### 4. Array Broadcasting (The Dot: ".")
 	This is arguably the most important feature for clean, fast array code.
 
 	What if you have a vector `A = [1, 2, 3]` and you want to add 1 to every element? Or what if you want to find the sine of every element?
 
 	The dot (`.`) operator tells Julia: "Apply this operation to _every single element_ of the array." We call using the dot operator "broadcasting".
 
-	- `A .+ 1` means `[A[1]+1, A[2]+1, A[3]+1]` $\rightarrow$ `[2, 3, 4]`
-	- `A .* B` means element-by-element multiplication.
+	a) `A .+ 1` means `[A[1]+1, A[2]+1, A[3]+1]` $\rightarrow$ `[2, 3, 4]`
+	b) `A .* B` means element-by-element multiplication.
 
 	You can "dot" any function, including your own: my\_function.(my_array).
 
@@ -223,63 +232,46 @@ md"""
 # ╔═╡ 8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
 md"""
 
-!!! note "5. Array Fusion (Performance vs. Python)"
+### 5. Array Fusion (Performance vs. Python)
 	This is where the magic happens. What happens if you chain multiple "dotted" operations?
 
-	```julia
+```julia
 	A = rand(1000)
 	B = rand(1000)
 	C = rand(1000)
 	D = A .* B .+ C
-	```
+```
 	Let's compare how Python (with NumPy) and Julia handle this.
 
 	In Python (NumPy): `D = A * B + C`
 
 	1. Python first calculates `T = A * B`. It creates a new temporary array `T` in memory to store this result.
-	1. Then, it calculates `D = T + C`. It creates the final array `D`.
-	1. This took two passes over the data and allocated a temporary array `T` of 1000 elements, which is then thrown away. This is slow and memory-intensive.
+	2. Then, it calculates `D = T + C`. It creates the final array `D`.
+	3. This took two passes over the data and allocated a temporary array `T` of 1000 elements, which is then thrown away. This is slow and memory-intensive.
 
 	In Julia: `D = A .* B .+ C`
 
 	1. Julia sees the "chain of dots" and performs loop fusion.
-	1. It knows you want to do `D[i] = A[i] * B[i] + C[i]` for every element.
-	1. It compiles this down to a single, efficient for-loop:
-	```julia
+	2. It knows you want to do `D[i] = A[i] * B[i] + C[i]` for every element.
+	3. It compiles this down to a single, efficient for-loop:
+
+```julia
 	# This is what Julia effectively runs:
 	D = similar(A) # Allocate D *once*
 	for i in 1:length(A)
 		D[i] = A[i] * B[i] + C[i]
 	end
-	```
+```
 """
 
 # ╔═╡ 65151aba-d946-401d-8cca-1874f38146f2
 md"""
-!!! note "6. Matrix Multiplication (*)"
+### 6. Matrix Multiplication (*)
 	We just learned that `A .* B` is the element-wise product.
 
 	So, how do we do standard, linear algebra matrix multiplication?
 
 	We use the asterisk (`*`) operator without the dot.
-
-	```julia
-	A = [1 2; 3 4]
-	B = [5 6; 7 8]
-
-	# Element-wise product
-	C = A .* B
-	# 2×2 Matrix{Int64}:
-	#   5  12
-	#  21  32
-
-	# Matrix multiplication
-	D = A * B
-	# 2×2 Matrix{Int64}:
-	#  19  22
-	#  43  50
-	```
-
 """
 
 # ╔═╡ d46a4d5c-4324-48c8-9851-d486495ec5dc
@@ -308,12 +300,12 @@ md"""
 # ╔═╡ 974bb44d-420c-460d-b626-707909568554
 md"""
 !!! danger "Review: Six Problems"
-	- Solutions, all together, are hidden at then end of the notebook.
+	- Solutions are hidden below each problem.
 """
 
 # ╔═╡ e3b1c6c2-5631-42c0-9a1b-d5a5520466c8
 md"""
-### "Problem 1: Creation and Indexing (Column-Major)"
+### Problem 1: Creation and Indexing (Column-Major)
 !!! warning ""
 	1. Create a 3×3 matrix named `M` containing the numbers 1 through 9. Important: The numbers should fill the matrix column-by-column (i.e., 1, 2, 3 should be in the first column).
 	   - Hint: The function `reshape(A, rows, cols)` is your friend here. Try `reshape(1:9, 3, 3)`.
@@ -348,7 +340,8 @@ end
 
 # ╔═╡ ff17e921-4522-4ab3-8282-9d9aafecdbe9
 md"""
-!!! warning "Problem 2: Broadcasting and Fusion"
+### Problem 2: Broadcasting and Fusion
+!!! warning ""
 	1. Create a 1D vector x containing five evenly spaced points from 0 to $\pi$, inclusive.
 	   - Hint: `pi` is a built-in constant. The `range()` function might be useful: `range(start, stop, length)`. Or just type it manually.
 	1. Define a simple function `my_poly(x) = x^2 - 2*x + 1`.
@@ -387,7 +380,8 @@ end
 
 # ╔═╡ 23069d06-9d74-4a39-912e-e6372ac03abb
 md"""
-!!! warning "Problem 3: Array Creation and Slicing"
+### Problem 3: Array Creation and Slicing
+!!! warning ""
 	1. Create a 4×2 matrix named `A` containing the numbers 1-8, filling by columns. (Again, `reshape` is great for this).
 	1. Create a 1D Vector named `v` containing the elements 10, 20, 30 using comma (`,`) syntax.
 	1. Create a 2×1 Matrix (a column matrix) named `c` containing the elements 40 and 50 using semicolon (`;`) syntax.
@@ -436,7 +430,8 @@ end
 
 # ╔═╡ e022f21e-7f18-4690-99d4-0141403b3b38
 md"""
-!!! warning "Problem 4: Matrix Math vs. Element-wise Math"
+### Problem 4: Matrix Math vs. Element-wise Math
+!!! warning ""
 	1. Create two 2×2 matrices:
 	   - `X = [1 2; 3 4]`
 	   - `Y = [2 0; 0 2] # This is a scaling matrix.`
@@ -489,8 +484,9 @@ let
 end
 
 # ╔═╡ 1416a80e-dbda-4185-8984-7f5de3c58f02
-md"""
-!!! warning "Problem 5: Broadcasting and Fusion"
+md""" 
+### Problem 5: Broadcasting and Fusion
+!!! warning ""
 	1. Create three 1D vectors, `a`, `b`, and `c`, each of length 4.
 	   - `a = [1.0, 2.0, 3.0, 4.0]`
 	   - `b = [0.1, 0.2, 0.3, 0.4]`
@@ -527,7 +523,8 @@ end
 
 # ╔═╡ cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
 md"""
-!!! warning "Problem 6: Column-Major Thinking (A Thought Experiment)"
+### Problem 6: Column-Major Thinking (A Thought Experiment)
+!!! warning ""
 	1. Imagine you have a 10,000 × 10,000 matrix called `DATA`.
 	1. You need to write a for loop to calculate the sum of every element in the second column.
 	1. Write this loop.
@@ -574,12 +571,12 @@ end
 # ╟─2675d602-810c-4320-971c-902c3327a5cb
 # ╟─346cb64d-3c89-44d1-9edb-06354152243a
 # ╟─977537f7-3358-4598-afb8-3d421c12f565
-# ╠═11832b60-4906-4d22-960b-0b16b6634011
+# ╟─11832b60-4906-4d22-960b-0b16b6634011
 # ╟─5a1ad46c-d500-4762-920f-812ebff350e4
 # ╟─40481932-af01-4981-8911-e6e35121ff9e
 # ╟─8e2946d7-bdd1-4c87-9831-2b4bf2d53a0f
 # ╟─3230a371-8901-41a0-8bd8-36965851eaca
-# ╠═d5268417-62f9-4fa8-beac-c4d4b9007223
+# ╟─d5268417-62f9-4fa8-beac-c4d4b9007223
 # ╟─8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
 # ╟─65151aba-d946-401d-8cca-1874f38146f2
 # ╠═d46a4d5c-4324-48c8-9851-d486495ec5dc
