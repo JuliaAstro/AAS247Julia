@@ -55,6 +55,14 @@ md"""
 `Left-Margin` $(@bind leftMargin Slider(-250:25:100, show_value=true, default=25))
 """
 
+# ╔═╡ b3c88a20-d092-40e8-9e01-95f093048318
+md"""
+###### Cell width sliders
+`cellWidth` $(@bind cellWidth Slider(500:25:1500, show_value=true, default=800))
+
+`Left-Margin` $(@bind leftMargin Slider(-250:25:100, show_value=true, default=25))
+"""
+
 # ╔═╡ 650767d3-3e8e-4351-a249-8e11c1037385
 begin
 	@bind screenWidth @htl("""
@@ -173,44 +181,42 @@ md"""
 	`[1, 2, 3]`, with commas, gives a 1D Vector, while `[1; 2; 3]`, with semicolons, gives a 2D, 3×1 Matrix. The 1D Vector is "dimensionless" and often acts like a column vector in math operations, which is very convenient.
 """
 
+# ╔═╡ a014d23c-ed96-4ffa-8790-be8621b67e70
+md"A 1D Vector (using commas) produces a 3-element Vector{Int64}, `v = [1, 2, 3]`, yields"
+
 # ╔═╡ 5a1ad46c-d500-4762-920f-812ebff350e4
 begin
-	display(md"1: A 1D Vector (using commas) produces a 3-element Vector{Int64}, v = [1, 2, 3], yields")
-	println()
 	v = [1, 2, 3]
-	display(v)
-	println()
-	println("typeof(v) = $(typeof(v)))")
+	println("$v\n", typeof(v))
 end
+
+# ╔═╡ aad1b1a4-34ba-47df-8762-1bac06ef7533
+md"A 2D Matrix (using spaces for columns and semicolons for rows) produces a 2×3 Matrix{Int64}: `m = [1 2 3; 4 5 6]` yields"
 
 # ╔═╡ 40481932-af01-4981-8911-e6e35121ff9e
 begin
-	display(md"2: A 2D Matrix (using spaces for columns and semicolons for rows) produces a 2×3 Matrix{Int64}: m = [1 2 3; 4 5 6] yields ")
-	println()
 	m = [1 2 3; 4 5 6]
-	display(m)
-	println()
-	println("typeof(m) =  $(typeof(m))")
+	println("$m\ntypeof(m) = ", typeof(m))
 end
+
+# ╔═╡ bcce528a-2fa8-4527-919e-705c09bba0a6
+md"A 1×3 Row Vector (Matrix) produces a 1×3 Matrix{Int64}: row_vec = [1 2 3] yields"
 
 # ╔═╡ 8e2946d7-bdd1-4c87-9831-2b4bf2d53a0f
 begin
-	display(md"3: A 1x3 Row Vector (Matrix) produces a 1×3 Matrix{Int64}: row_vec = [1 2 3] yields")
-	println()
 	row_vec = [1 2 3]
-	display(row_vec)
-	println()
-	println("typeof(row_vec) = ", typeof(row_vec))
+	println("$m\ntypeof(row_vec) = ", typeof(row_vec))
 end
+
+# ╔═╡ b8e85b76-3493-4d12-ae47-949b2fbb9b60
+md"A 3×1 Column Vector (Matrix) produces a 3×1 Matrix{Int64}: `col_vec = [1; 2; 3]` yields"
 
 # ╔═╡ 3230a371-8901-41a0-8bd8-36965851eaca
 begin
 		display(md"4: A 3x1 Column Vector (Matrix) produces a 3×1 Matrix{Int64}: col_vec = [1; 2; 3] yields")
 		println()
 		col_vec = [1; 2; 3]
-		display(col_vec)
-		println()
-		println("typeof(col_vec) = ", typeof(col_vec))
+		println("$m\ntypeof(col_vec) = ", typeof(col_vec))
 end
 
 # ╔═╡ d5268417-62f9-4fa8-beac-c4d4b9007223
@@ -571,12 +577,12 @@ end
 # ╟─2675d602-810c-4320-971c-902c3327a5cb
 # ╟─346cb64d-3c89-44d1-9edb-06354152243a
 # ╟─977537f7-3358-4598-afb8-3d421c12f565
-# ╟─11832b60-4906-4d22-960b-0b16b6634011
+# ╠═11832b60-4906-4d22-960b-0b16b6634011
 # ╟─5a1ad46c-d500-4762-920f-812ebff350e4
 # ╟─40481932-af01-4981-8911-e6e35121ff9e
 # ╟─8e2946d7-bdd1-4c87-9831-2b4bf2d53a0f
 # ╟─3230a371-8901-41a0-8bd8-36965851eaca
-# ╟─d5268417-62f9-4fa8-beac-c4d4b9007223
+# ╠═d5268417-62f9-4fa8-beac-c4d4b9007223
 # ╟─8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
 # ╟─65151aba-d946-401d-8cca-1874f38146f2
 # ╠═d46a4d5c-4324-48c8-9851-d486495ec5dc
