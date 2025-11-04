@@ -50,24 +50,24 @@ TableOfContents(title = notebookName, depth = 6)
 # ╔═╡ 650767d3-3e8e-4351-a249-8e11c1037385
 begin
 	@bind screenWidth @htl("""
-<div>
-    <script>
-        var div = currentScript.parentElement
-        div.value = screen.width
-    </script>
-</div>
-""")
-    # cellWidth = min(1000, screenWidth * 0.50)
-    @htl("""
-    <style>
-    pluto-notebook {
+	<div>
+		<script>
+			var div = currentScript.parentElement
+			div.value = screen.width
+		</script>
+	</div>
+	""")
+	# cellWidth = min(1000, screenWidth * 0.50)
+	@htl("""
+	<style>
+	pluto-notebook {
 		margin-left: $(leftMargin)px;
-        # margin: auto;
-        width: $(cellWidth)px;
-    }
-    </style>
+		# margin: auto;
+		width: $(cellWidth)px;
+	}
+	</style>
 	Widening cell.
-    """)
+	""")
 end
 
 # ╔═╡ b3c88a20-d092-40e8-9e01-95f093048318
@@ -323,8 +323,6 @@ md"""
 """
 
 # ╔═╡ 7fee9cc1-ecd5-40d1-b9e5-7ca82ee3128e
-# ╠═╡ skip_as_script = true
-#=╠═╡
 begin
 	# 1. Create the matrix
 	M = reshape(1:9, 3, 3)
@@ -347,7 +345,6 @@ begin
 	!!! tip "Solution 1 (with println commented out)"
 	"""
 end
-  ╠═╡ =#
 
 # ╔═╡ ff17e921-4522-4ab3-8282-9d9aafecdbe9
 md"""
