@@ -253,15 +253,15 @@ md"""
 
 	In Python (NumPy): `D = A * B + C`
 
-	1. Python first calculates `T = A * B`. It creates a new temporary array `T` in memory to store this result.
-	2. Then, it calculates `D = T + C`. It creates the final array `D`.
-	3. This took two passes over the data and allocated a temporary array `T` of 1000 elements, which is then thrown away. This is slow and memory-intensive.
+		1. Python first calculates `T = A * B`. It creates a new temporary array `T` in memory to store this result.
+		2. Then, it calculates `D = T + C`. It creates the final array `D`.
+		3. This took two passes over the data and allocated a temporary array `T` of 1000 elements, which is then thrown away. This is slow and memory-intensive.
 
 	In Julia: `D = A .* B .+ C`
 
-	1. Julia sees the "chain of dots" and performs loop fusion.
-	2. It knows you want to do `D[i] = A[i] * B[i] + C[i]` for every element.
-	3. It compiles this down to a single, efficient for-loop:
+		1. Julia sees the "chain of dots" and performs loop fusion.
+		2. It knows you want to do `D[i] = A[i] * B[i] + C[i]` for every element.
+		3. It compiles this down to a single, efficient for-loop:
 
 ```julia
 	# This is what Julia effectively runs:
@@ -586,7 +586,7 @@ end
 # ╟─8e2946d7-bdd1-4c87-9831-2b4bf2d53a0f
 # ╟─3230a371-8901-41a0-8bd8-36965851eaca
 # ╟─d5268417-62f9-4fa8-beac-c4d4b9007223
-# ╠═8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
+# ╟─8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
 # ╟─65151aba-d946-401d-8cca-1874f38146f2
 # ╠═d46a4d5c-4324-48c8-9851-d486495ec5dc
 # ╠═9ff79fb3-7415-44db-9427-853296f9fb6e
