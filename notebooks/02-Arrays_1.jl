@@ -18,6 +18,7 @@ end
 
 # ╔═╡ ea7ad263-dcf2-474e-84b5-6f1ceb2b8f4e
 begin
+	# According to Copilot, "By separating Pkg.add (installation) and using (import) into different cells, you minimize risk of accidentally reinstalling packages every time the notebook is run."
 	import Pkg
 	Pkg.add("PlutoUI")
 	Pkg.add("HypertextLiteral")
@@ -105,6 +106,9 @@ md"""
 	1. Array Fusion and its performance (especially vs. Python).
 
 	1. Matrix Multiplication with the * operator.
+
+!!! warning ""
+	If you want to go straight to the problems based on these topics, go [here.](#Problem-1:-Creation-and-Indexing-(Column-Major))
 """
 
 # ╔═╡ 2675d602-810c-4320-971c-902c3327a5cb
@@ -112,11 +116,11 @@ md"""
 ### 1. Multidimensional Arrays
 	In Julia, an array is a collection of objects stored in a multi-dimensional grid.
 
-	- A 1D array is a Vector, i.e., as a single list or column of numbers.
+		i) A 1D array is a Vector, i.e., as a single list or column of numbers.
 
-	- A 2D array is a Matrix, i.e., rows and columns.
+		ii) A 2D array is a Matrix, i.e., rows and columns.
 
-	- A 3D array is a cube of numbers, but of course one can keep going to 4D, 5D, or any number of dimensions.
+		iii) A 3D array is a cube of numbers, but of course one can keep going to 4D, 5D, or any number of dimensions.
 
 	We interact with these using square brackets `[]` for indexing, e.g., `A[2]` gets the second element of a vector. `M[2, 3]` gets the element at the second row, third column of a matrix.
 
@@ -131,23 +135,22 @@ md"""
 	A) 1-Based Indexing
 	The first element of an array is at index 1.
 
-	- `my_vector[1]` is the first element.
+		i) `my_vector[1]` is the first element.
 
-	- `my_matrix[1, 1]` is the top-left element.
+		ii) `my_matrix[1, 1]` is the top-left element.
 
 	Python and C use 0-based indexing (where `my_array[0]` is the first element). This 1-based system may be more intuitive for mathematicians and scientists who are used to notation such as ``A_{ij}``, where $i$ and $j$ start at 1.
 
 	B) Column-Major Order
-	This is the secret to Julia's performance. It describes how arrays are physically laid out in your computer's memory.
+	This is one secret to Julia's performance. It describes how arrays are physically laid out in your computer's memory.
 
-	- Row-major order (used by Python's NumPy, C): Elements of a row are grouped together in memory. The computer stores [row1, row2, row3].
+		i) Row-major order (used by Python's NumPy, C): Elements of a row are grouped together in memory. The computer stores [row1, row2, row3].
 
-	- Column-major order (used by Julia, MATLAB, Fortran): Elements of a column are grouped together. The computer stores [col1, col2, col3].
+		ii) Column-major order (used by Julia, MATLAB, Fortran): Elements of a column are grouped together. The computer stores [col1, col2, col3].
 
-	Why does this matter? Accessing memory that is close together is extremely fast (due to CPU caching). Accessing memory that is spread out is slow.
+	Why does this matter? Accessing memory that is close together is typically much faster (due to CPU caching) than accessing memory that is spread out.
 
-	In Julia, this means that looping down a column, i.e., through the rows, is fast:
-
+	In Julia, this means that looping down a column, i.e., through the rows, is fast.
 """
 
 # ╔═╡ 977537f7-3358-4598-afb8-3d421c12f565
@@ -165,11 +168,11 @@ end
 # ╔═╡ 11832b60-4906-4d22-960b-0b16b6634011
 md"""
 ### 3. Array Creation
-	You can create arrays with functions like `zeros(2, 3)` or `rand(3, 3)`. But for literal arrays, we use `[]` with two simple rules:
+	1) You can create arrays with functions like `zeros(2, 3)` or `rand(3, 3)`. But for literal arrays, we use `[]` with two simple rules:
 
-	1a) Commas (`,`) separate elements in a 1D Vector.
+        i) Commas (`,`) separate elements in a 1D Vector.
 
-	1b) Spaces separate elements in a row (i.e., new columns).
+		ii) Spaces separate elements in a row (i.e., new columns).
 
 	2) Semicolons (`;`) separate rows.
 
@@ -227,8 +230,8 @@ md"""
 
 	The dot (`.`) operator tells Julia: "Apply this operation to _every single element_ of the array." We call using the dot operator "broadcasting".
 
-	a) `A .+ 1` means `[A[1]+1, A[2]+1, A[3]+1]` $\rightarrow$ `[2, 3, 4]`
-	b) `A .* B` means element-by-element multiplication.
+		i) `A .+ 1` means `[A[1]+1, A[2]+1, A[3]+1]` $\rightarrow$ `[2, 3, 4]`
+		ii) `A .* B` means element-by-element multiplication.
 
 	You can "dot" any function, including your own: my\_function.(my_array).
 
@@ -583,7 +586,7 @@ end
 # ╟─8e2946d7-bdd1-4c87-9831-2b4bf2d53a0f
 # ╟─3230a371-8901-41a0-8bd8-36965851eaca
 # ╟─d5268417-62f9-4fa8-beac-c4d4b9007223
-# ╟─8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
+# ╠═8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
 # ╟─65151aba-d946-401d-8cca-1874f38146f2
 # ╠═d46a4d5c-4324-48c8-9851-d486495ec5dc
 # ╠═9ff79fb3-7415-44db-9427-853296f9fb6e
