@@ -47,9 +47,6 @@ end
 # ╔═╡ 0fe8eafe-871b-40a2-ad45-3a27e0566533
 TableOfContents(title = notebookName, depth = 6)
 
-# ╔═╡ 2a1327da-b77f-4ebb-8627-d786de6c69dc
-# is this change uploading?
-
 # ╔═╡ 650767d3-3e8e-4351-a249-8e11c1037385
 begin
 	@bind screenWidth @htl("""
@@ -294,6 +291,10 @@ begin
 	C = A .* B
 end
 
+# ╔═╡ 9ff79fb3-7415-44db-9427-853296f9fb6e
+	# Matrix multiplication
+	D = A * B
+
 # ╔═╡ 29e28885-d969-4e27-b5d3-866eb25302ab
 md"""
 !!! note "Summary"
@@ -312,68 +313,13 @@ md"""
 
 # ╔═╡ e3b1c6c2-5631-42c0-9a1b-d5a5520466c8
 md"""
-!!! warning "Problem 1: Creation and Indexing (Column-Major)"
-
+### "Problem 1: Creation and Indexing (Column-Major)"
+!!! warning ""
 	1. Create a 3×3 matrix named `M` containing the numbers 1 through 9. Important: The numbers should fill the matrix column-by-column (i.e., 1, 2, 3 should be in the first column).
 	   - Hint: The function `reshape(A, rows, cols)` is your friend here. Try `reshape(1:9, 3, 3)`.
 	2. Print the element at the 1st row, 3rd column. (What do you expect it to be?)
 	3. Print the entire 2nd column of `M`.
 	   - Hint: The `:` operator means "all". `M[row_index, col_index]`.
-"""
-
-# ╔═╡ ff17e921-4522-4ab3-8282-9d9aafecdbe9
-md"""
-!!! warning "Problem 2: Broadcasting and Fusion"
-	1. Create a 1D vector x containing five evenly spaced points from 0 to $\pi$, inclusive.
-	   - Hint: `pi` is a built-in constant. The `range()` function might be useful: `range(start, stop, length)`. Or just type it manually.
-	1. Define a simple function `my_poly(x) = x^2 - 2*x + 1`.
-	1. Using broadcasting, apply your function `my_poly` to every element in `x`. Store the result in `y`.
-	1. Print both `x` and `y`.
-
-"""
-
-# ╔═╡ 23069d06-9d74-4a39-912e-e6372ac03abb
-md"""
-!!! warning "Problem 3: Array Creation and Slicing"
-	1. Create a 4×2 matrix named `A` containing the numbers 1-8, filling by columns. (Again, `reshape` is great for this).
-	1. Create a 1D Vector named `v` containing the elements 10, 20, 30 using comma (`,`) syntax.
-	1. Create a 2×1 Matrix (a column matrix) named `c` containing the elements 40 and 50 using semicolon (`;`) syntax.
-	1. Create a new matrix `B` that consists of the last two rows of `A`.
-	   - Hint: You can use the `end` keyword for indexing, like `A[end-1, :]`.
-"""
-
-
-# ╔═╡ e022f21e-7f18-4690-99d4-0141403b3b38
-md"""
-!!! warning "Problem 4: Matrix Math vs. Element-wise Math"
-	1. Create two 2×2 matrices:
-	   - `X = [1 2; 3 4]`
-	   - `Y = [2 0; 0 2] # This is a scaling matrix.`
-	2. Calculate the matrix multiplication `M = X * Y`.
-	3. Calculate the element-wise multiplication `E = X .* Y`.
-	4. Print both `M` and `E`. Look at `M[1, 1]` and `E[1, 1]`. Why are they different? (You just need to think about this, no need to write the answer).
-
-"""
-
-# ╔═╡ 1416a80e-dbda-4185-8984-7f5de3c58f02
-md"""
-!!! warning "Problem 5: Broadcasting and Fusion"
-	1. Create three 1D vectors, `a`, `b`, and `c`, each of length 4.
-	   - `a = [1.0, 2.0, 3.0, 4.0]`
-	   - `b = [0.1, 0.2, 0.3, 0.4]`
-	   - `c = [10.0, 10.0, 10.0, 10.0]`
-	2. Using a single, "fused" broadcast expression, calculate the value y for each element according to the formula: $y = {(a^2 + b)}/{c}$
-	3. Print the resulting vector `y`.
-	   - Hint: Remember to "dot" (`.`) every operation (`^`, `+`, `/`) to apply it element-wise.
-"""
-
-# ╔═╡ cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
-md"""
-!!! warning "Problem 6: Column-Major Thinking (A Thought Experiment)"
-	1. Imagine you have a 10,000 × 10,000 matrix called `DATA`.
-	1. You need to write a for loop to calculate the sum of every element in the second column.
-	1. Write this loop.
-	   - Hint: You only need one loop. Which index (row or column) should be fixed? Which one should your loop iterate over? Will this loop be fast or slow according to Julia's memory layout?
 """
 
 # ╔═╡ 7fee9cc1-ecd5-40d1-b9e5-7ca82ee3128e
@@ -403,6 +349,17 @@ begin
 end
   ╠═╡ =#
 
+# ╔═╡ ff17e921-4522-4ab3-8282-9d9aafecdbe9
+md"""
+!!! warning "Problem 2: Broadcasting and Fusion"
+	1. Create a 1D vector x containing five evenly spaced points from 0 to $\pi$, inclusive.
+	   - Hint: `pi` is a built-in constant. The `range()` function might be useful: `range(start, stop, length)`. Or just type it manually.
+	1. Define a simple function `my_poly(x) = x^2 - 2*x + 1`.
+	1. Using broadcasting, apply your function `my_poly` to every element in `x`. Store the result in `y`.
+	1. Print both `x` and `y`.
+
+"""
+
 # ╔═╡ 86c3b5ee-7024-4614-a28e-4516e35adfb4
 begin
 	# 1. Create the vector x
@@ -430,6 +387,17 @@ begin
 	!!! tip "Solution 2 (with println commented out)"
 	"""
 end
+
+# ╔═╡ 23069d06-9d74-4a39-912e-e6372ac03abb
+md"""
+!!! warning "Problem 3: Array Creation and Slicing"
+	1. Create a 4×2 matrix named `A` containing the numbers 1-8, filling by columns. (Again, `reshape` is great for this).
+	1. Create a 1D Vector named `v` containing the elements 10, 20, 30 using comma (`,`) syntax.
+	1. Create a 2×1 Matrix (a column matrix) named `c` containing the elements 40 and 50 using semicolon (`;`) syntax.
+	1. Create a new matrix `B` that consists of the last two rows of `A`.
+	   - Hint: You can use the `end` keyword for indexing, like `A[end-1, :]`.
+"""
+
 
 # ╔═╡ 3d50f1d3-066a-4ab0-8e6d-bb1041598057
 let # to avoid multiple instances of variables
@@ -468,6 +436,18 @@ let # to avoid multiple instances of variables
 	!!! tip "Solution 3"
 	"""
 end
+
+# ╔═╡ e022f21e-7f18-4690-99d4-0141403b3b38
+md"""
+!!! warning "Problem 4: Matrix Math vs. Element-wise Math"
+	1. Create two 2×2 matrices:
+	   - `X = [1 2; 3 4]`
+	   - `Y = [2 0; 0 2] # This is a scaling matrix.`
+	2. Calculate the matrix multiplication `M = X * Y`.
+	3. Calculate the element-wise multiplication `E = X .* Y`.
+	4. Print both `M` and `E`. Look at `M[1, 1]` and `E[1, 1]`. Why are they different? (You just need to think about this, no need to write the answer).
+
+"""
 
 # ╔═╡ 34cd25cc-f017-4c24-8125-bd899945be62
 let
@@ -511,6 +491,18 @@ let
 	"""
 end
 
+# ╔═╡ 1416a80e-dbda-4185-8984-7f5de3c58f02
+md"""
+!!! warning "Problem 5: Broadcasting and Fusion"
+	1. Create three 1D vectors, `a`, `b`, and `c`, each of length 4.
+	   - `a = [1.0, 2.0, 3.0, 4.0]`
+	   - `b = [0.1, 0.2, 0.3, 0.4]`
+	   - `c = [10.0, 10.0, 10.0, 10.0]`
+	2. Using a single, "fused" broadcast expression, calculate the value y for each element according to the formula: $y = {(a^2 + b)}/{c}$
+	3. Print the resulting vector `y`.
+	   - Hint: Remember to "dot" (`.`) every operation (`^`, `+`, `/`) to apply it element-wise.
+"""
+
 # ╔═╡ 1ae90170-7388-4a6b-a134-508a94c0ba05
 let
 	# 1. Create vectors
@@ -535,6 +527,15 @@ let
 	!!! tip "Solution 5 (with println commented out)"
 	"""
 end
+
+# ╔═╡ cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
+md"""
+!!! warning "Problem 6: Column-Major Thinking (A Thought Experiment)"
+	1. Imagine you have a 10,000 × 10,000 matrix called `DATA`.
+	1. You need to write a for loop to calculate the sum of every element in the second column.
+	1. Write this loop.
+	   - Hint: You only need one loop. Which index (row or column) should be fixed? Which one should your loop iterate over? Will this loop be fast or slow according to Julia's memory layout?
+"""
 
 # ╔═╡ 9d3ace8b-55a4-45bf-8609-8eff2341aa82
 let
@@ -562,26 +563,13 @@ let
 	"""
 end
 
-# ╔═╡ 9ff79fb3-7415-44db-9427-853296f9fb6e
-# ╠═╡ disabled = true
-#=╠═╡
-	# Matrix multiplication
-	D = A * B
-	# 2×2 Matrix{Int64}:
-  ╠═╡ =#
-
-# ╔═╡ 33f40ccb-335e-4a3e-97b7-5bfeeef7b7e1
-	# Matrix multiplication
-	D = A * B
-
 # ╔═╡ Cell order:
 # ╟─f7cd76de-4427-4dc3-9d12-9931b27a2956
 # ╟─e984391b-0c01-4dc8-85aa-3593027e8530
+# ╠═533bf41f-0dc3-42e3-af5c-344163e950b1
+# ╟─1c4e354c-ddd8-4a6b-bbe6-d8d3b917955d
 # ╠═0fe8eafe-871b-40a2-ad45-3a27e0566533
 # ╟─c10a2907-d677-4280-81fe-4f438a0023c6
-# ╠═533bf41f-0dc3-42e3-af5c-344163e950b1
-# ╠═2a1327da-b77f-4ebb-8627-d786de6c69dc
-# ╟─1c4e354c-ddd8-4a6b-bbe6-d8d3b917955d
 # ╟─650767d3-3e8e-4351-a249-8e11c1037385
 # ╟─b3c88a20-d092-40e8-9e01-95f093048318
 # ╟─e133c0fe-39b7-400e-9e20-f7506603e17d
@@ -599,18 +587,17 @@ end
 # ╟─65151aba-d946-401d-8cca-1874f38146f2
 # ╠═d46a4d5c-4324-48c8-9851-d486495ec5dc
 # ╠═9ff79fb3-7415-44db-9427-853296f9fb6e
-# ╠═33f40ccb-335e-4a3e-97b7-5bfeeef7b7e1
 # ╟─29e28885-d969-4e27-b5d3-866eb25302ab
 # ╟─974bb44d-420c-460d-b626-707909568554
 # ╟─e3b1c6c2-5631-42c0-9a1b-d5a5520466c8
-# ╟─ff17e921-4522-4ab3-8282-9d9aafecdbe9
-# ╟─23069d06-9d74-4a39-912e-e6372ac03abb
-# ╟─e022f21e-7f18-4690-99d4-0141403b3b38
-# ╟─1416a80e-dbda-4185-8984-7f5de3c58f02
-# ╟─cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
 # ╟─7fee9cc1-ecd5-40d1-b9e5-7ca82ee3128e
+# ╟─ff17e921-4522-4ab3-8282-9d9aafecdbe9
 # ╟─86c3b5ee-7024-4614-a28e-4516e35adfb4
+# ╟─23069d06-9d74-4a39-912e-e6372ac03abb
 # ╟─3d50f1d3-066a-4ab0-8e6d-bb1041598057
+# ╟─e022f21e-7f18-4690-99d4-0141403b3b38
 # ╟─34cd25cc-f017-4c24-8125-bd899945be62
+# ╟─1416a80e-dbda-4185-8984-7f5de3c58f02
 # ╟─1ae90170-7388-4a6b-a134-508a94c0ba05
+# ╟─cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
 # ╟─9d3ace8b-55a4-45bf-8609-8eff2341aa82
