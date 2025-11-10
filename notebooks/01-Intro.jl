@@ -10,15 +10,23 @@ using DrWatson
 # ╔═╡ 040b953f-8873-441c-a97f-48c1cf45ef03
 @quickactivate "AAS247Julia"
 
-# ╔═╡ 1e47e383-b735-4c57-a300-2afe8491b49a
-using PlutoUI; TableOfContents()
+# ╔═╡ 94d323b9-554f-4620-8900-da7c89ad338d
+using Symbolics, Latexify
 
-# ╔═╡ 09193424-25b9-45ce-840f-f24bbcc46c9d
-md"""## Introduction"""
+# ╔═╡ d308df6b-14ec-49ec-8270-a3b9efd88517
+using AMDGPU
+
+# ╔═╡ 7c4ebc32-9b8e-4b2a-8f39-f4c351283843
+using PlutoUI
+
+# ╔═╡ 6001288a-7a9d-4020-bf7d-02a0fa250c04
+md"""
+# 01: Introduction
+"""
 
 # ╔═╡ 38ead816-0375-4605-a833-6464485aa0d6
 md"""
-### Historical Context
+## Historical Context
 
 Twenty-nine years ago at the Astronomical Data Analysis Software and Systems (ADASS) VI meeting (1996), Harrington and Barrett hosted a Birds-of-a-Feather session entitled [Interactive Data Analysis Environments](https://www.cv.nrao.edu/adass/adassVI/harringtonj.html). Based on their review of [21 interpreted programming languages](https://htmlpreview.github.io/?https://github.com/barrettp/AAS245Julia/blob/main/Interactive%20Data%20Analysis%20Environments.html) such as Glish, GUILE, IDL, IRAF, Matlab, Perl, Python, and Tcl; they recommended that Python be considered the primary language for astronomical data analysis. The primary reasons were that the language was simple to learn, yet powerful; well supported by the programming community; and had FORTRAN-like arrays. However, for good performance, the multi-dimensional arrays needed to be written in a compiled language, namely C. So Numerical Python suffered from the "two language problem".
 """
@@ -52,14 +60,12 @@ Although an early advocate and developer of Numerical Python (now NumPy), Matplo
 """
 
 # ╔═╡ b1ed2c4e-f5fa-4e5e-87d8-7af6f80a83ca
-
-md"""## Getting Started"""
-
+md"""
+## Getting Started
+"""
 
 # ╔═╡ 7f3357bc-4103-4a35-af21-9c86f5a0ec2f
 md"""
-**===================================================================================**
-
 ### Starting Julia
 
 Enter `julia` at the terminal prompt. Set the number of threads to `auto`. Threads will be discussed later in Parallel Computing.
@@ -79,13 +85,12 @@ julia>
 ```
 
 !!! tip
-
     The command line option "`-q`" can be used to remove the start-up banner.
 """
 
 # ╔═╡ 7475c896-d1b1-4429-9ba8-8e78de41e0b0
 md"""
-**===================================================================================**
+---
 
 ### Stopping Julia
 
@@ -97,12 +102,11 @@ julia> <Ctrl-D>
 
 !!! tip
     Don't do this now!
-
 """
 
 # ╔═╡ 5df8264e-6e37-4674-abdf-2b05c530787f
 md"""
-**===================================================================================**
+---
 
 ### The command line  or  REPL (Read-Eval-Print-Loop)"""
 
@@ -151,18 +155,20 @@ a + b
 
 # ╔═╡ 419a6dec-1db0-477f-911f-049223b5674f
 md"""
-**===================================================================================**
+## Other REPL Modes
 
-### Other REPL Modes
+The Julia REPL supports several different modes, outlined below, accessible by a keystroke. Hit the `delete` or `backspace` key to return to the normal `julia>` REPL.
 """
 
 # ╔═╡ 85f2bec3-0095-4bbc-93ef-48ab97094244
 md"""
-#### Help, '?'
-For help mode,
+### Help: `?`
+
+For help mode:
 
 ```julia-repl
 julia> ?
+
 help?> println
 search: println printstyled print sprint isprint
 
@@ -186,34 +192,33 @@ julia> String(take!(io))
 "Hello, world.\n"
 ```
 
-Enter 'delete' or 'backspace' to exit help
-
 !!! note
 	Pluto has a **Live docs** tab in the lower right corner that will display the current Julia function or command. The **Help**, **Shell**, and **Package Manager** examples require the REPL, i.e., running Julia in a terminal.
 """
 
 # ╔═╡ 8ee7f43d-bf75-4975-ac64-54c2d5a0174a
 md"""
-#### Shell, ';'
+### Shell: `;`
 
-For shell mode,
+For shell mode:
 
 ```julia-repl
 julia> ;
+
 shell> pwd
 /Users/myhomedir
 ```
-
-Enter 'delete' or 'backspace' to exit shell
 """
-
 
 # ╔═╡ d1e9c51c-efb9-4dcb-9d28-8c54a235fbb4
 md"""
-#### Package Manager, `]`
+### Package Manager: `]`
+
+For package mode:
 
 ```julia-repl
 julia> ]
+
 pkg>
 ```
 
@@ -223,25 +228,27 @@ For package manager help,
 pkg> ? `return`
 ```
 
-Returns a brief summary of package commands
+returns a brief summary of package commands.
 
-To add a package,
+To add a package:
 
 ```julia-repl
 pkg> add <package>
+
 pkg> add <package1>, <package2>
 ```
 
-When adding a package, the Julia on-line repository will be searched. The package and its dependencies will then be downloaded, compiled, and installed. This may take anywhere from a few seconds to a few minutes depending on the size of the package and its dependencies.
+When adding a package, the Julia online repository (aka the "registry") will be searched. The package and its dependencies will then be downloaded, compiled, and installed. This may take anywhere from a few seconds to a few minutes depending on the size of the package and its dependencies.
 
-To use or load a package (after it has been added),
+To use or load a package (after it has been added):
 
 ```julia-repl
 julia> using <package>
+
 julia> using <package1>, <package2>
 ```
 
-A feature of the 'using' command is that it will add the package, if it hasn't alaredy been added.
+A feature of the `using` command is that it will add the package, if it hasn't already been added.
 """
 
 # ╔═╡ b27578b2-f5f5-4e46-82e6-0007be187ba6
@@ -271,13 +278,13 @@ or
 pkg> up <package>
 ```
 
-To update all packages in the manifest,
+To update all packages in the manifest:
 
 ```julia-repl
 pkg> up
 ```
 
-To garbage collect packages not used for a significant time,
+To garbage collect packages not used for a significant time:
 
 ```julia-repl
 pkg> gc
@@ -286,10 +293,12 @@ pkg> gc
 
 # ╔═╡ 563f07ad-6aed-495e-85fb-bae4a1755ac2
 md"""
-=====================================================================================
-#### Some simple programming examples
+## Some simple programming examples
+"""
 
-##### Measurements and Unicode
+# ╔═╡ 0f94b21c-364f-488e-aff3-28c4b39a3844
+md"""
+### Measurements and Unicode
 
 The Measurements package enables variables to have both values and errors.
 Let's add the Measurements package using the `using` statement:
@@ -315,13 +324,13 @@ m1 = measurement(4.5, 0.1)
 
 
 # ╔═╡ 094b6f30-cbd6-46b1-8e0c-3fdb1ef18261
-md"""Typing 'measurements' is rather awkward. There must be a better way. How about the following?
+md"""Typing `measurements` is rather awkward. There must be a better way. How about the following?
 
 ```julia
 m2 = 15 ± 0.3
 ```
 
-where the plus-minus character is entered using LaTex syntax followed by tab, i.e., `\pm<tab>`.
+where the plus-minus character is entered using LaTeX syntax followed by tab, i.e., `\pm<tab>`.
 """
 
 
@@ -330,7 +339,7 @@ where the plus-minus character is entered using LaTex syntax followed by tab, i.
 
 # ╔═╡ 668abc35-fdc3-430f-8c90-de3c2c2cd77b
 md"""
-One of the features of Julia is that it understands unicode. For example, expressions in a printed document that contain greek characters can be entered as greek characters in your code, e.g., `\alpha<tab>`. Let's calculate the following expression.
+One of the features of Julia is that it understands unicode. For example, expressions in a printed document that contain greek characters can be entered as greek characters in your code, e.g., `\alpha<tab>`. Let's calculate the following expression:
 
 ```julia
 α = m1 + m2
@@ -344,11 +353,15 @@ One of the features of Julia is that it understands unicode. For example, expres
 md"""
 !!! note
 
-    Notice that the error of the result α has been propogated correctly.
+    Notice that the error of the result `α` has been propogated correctly.
+"""
 
-##### Units
+# ╔═╡ 750acbf6-bc04-43ea-b123-14753cab597a
+md"""
 
-Let's add another package called Unitful, which enables attaching units to variables:
+### Units
+
+Let's add another package called Unitful.jl, which enables attaching units to variables:
 
 ```julia
 using Unitful
@@ -424,15 +437,15 @@ And 2π is the constant 2π.
 
 # ╔═╡ cf4a0e8f-9210-4f1e-84d4-ee7ff09aaf61
 md"""
-##### Arrays
+### Arrays
 
-Let's see if this works with one dimensional arrays or vectors.
+Let's see if this works with one dimensional arrays or vectors:
 
 ```julia
 γ = [10 ± 0.1, 20 ± 0.2, 30 ± 0.3]u"m/s" .* [15 ± 0.01, 25 ± 0.02, 25 ± 0.03]u"s"
 ```
 
-Note the dot '.' before the multiplication character '\*'.  This means element-wise multiplication. Whereas the multiplication character '\*' by itself means matrix multiplication. If you are coming from Python, this difference may take a little time to get used to.
+Note the dot '`.`' before the multiplication character '`*`'.  This means element-wise multiplication, whereas the multiplication character '`*`' by itself means matrix multiplication. If you are coming from Python, this difference may take a little time to get used to.
 """
 
 # ╔═╡ fdba7211-e480-4948-8435-76a7608e7e63
@@ -440,21 +453,18 @@ Note the dot '.' before the multiplication character '\*'.  This means element-w
 
 # ╔═╡ 3e8ee79c-c315-4c19-88ad-9b58caa86c40
 md"""
-##### Symbolics
+### Symbolics
 
-Julia can also do symbolic manipulation. We will need the Symbolics package for this:
+Julia can also do symbolic manipulation. We will need the Symbolics.jl package for this and Latexify.jl for optional pretty printing in the notebook:
 
 ```julia
-using Symbolics
+using Symbolics, Latexify
 ```
 """
 
-# ╔═╡ 2a73c720-e08e-4b18-90d2-f86f945806f9
-
-
 # ╔═╡ 746e3dae-4bbb-410b-899f-ef95c8afb1b0
 md"""
-We will use rotation matrices as an example, where Rx, Ry, and Rz are rotations about the 'x', 'y', and 'z'-axes:
+We will use rotation matrices as an example, where `Rx`, `Ry`, and `Rz` are rotations about the ``x``, ``y``, and ``z``-axes:
 
 ```julia
 begin
@@ -468,11 +478,17 @@ end
 """
 
 # ╔═╡ d7169595-d401-4fab-8554-d25e3b367583
+begin
+    Rx(θ) = [1. 0. 0.; 0. cos(θ) sin(θ); 0. -sin(θ) cos(θ)]
 
+    Ry(θ) = [cos(θ) 0. -sin(θ); 0. 1. 0.; sin(θ) 0. cos(θ)]
+
+    Rz(θ) = [cos(θ) sin(θ) 0.; -sin(θ) cos(θ) 0.; 0. 0. 1.]
+end
 
 # ╔═╡ 80335b0c-de35-4133-a32d-c0ccb826a4b3
 md"""
-Now create symbolic variables for the three equatorial precession angles: 'z', 'θ', and 'ζ' defined by Lieske *et al.* (1977):
+Now create symbolic variables for the three equatorial precession angles: `z`, `θ`, and `ζ` defined by *Lieske et al. (1977)*:
 
 ```julia
 @variables z, θ, ζ
@@ -480,7 +496,7 @@ Now create symbolic variables for the three equatorial precession angles: 'z', '
 """
 
 # ╔═╡ 8f5f7d12-38eb-49c9-90c6-81d27eda13fe
-
+@variables z, θ, ζ
 
 # ╔═╡ 1b9553dd-149c-4e48-aacf-10d6ca4756c2
 md"""
@@ -492,11 +508,11 @@ Rz(-z)Ry(θ)Rz(-ζ)
 """
 
 # ╔═╡ 856a6279-6354-48de-85ca-c5638be68c9e
-
+Rz(-z)Ry(θ)Rz(-ζ)
 
 # ╔═╡ f80f1bdd-5147-4a6c-8280-09329ed6dba1
 md"""
-##### GPU Programming
+### GPU Programming
 
 Depending on the GPU that your laptop has, you will need to load one of the following packages.
 
@@ -517,9 +533,6 @@ using Metal                # Apple Silicon, i.e., M1-4 Mac
 ```
 """
 
-# ╔═╡ d308df6b-14ec-49ec-8270-a3b9efd88517
-
-
 # ╔═╡ cfc57dc3-bb97-4bf2-99e8-241e3f552f1e
 md"""
 Create three large arrays.
@@ -535,13 +548,15 @@ end
 """
 
 # ╔═╡ d7ecfac4-8b9b-4b4b-b258-429f417380cc
-
+begin
+	xlarge = rand(2^20)
+	ylarge = rand(2^20)
+	outlarge = rand(2^20)
+end
 
 # ╔═╡ b186c2fa-0ce2-4941-a9fa-a055de7f4ebf
 md"""
-Now let's load our array onto the GPU
-
-For CUDA:
+Now let's load our array onto the GPU. For CUDA:
 ```julia
 begin
 	xlarge_gpu   = cu(xlarge)
@@ -550,7 +565,7 @@ begin
 end
 ```
 
-For other GPU providers replace `cu` with
+For other GPU providers replace `cu` with:
 ```julia
 ROCArray(xlarge)              # AMD
 ```
@@ -563,7 +578,11 @@ MtlArray(xlarge)              # Apple Silicon
 """
 
 # ╔═╡ ec8dbfe4-15f2-41f6-93be-48486c2bf8fb
-
+begin
+	xlarge_gpu   = ROCArray(xlarge)
+	ylarge_gpu   = ROCArray(ylarge)
+	outlarge_gpu = ROCArray(outlarge)
+end
 
 # ╔═╡ 8401d5df-ccb5-4c98-a952-6d71b7a74fa8
 md"""
@@ -582,11 +601,16 @@ md"""
 	* Julia can perform calculations on the GPU without resorting to compiled languages such as C/C++.
 """
 
+# ╔═╡ 11645d9e-637b-47c4-b2e6-8c4a7d9747cb
+md"""
+# Notebook setup
+"""
+
+# ╔═╡ b809bdb0-f042-4fd5-ace7-0cf51a587558
+TableOfContents(; depth = 4)
+
 # ╔═╡ Cell order:
-# ╟─b34e164a-da63-4636-b2d3-1d9efc9ae8d6
-# ╟─040b953f-8873-441c-a97f-48c1cf45ef03
-# ╟─1e47e383-b735-4c57-a300-2afe8491b49a
-# ╟─09193424-25b9-45ce-840f-f24bbcc46c9d
+# ╟─6001288a-7a9d-4020-bf7d-02a0fa250c04
 # ╟─38ead816-0375-4605-a833-6464485aa0d6
 # ╟─95cfbabc-5e7c-481b-853c-6d06baa577b6
 # ╟─8e597a38-6e41-499f-af06-f9223b8827de
@@ -610,6 +634,7 @@ md"""
 # ╟─b27578b2-f5f5-4e46-82e6-0007be187ba6
 # ╟─065265a5-c9ad-4a39-b14d-f4e2e49d3f7a
 # ╟─563f07ad-6aed-495e-85fb-bae4a1755ac2
+# ╟─0f94b21c-364f-488e-aff3-28c4b39a3844
 # ╠═40abc83f-b4bd-479f-8671-189cc712d792
 # ╟─297cd86c-5e9d-4f70-b11a-cbae8fa96d1e
 # ╠═8f016c75-7768-4418-8c57-100db3073c85
@@ -618,6 +643,7 @@ md"""
 # ╟─668abc35-fdc3-430f-8c90-de3c2c2cd77b
 # ╠═0e42f7fd-955e-4679-8d90-0cb46c9a12dc
 # ╟─d2a2d0bc-e883-439f-8e34-166e2369caef
+# ╟─750acbf6-bc04-43ea-b123-14753cab597a
 # ╠═88ca2a73-6203-447c-afcc-9e370a82076b
 # ╟─c24f1ddd-5e31-4073-a627-86cedb1d44c2
 # ╠═63a4b27a-5361-4d95-8787-ae31ca7987fe
@@ -631,7 +657,7 @@ md"""
 # ╟─cf4a0e8f-9210-4f1e-84d4-ee7ff09aaf61
 # ╠═fdba7211-e480-4948-8435-76a7608e7e63
 # ╟─3e8ee79c-c315-4c19-88ad-9b58caa86c40
-# ╠═2a73c720-e08e-4b18-90d2-f86f945806f9
+# ╠═94d323b9-554f-4620-8900-da7c89ad338d
 # ╟─746e3dae-4bbb-410b-899f-ef95c8afb1b0
 # ╠═d7169595-d401-4fab-8554-d25e3b367583
 # ╟─80335b0c-de35-4133-a32d-c0ccb826a4b3
@@ -645,3 +671,8 @@ md"""
 # ╟─b186c2fa-0ce2-4941-a9fa-a055de7f4ebf
 # ╠═ec8dbfe4-15f2-41f6-93be-48486c2bf8fb
 # ╟─8401d5df-ccb5-4c98-a952-6d71b7a74fa8
+# ╟─11645d9e-637b-47c4-b2e6-8c4a7d9747cb
+# ╠═b34e164a-da63-4636-b2d3-1d9efc9ae8d6
+# ╠═7c4ebc32-9b8e-4b2a-8f39-f4c351283843
+# ╠═b809bdb0-f042-4fd5-ace7-0cf51a587558
+# ╠═040b953f-8873-441c-a97f-48c1cf45ef03
