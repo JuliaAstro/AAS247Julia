@@ -10,12 +10,6 @@ using DrWatson
 # ╔═╡ 040b953f-8873-441c-a97f-48c1cf45ef03
 @quickactivate "AAS247Julia"
 
-# ╔═╡ 94d323b9-554f-4620-8900-da7c89ad338d
-using Symbolics, Latexify
-
-# ╔═╡ d308df6b-14ec-49ec-8270-a3b9efd88517
-using AMDGPU
-
 # ╔═╡ 7c4ebc32-9b8e-4b2a-8f39-f4c351283843
 using PlutoUI
 
@@ -462,6 +456,9 @@ using Symbolics, Latexify
 ```
 """
 
+# ╔═╡ 94d323b9-554f-4620-8900-da7c89ad338d
+
+
 # ╔═╡ 746e3dae-4bbb-410b-899f-ef95c8afb1b0
 md"""
 We will use rotation matrices as an example, where `Rx`, `Ry`, and `Rz` are rotations about the ``x``, ``y``, and ``z``-axes:
@@ -496,7 +493,7 @@ Now create symbolic variables for the three equatorial precession angles: `z`, `
 """
 
 # ╔═╡ 8f5f7d12-38eb-49c9-90c6-81d27eda13fe
-@variables z, θ, ζ
+
 
 # ╔═╡ 1b9553dd-149c-4e48-aacf-10d6ca4756c2
 md"""
@@ -508,7 +505,7 @@ Rz(-z)Ry(θ)Rz(-ζ)
 """
 
 # ╔═╡ 856a6279-6354-48de-85ca-c5638be68c9e
-Rz(-z)Ry(θ)Rz(-ζ)
+
 
 # ╔═╡ f80f1bdd-5147-4a6c-8280-09329ed6dba1
 md"""
@@ -532,6 +529,9 @@ using AMDGPU               # for AMD
 using Metal                # Apple Silicon, i.e., M1-4 Mac
 ```
 """
+
+# ╔═╡ d308df6b-14ec-49ec-8270-a3b9efd88517
+
 
 # ╔═╡ cfc57dc3-bb97-4bf2-99e8-241e3f552f1e
 md"""
@@ -578,11 +578,7 @@ MtlArray(xlarge)              # Apple Silicon
 """
 
 # ╔═╡ ec8dbfe4-15f2-41f6-93be-48486c2bf8fb
-begin
-	xlarge_gpu   = ROCArray(xlarge)
-	ylarge_gpu   = ROCArray(ylarge)
-	outlarge_gpu = ROCArray(outlarge)
-end
+
 
 # ╔═╡ 8401d5df-ccb5-4c98-a952-6d71b7a74fa8
 md"""
