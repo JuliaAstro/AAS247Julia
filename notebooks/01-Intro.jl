@@ -1,6 +1,10 @@
 ### A Pluto.jl notebook ###
 # v0.20.20
 
+#> [frontmatter]
+#> title = "01: Intro"
+#> description = "Notebook 1 in the AAS 247 JuliaAstro workshop series."
+
 using Markdown
 using InteractiveUtils
 
@@ -11,12 +15,18 @@ using DrWatson
 @quickactivate "AAS247Julia"
 
 # ╔═╡ 7c4ebc32-9b8e-4b2a-8f39-f4c351283843
-using PlutoUI
+using Dates, PlutoUI
 
 # ╔═╡ 6001288a-7a9d-4020-bf7d-02a0fa250c04
-md"""
-# 01: Introduction
-"""
+begin
+	notebook_name = "01: Introduction"
+	timestamp = string("Last updated: ", Dates.format(today(), dateformat"d u Y"))
+
+	"""
+	!!! note "$(notebook_name)"
+		**$(timestamp)**
+	""" |> Markdown.parse
+end
 
 # ╔═╡ 38ead816-0375-4605-a833-6464485aa0d6
 md"""
@@ -593,7 +603,7 @@ md"""
 """
 
 # ╔═╡ b809bdb0-f042-4fd5-ace7-0cf51a587558
-TableOfContents(; depth = 4)
+TableOfContents(; title = notebook_name, depth = 4)
 
 # ╔═╡ Cell order:
 # ╟─6001288a-7a9d-4020-bf7d-02a0fa250c04
