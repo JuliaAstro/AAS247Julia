@@ -202,6 +202,8 @@ julia> String(take!(io))
 
 # ╔═╡ 8ee7f43d-bf75-4975-ac64-54c2d5a0174a
 md"""
+---
+
 ### Shell: `;`
 
 For shell mode:
@@ -216,6 +218,8 @@ shell> pwd
 
 # ╔═╡ d1e9c51c-efb9-4dcb-9d28-8c54a235fbb4
 md"""
+---
+
 ### Package Manager: `]`
 
 For package mode:
@@ -304,8 +308,7 @@ md"""
 md"""
 ### Measurements and Unicode
 
-The Measurements package enables variables to have both values and errors.
-Let's add the Measurements package using the `using` statement:
+The [Measurements.jl](https://juliaphysics.github.io/Measurements.jl/stable/) package enables variables to have both values and errors. Let's add Measurements using the `using` statement:
 
 ```julia
 using Measurements
@@ -362,10 +365,11 @@ md"""
 
 # ╔═╡ 750acbf6-bc04-43ea-b123-14753cab597a
 md"""
+---
 
 ### Units
 
-Let's add another package called Unitful.jl, which enables attaching units to variables:
+Let's add another package called [Unitful.jl](https://juliaphysics.github.io/Unitful.jl/stable/), which enables attaching units to variables:
 
 ```julia
 using Unitful
@@ -441,6 +445,8 @@ And 2π is the constant 2π.
 
 # ╔═╡ cf4a0e8f-9210-4f1e-84d4-ee7ff09aaf61
 md"""
+---
+
 ### Arrays
 
 Let's see if this works with one dimensional arrays or vectors:
@@ -455,11 +461,18 @@ Note the dot '`.`' before the multiplication character '`*`'.  This means elemen
 # ╔═╡ fdba7211-e480-4948-8435-76a7608e7e63
 
 
+# ╔═╡ 1f90de4b-790b-41f8-9a7b-3a54e9fff472
+md"""
+See the [dot syntax](https://docs.julialang.org/en/v1/manual/functions/#man-vectorized) section of the Julia manual for more.
+"""
+
 # ╔═╡ 3e8ee79c-c315-4c19-88ad-9b58caa86c40
 md"""
+---
+
 ### Symbolics
 
-Julia can also do symbolic manipulation. We will need the Symbolics.jl package for this and Latexify.jl for optional pretty printing in the notebook:
+Julia can also do symbolic manipulation. We will need the [Symbolics.jl](https://docs.sciml.ai/Symbolics/stable/) package for this and [Latexify.jl](https://korsbo.github.io/Latexify.jl/stable) for optional pretty printing in the notebook:
 
 ```julia
 using Symbolics, Latexify
@@ -513,9 +526,11 @@ Rz(-z)Ry(θ)Rz(-ζ)
 
 # ╔═╡ f80f1bdd-5147-4a6c-8280-09329ed6dba1
 md"""
+---
+
 ### GPU Programming
 
-Depending on the GPU that your laptop has, you will need to load one of the following packages.
+Depending on the GPU that your laptop has, you will need to load one of the following packages:
 
 ```julia
 using CUDA                 # for NVIDIA
@@ -580,8 +595,15 @@ MtlArray(xlarge)              # Apple Silicon
 # ╔═╡ ec8dbfe4-15f2-41f6-93be-48486c2bf8fb
 
 
+# ╔═╡ da2c5d76-2dd3-4f1c-834e-11189793c56f
+md"""
+For more on GPU programming in Julia, see the [JuliaGPU website](https://juliagpu.org/).
+"""
+
 # ╔═╡ 8401d5df-ccb5-4c98-a952-6d71b7a74fa8
 md"""
+## Summary
+
 !!! note
 
     What have we learned about the Julia command line and features?
@@ -652,6 +674,7 @@ TableOfContents(; title = notebook_name, depth = 4)
 # ╠═75ab8e8b-3082-45b0-9442-9c21bd1b09fa
 # ╟─cf4a0e8f-9210-4f1e-84d4-ee7ff09aaf61
 # ╠═fdba7211-e480-4948-8435-76a7608e7e63
+# ╟─1f90de4b-790b-41f8-9a7b-3a54e9fff472
 # ╟─3e8ee79c-c315-4c19-88ad-9b58caa86c40
 # ╠═94d323b9-554f-4620-8900-da7c89ad338d
 # ╟─746e3dae-4bbb-410b-899f-ef95c8afb1b0
@@ -666,6 +689,7 @@ TableOfContents(; title = notebook_name, depth = 4)
 # ╠═d7ecfac4-8b9b-4b4b-b258-429f417380cc
 # ╟─b186c2fa-0ce2-4941-a9fa-a055de7f4ebf
 # ╠═ec8dbfe4-15f2-41f6-93be-48486c2bf8fb
+# ╟─da2c5d76-2dd3-4f1c-834e-11189793c56f
 # ╟─8401d5df-ccb5-4c98-a952-6d71b7a74fa8
 # ╟─11645d9e-637b-47c4-b2e6-8c4a7d9747cb
 # ╠═b34e164a-da63-4636-b2d3-1d9efc9ae8d6
