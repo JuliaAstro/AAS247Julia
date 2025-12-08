@@ -76,7 +76,7 @@ md"""
 ### 0. The Power of Functions in Julia
 Introduction to the contruction of Julia functions and their implementation by Julia.
 
-If you come from Python or Java, functions are attached to classes. In Julia, functions are standalone citizens, and they define the behavior of the language. We will cover the syntax, the argument system, and introduce Julia’s killer feature: Multiple Dispatch.
+If you come from Python or Java, functions are attached to classes. In Julia, functions are standalone citizens, and they define the behavior of the language. We will cover the syntax, the argument system, and introduce a key Julia feature: Multiple Dispatch.
 
 !!! note ""
 	1. Defining functions
