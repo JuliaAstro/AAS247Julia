@@ -21,7 +21,7 @@ using InteractiveUtils
 
 # ╔═╡ 70c42e39-490a-4fc2-acfc-c4c0553a4e1e
 begin
-	notebook_name = "06: Functions and Types"
+	notebook_name = "1-6: Functions and Types"
 	timestamp = string("Last Updated: ", Dates.format(today(), dateformat"d u Y"))
 
 	"""

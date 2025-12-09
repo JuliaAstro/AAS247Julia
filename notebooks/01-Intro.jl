@@ -19,7 +19,7 @@ using Dates, PlutoUI
 
 # ╔═╡ 6001288a-7a9d-4020-bf7d-02a0fa250c04
 begin
-	notebook_name = "01: Introduction"
+	notebook_name = "1-1: Introduction"
 	timestamp = string("Last updated: ", Dates.format(today(), dateformat"d u Y"))
 
 	"""

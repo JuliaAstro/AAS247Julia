@@ -162,7 +162,7 @@ md"""
 """
 
 # ╔═╡ c47564b1-751b-46e0-883f-86fc11f6abb8
-notebookName = "Arrays 2";
+notebookName = "1-3: Arrays 2";
 
 # ╔═╡ d046592d-9786-4675-b8bd-26848fcb6a50
 "# $notebookName" |> Markdown.parse

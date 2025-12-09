@@ -27,7 +27,7 @@ using PlutoUI, HypertextLiteral, Revise
 
 # ╔═╡ afe988c7-c708-4fdb-bf82-54edeb9db708
 begin
-	notebookName = "04-Arrays"
+	notebookName = "1-4: Arrays"
 	"""
 	!!! note "$notebookName"
 		###### Origin Date: 1 December 2025

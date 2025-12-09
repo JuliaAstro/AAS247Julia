@@ -30,7 +30,7 @@ md" [Julia Markdown Doc](https://docs.julialang.org/en/v1/stdlib/Markdown)"
 
 # ╔═╡ e984391b-0c01-4dc8-85aa-3593027e8530
 begin
-	notebookName = "02-Arrays_1"
+	notebookName = "1-2: Arrays_1"
 	"""
 	!!! note "$notebookName"
 		###### Origin Date: 29 October 2025
