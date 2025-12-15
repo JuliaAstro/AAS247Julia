@@ -315,7 +315,7 @@ md"""
 """
 
 # ╔═╡ 1416a80e-dbda-4185-8984-7f5de3c58f02
-md""" 
+md"""
 ### Problem 5: Broadcasting and Fusion
 !!! warning ""
 	1. Create three 1D vectors, `a`, `b`, and `c`, each of length 4.

@@ -89,7 +89,7 @@ Used often in functional programming contexts such as `map`, `filter` or `findal
 f = x -> x^2 + 2x - 1
 
 # Usage in a map function
-map(x -> x^2, [1, 2, 3]) 
+map(x -> x^2, [1, 2, 3])
 ```
 """
 
@@ -178,8 +178,8 @@ d) Note that Dispatch happens on positional arguments only. Keyword arguments do
 # ╔═╡ d8ba51b9-2d28-4d97-8704-c56c44e04a62
 md"""
 !!! note "Summary of Dispatch"
-	  - Python: `dog.bark(at_stranger)` -> Logic lives in `dog`.\
-	  - Julia: `bark(dog, stranger)` -> Logic lives in the `bark` function, selected specifically for the combination of `Dog` and `Stranger`.
+	- Python: `dog.bark(at_stranger)` -> Logic lives in `dog`.\
+	- Julia: `bark(dog, stranger)` -> Logic lives in the `bark` function, selected specifically for the combination of `Dog` and `Stranger`.
 """
 
 # ╔═╡ 09abe51d-ed7d-4f8a-b49c-193dbf188e02
