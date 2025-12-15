@@ -255,6 +255,11 @@ md"""
 	c) (But also use `*` to join strings.)
 """
 
+# ╔═╡ f4c82ed6-bfb7-4600-b9c6-b29627de74f4
+md"""
+## Problems
+"""
+
 # ╔═╡ 974bb44d-420c-460d-b626-707909568554
 md"""
 !!! danger "Review: Six Problems"
@@ -417,6 +422,7 @@ end
 # ╠═d46a4d5c-4324-48c8-9851-d486495ec5dc
 # ╠═9ff79fb3-7415-44db-9427-853296f9fb6e
 # ╟─29e28885-d969-4e27-b5d3-866eb25302ab
+# ╟─f4c82ed6-bfb7-4600-b9c6-b29627de74f4
 # ╟─974bb44d-420c-460d-b626-707909568554
 # ╟─e3b1c6c2-5631-42c0-9a1b-d5a5520466c8
 # ╟─ff17e921-4522-4ab3-8282-9d9aafecdbe9
