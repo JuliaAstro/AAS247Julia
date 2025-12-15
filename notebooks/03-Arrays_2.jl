@@ -39,7 +39,7 @@ using PlutoUI, HypertextLiteral
 
 # ╔═╡ 1282f0b4-41a9-46d1-adb2-68638c76da87
 md"""
-## Loading arrays from files
+### Loading arrays from files
 """
 
 # ╔═╡ 87c9962d-0a48-4772-ae15-7cd5bf9b21f4
@@ -64,7 +64,7 @@ CSV.read(local_filename, Tuple, header=false)
 
 # ╔═╡ 2788d2f9-a6b9-4169-85c9-014e5dd565bc
 md"""
-## Array and tuple comprehensions
+### Array and tuple comprehensions
 """
 
 # ╔═╡ a42c9932-65e5-4d7b-946e-4e1f81a364db
@@ -99,7 +99,7 @@ Tuple(-sinpi(x) for x in rand(44))
 
 # ╔═╡ 7a634fe5-2a4e-4abd-90c8-5a4da31bba1e
 md"""
-## Array comprehensions with "if statement"
+### Array comprehensions with "if statement"
 """
 
 # ╔═╡ f13e35cf-d75f-4d56-82d6-1e1d52934512
@@ -123,12 +123,12 @@ Another option to pick out only certain elements of an array is to use the built
 
 # ╔═╡ bfa7975e-f206-4179-93eb-e0236855c981
 md"""
-## Array slicing & indexing
+### Array slicing & indexing
 """
 
 # ╔═╡ d1e8e027-ce75-4cee-bbbd-f977e7c4d442
 md"""
-## Array slicing with boolean array (masking)
+### Array slicing with boolean array (masking)
 """
 
 # ╔═╡ ff5ae511-b9ee-46fa-8838-39e44d9fd7f3
@@ -148,17 +148,17 @@ damages[mask]
 
 # ╔═╡ c5e7ec5b-fc9b-46fb-8708-4cf9d80387e3
 md"""
-# Problems
+## Problems
 """
 
 # ╔═╡ cee1d2fd-cea3-4fbf-bdd6-1d0286f84f69
 md"""
-## Cartesian indexing
+### Cartesian indexing
 """
 
 # ╔═╡ 9f6c71ca-6de0-453d-9ad3-4996e2a2001b
 md"""
-# Notebook setup
+## Notebook setup
 """
 
 # ╔═╡ c47564b1-751b-46e0-883f-86fc11f6abb8

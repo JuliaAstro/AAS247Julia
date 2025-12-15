@@ -18,12 +18,12 @@ using PlutoUI, HypertextLiteral
 
 # ╔═╡ c8a117d7-790b-433f-9993-9e2f09357b25
 md"""
-## Type declarations
+### Type declarations
 """
 
 # ╔═╡ 33a3c28c-7b98-4fa9-8603-d9f8848a523b
 md"""
-## Type hierarchy
+### Type hierarchy
 """
 
 # ╔═╡ fd423ae4-fd20-46dd-9a92-369d69242dde
@@ -31,7 +31,7 @@ md"""
 
 # ╔═╡ 444a233a-6815-43ce-a9f9-340ccbc7cb65
 md"""
-# Problems
+## Problems
 """
 
 # ╔═╡ 6d5283e1-cbc8-49c2-a8ff-79e0df888483
@@ -81,7 +81,7 @@ Create a composite type, e.g., `struct AType a::Integer b::String end`, and inst
 
 # ╔═╡ e3d0f321-ded7-4355-abdb-d58fbc008cd1
 md"""
-# Notebook setup
+## Notebook setup
 """
 
 # ╔═╡ 488e18dd-a795-457f-a78c-36090a63d1a1
