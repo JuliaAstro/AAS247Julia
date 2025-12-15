@@ -35,7 +35,7 @@ using Downloads
 using Markdown
 
 # ╔═╡ 157fdc89-ff6f-4e6c-99b0-fc952daa24ef
-using PlutoUI, HypertextLiteral
+using Dates, PlutoUI, HypertextLiteral
 
 # ╔═╡ 1282f0b4-41a9-46d1-adb2-68638c76da87
 md"""
@@ -162,26 +162,36 @@ md"""
 """
 
 # ╔═╡ c47564b1-751b-46e0-883f-86fc11f6abb8
-notebookName = "1-3: Arrays 2";
+notebookName = "1-3: Arrays 2"
+
+# ╔═╡ c4e5e3b5-7b0a-4b27-8781-6e12e11c5f4e
+timestamp = Dates.format(today(), dateformat"d u Y")
 
 # ╔═╡ d046592d-9786-4675-b8bd-26848fcb6a50
-"# $notebookName" |> Markdown.parse
+"""
+!!! note "$notebookName"
+	**Last Updated: $(timestamp)**
+""" |> Markdown.parse
 
 # ╔═╡ 56274a04-6ace-477a-a4f4-3acad1a85809
-TableOfContents()
+TableOfContents(title = notebookName, depth = 4)
+
+# ╔═╡ 462886b6-2317-4e94-804c-483251ece497
+md"""
+Widening sliders
+"""
 
 # ╔═╡ ed2f25e4-ffcf-4e6e-bf18-046906f05a84
 cellWidthSlider = @bind cellWidth Slider(500:25:1500, show_value=true, default=800);
 
 # ╔═╡ a2dfca01-81f6-45e4-aa5e-da24c8ae5871
-leftMarginSlider = @bind leftMargin Slider(-250:25:100, show_value=true, default=25);
+leftMarginSlider = @bind leftMargin Slider(-250:25:100, show_value=true, default=0);
 
 # ╔═╡ 6dab8c14-64c1-4518-aea4-c3502787851e
 md"""
 ###### Cell width sliders
-`cellWidth` $(cellWidthSlider)
-
-`Left-Margin` $(leftMarginSlider)
+- cell width: $cellWidthSlider
+- left margin: $leftMarginSlider
 """
 
 # ╔═╡ 62d434d4-93bb-49f1-a6ee-a7499b58aa92
@@ -236,8 +246,10 @@ Widening cell
 # ╠═3e21eeef-836b-468e-b058-9c26d8f75f01
 # ╠═218c497d-d81a-40fe-b47a-5c59dbab2f09
 # ╠═157fdc89-ff6f-4e6c-99b0-fc952daa24ef
-# ╠═c47564b1-751b-46e0-883f-86fc11f6abb8
+# ╟─c47564b1-751b-46e0-883f-86fc11f6abb8
+# ╟─c4e5e3b5-7b0a-4b27-8781-6e12e11c5f4e
 # ╠═56274a04-6ace-477a-a4f4-3acad1a85809
 # ╟─62d434d4-93bb-49f1-a6ee-a7499b58aa92
+# ╟─462886b6-2317-4e94-804c-483251ece497
 # ╠═ed2f25e4-ffcf-4e6e-bf18-046906f05a84
 # ╠═a2dfca01-81f6-45e4-aa5e-da24c8ae5871

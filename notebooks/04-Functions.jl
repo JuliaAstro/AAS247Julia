@@ -23,53 +23,10 @@ using DrWatson
 @quickactivate "AAS247Julia"
 
 # ╔═╡ 602c43c5-28de-487b-af91-bc6523b7d899
-using PlutoUI, HypertextLiteral, Revise
-
-# ╔═╡ afe988c7-c708-4fdb-bf82-54edeb9db708
-begin
-	notebookName = "1-4: Functions"
-	"""
-	!!! note "$notebookName"
-		###### Origin Date: 1 December 2025
-	""" |> Markdown.parse
-end
-
-# ╔═╡ 83ab9733-5969-4d0c-a3c0-b8f4d2402fde
-TableOfContents(title = notebookName, depth = 6)
-
-# ╔═╡ 55f82e50-9a84-4c09-a15b-18fa9275726c
-md"""
-###### Cell width sliders
-`cellWidth` $(@bind cellWidth Slider(500:25:1500, show_value=true, default=800))
-
-`Left-Margin` $(@bind leftMargin Slider(-250:25:100, show_value=true, default=25))
-"""
-
-# ╔═╡ 3aa7166e-3e82-41c3-8618-859c1d8fbe5a
-begin
-	@bind screenWidth @htl("""
-	<div>
-		<script>
-			var div = currentScript.parentElement
-			div.value = screen.width
-		</script>
-	</div>
-	""")
-	# cellWidth = min(1000, screenWidth * 0.50)
-	@htl("""
-	<style>
-	pluto-notebook {
-		margin-left: $(leftMargin)px;
-		# margin: auto;
-		width: $(cellWidth)px;
-	}
-	</style>
-	Widening cell.
-	""")
-end
+using Dates, PlutoUI, HypertextLiteral, Revise
 
 # ╔═╡ 65b843a0-24ad-4821-9097-088be8d4539f
-md" ##### Begin New Coding Here."
+md" ##### Begin New Coding Here"
 
 # ╔═╡ 7d8410d2-7568-4dee-b812-9fa9f8acb33f
 md"""
@@ -233,13 +190,69 @@ md"""
   * Note: Julia will use the specific version function before defaulting to the general version function.
 """
 
+# ╔═╡ 7c70658b-9913-42ee-913b-0c483d95aee9
+md"""
+## Notebook setup
+"""
+
+# ╔═╡ 601e5ecb-4829-432c-9315-6450cb22b05a
+notebookName = "1-4: Functions"
+
+# ╔═╡ ae271c82-969e-45e3-87b7-872e1cbf097b
+timestamp = Dates.format(today(), dateformat"d u Y")
+
+# ╔═╡ afe988c7-c708-4fdb-bf82-54edeb9db708
+"""
+!!! note "$notebookName"
+	**Last Updated: $(timestamp)**
+""" |> Markdown.parse
+
+# ╔═╡ 83ab9733-5969-4d0c-a3c0-b8f4d2402fde
+TableOfContents(title = notebookName, depth = 4)
+
+# ╔═╡ 8e538add-e168-434f-b98c-721586a66167
+md"""
+Widening sliders
+"""
+
+# ╔═╡ 86b28341-38ec-4dfc-bad2-4a5c89d46cb9
+cellWidthSlider = @bind cellWidth Slider(500:25:1500, show_value=true, default=800);
+
+# ╔═╡ 25f04e9b-f087-49fb-b325-bd73c4260d58
+leftMarginSlider = @bind leftMargin Slider(-250:25:100, show_value=true, default=0);
+
+# ╔═╡ 55f82e50-9a84-4c09-a15b-18fa9275726c
+md"""
+###### Cell width sliders
+- cell width: $cellWidthSlider
+- left-margin: $leftMarginSlider
+"""
+
+# ╔═╡ 3aa7166e-3e82-41c3-8618-859c1d8fbe5a
+begin
+	@bind screenWidth @htl("""
+	<div>
+		<script>
+			var div = currentScript.parentElement
+			div.value = screen.width
+		</script>
+	</div>
+	""")
+	# cellWidth = min(1000, screenWidth * 0.50)
+	@htl("""
+	<style>
+	pluto-notebook {
+		margin-left: $(leftMargin)px;
+		# margin: auto;
+		width: $(cellWidth)px;
+	}
+	</style>
+	Widening cell.
+	""")
+end
+
 # ╔═╡ Cell order:
 # ╟─afe988c7-c708-4fdb-bf82-54edeb9db708
-# ╠═c4480e57-d479-403b-a841-50e0b6ee0b04
-# ╠═5bd8b585-ee1c-4ec7-bfb5-6e266824b3b4
-# ╠═602c43c5-28de-487b-af91-bc6523b7d899
-# ╠═83ab9733-5969-4d0c-a3c0-b8f4d2402fde
-# ╟─3aa7166e-3e82-41c3-8618-859c1d8fbe5a
 # ╟─55f82e50-9a84-4c09-a15b-18fa9275726c
 # ╟─65b843a0-24ad-4821-9097-088be8d4539f
 # ╟─7d8410d2-7568-4dee-b812-9fa9f8acb33f
@@ -248,3 +261,14 @@ md"""
 # ╟─022ce88c-cf02-11f0-ba74-39ac8b31fd57
 # ╟─09abe51d-ed7d-4f8a-b49c-193dbf188e02
 # ╟─f2c8a8af-6638-4fc3-88e7-88190bcea9b2
+# ╟─7c70658b-9913-42ee-913b-0c483d95aee9
+# ╠═c4480e57-d479-403b-a841-50e0b6ee0b04
+# ╠═5bd8b585-ee1c-4ec7-bfb5-6e266824b3b4
+# ╠═602c43c5-28de-487b-af91-bc6523b7d899
+# ╟─601e5ecb-4829-432c-9315-6450cb22b05a
+# ╟─ae271c82-969e-45e3-87b7-872e1cbf097b
+# ╠═83ab9733-5969-4d0c-a3c0-b8f4d2402fde
+# ╟─3aa7166e-3e82-41c3-8618-859c1d8fbe5a
+# ╟─8e538add-e168-434f-b98c-721586a66167
+# ╠═86b28341-38ec-4dfc-bad2-4a5c89d46cb9
+# ╠═25f04e9b-f087-49fb-b325-bd73c4260d58

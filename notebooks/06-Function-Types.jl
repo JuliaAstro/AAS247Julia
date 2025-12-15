@@ -19,17 +19,6 @@ using Markdown
 # ╔═╡ a450e173-a833-4bbd-be59-be42fc9c2247
 using InteractiveUtils
 
-# ╔═╡ 70c42e39-490a-4fc2-acfc-c4c0553a4e1e
-begin
-	notebook_name = "1-6: Functions and Types"
-	timestamp = string("Last Updated: ", Dates.format(today(), dateformat"d u Y"))
-
-	"""
-	!!! note "$(notebook_name)"
-		**$(timestamp)**
-	""" |> Markdown.parse
-end
-
 # ╔═╡ 2614efc4-c4a5-11f0-b6f8-5fb2b6ceb0de
 md"""
 
@@ -244,8 +233,20 @@ md"""
 ### Notebook setup
 """
 
+# ╔═╡ 2af773a0-1138-4918-8224-aabbd046261e
+notebook_name = "1-6: Functions and Types"
+
 # ╔═╡ 8bc5134f-d7e8-438a-9d68-fbf14951a66f
 TableOfContents(; title = notebook_name, depth = 4)
+
+# ╔═╡ 0df0caf9-e2df-4713-a9d1-fdb724882a0a
+timestamp = Dates.format(today(), dateformat"d u Y")
+
+# ╔═╡ 70c42e39-490a-4fc2-acfc-c4c0553a4e1e
+"""
+!!! note "$(notebook_name)"
+	**Last Updated: $(timestamp)**
+""" |> Markdown.parse
 
 # ╔═╡ Cell order:
 # ╟─70c42e39-490a-4fc2-acfc-c4c0553a4e1e
@@ -266,9 +267,11 @@ TableOfContents(; title = notebook_name, depth = 4)
 # ╟─36360e9c-a3fa-463d-b3ed-fef4f4851007
 # ╟─8c258f48-bd25-4998-9699-b4f415d76b8a
 # ╟─e7ae5a6e-1bf4-442b-9c03-75343c07f999
-# ╟─b4228b44-cd1f-4664-a102-65c0b22a757c
-# ╟─04cc37cd-ecf9-4dd5-b14d-4d4fe1f0992d
-# ╟─8bc5134f-d7e8-438a-9d68-fbf14951a66f
+# ╠═b4228b44-cd1f-4664-a102-65c0b22a757c
 # ╠═d07e2d0b-9d94-4cd4-ac26-5494d555bd1b
+# ╠═04cc37cd-ecf9-4dd5-b14d-4d4fe1f0992d
+# ╠═8bc5134f-d7e8-438a-9d68-fbf14951a66f
+# ╟─2af773a0-1138-4918-8224-aabbd046261e
+# ╟─0df0caf9-e2df-4713-a9d1-fdb724882a0a
 # ╟─9119b6aa-10f1-41a8-b236-e407312cb219
 # ╟─a450e173-a833-4bbd-be59-be42fc9c2247

@@ -25,54 +25,14 @@ using DrWatson
 # ╔═╡ e186986e-ae37-47ad-b44c-2d7d1078b3cd
 using PlutoUI, HypertextLiteral, Revise
 
+# ╔═╡ 624bd571-c51e-4f52-848b-7cdefebbd42a
+using Dates
+
 # ╔═╡ f7cd76de-4427-4dc3-9d12-9931b27a2956
 md" [Julia Markdown Doc](https://docs.julialang.org/en/v1/stdlib/Markdown)"
 
-# ╔═╡ e984391b-0c01-4dc8-85aa-3593027e8530
-begin
-	notebookName = "1-2: Arrays_1"
-	"""
-	!!! note "$notebookName"
-		###### Origin Date: 29 October 2025
-	""" |> Markdown.parse
-end
-
-# ╔═╡ 0fe8eafe-871b-40a2-ad45-3a27e0566533
-TableOfContents(title = notebookName, depth = 6)
-
-# ╔═╡ b3c88a20-d092-40e8-9e01-95f093048318
-md"""
-###### Cell width sliders
-`cellWidth` $(@bind cellWidth Slider(500:25:1500, show_value=true, default=800))
-
-`Left-Margin` $(@bind leftMargin Slider(-250:25:100, show_value=true, default=25))
-"""
-
-# ╔═╡ 650767d3-3e8e-4351-a249-8e11c1037385
-begin
-	@bind screenWidth @htl("""
-	<div>
-		<script>
-			var div = currentScript.parentElement
-			div.value = screen.width
-		</script>
-	</div>
-	""")
-	# cellWidth = min(1000, screenWidth * 0.50)
-	@htl("""
-	<style>
-	pluto-notebook {
-		margin-left: $(leftMargin)px;
-		# margin: auto;
-		width: $(cellWidth)px;
-	}
-	</style>
-	Widening cell.
-	""")
-end
-
 # ╔═╡ e133c0fe-39b7-400e-9e20-f7506603e17d
-md" ##### Begin New Coding Here."
+md" ##### Begin New Coding Here"
 
 # ╔═╡ b28ecc8b-c27f-4446-961d-a187f28cf97a
 md"""
@@ -372,15 +332,71 @@ md"""
 	   - Hint: You only need one loop. Which index (row or column) should be fixed? Which one should your loop iterate over? Will this loop be fast or slow according to Julia's memory layout?
 """
 
+# ╔═╡ 75a587fc-cd2d-4205-bd2e-8fc770a63dcf
+md"""
+## Notebook setup
+"""
+
+# ╔═╡ 84ecbeb2-f601-4945-8ed0-6dcf103d97da
+notebookName = "1-2: Arrays_1"
+
+# ╔═╡ f124d454-a47e-446a-95f4-6793e9fd5b13
+timestamp = Dates.format(today(), dateformat"d u Y")
+
+# ╔═╡ e984391b-0c01-4dc8-85aa-3593027e8530
+"""
+!!! note "$notebookName"
+	**Last Updated: $(timestamp)**
+""" |> Markdown.parse
+
+# ╔═╡ 0fe8eafe-871b-40a2-ad45-3a27e0566533
+TableOfContents(title = notebookName, depth = 4)
+
+# ╔═╡ 3c71a06d-924a-4403-98df-4bf167ee8520
+md"""
+Widening sliders
+"""
+
+# ╔═╡ cd7d2daf-d625-4c76-a27d-3153721b339a
+cellWidthSlider = @bind cellWidth Slider(500:25:1500, show_value=true, default=800);
+
+# ╔═╡ 0c30be39-0c5b-44cf-9a64-518080da07a7
+leftMarginSlider = @bind leftMargin Slider(-250:25:100, show_value=true, default=0);
+
+# ╔═╡ b3c88a20-d092-40e8-9e01-95f093048318
+md"""
+###### Cell width sliders
+- cell width: $cellWidthSlider
+- left margin: $leftMarginSlider
+"""
+
+# ╔═╡ 650767d3-3e8e-4351-a249-8e11c1037385
+begin
+	@bind screenWidth @htl("""
+	<div>
+		<script>
+			var div = currentScript.parentElement
+			div.value = screen.width
+		</script>
+	</div>
+	""")
+	# cellWidth = min(1000, screenWidth * 0.50)
+	@htl("""
+	<style>
+	pluto-notebook {
+		margin-left: $(leftMargin)px;
+		# margin: auto;
+		width: $(cellWidth)px;
+	}
+	</style>
+	Widening cell.
+	""")
+end
+
 # ╔═╡ Cell order:
 # ╟─f7cd76de-4427-4dc3-9d12-9931b27a2956
 # ╟─e984391b-0c01-4dc8-85aa-3593027e8530
-# ╠═dbb04803-2fc3-4455-99e6-ac78360a200f
-# ╠═533bf41f-0dc3-42e3-af5c-344163e950b1
-# ╠═e186986e-ae37-47ad-b44c-2d7d1078b3cd
-# ╠═0fe8eafe-871b-40a2-ad45-3a27e0566533
-# ╟─650767d3-3e8e-4351-a249-8e11c1037385
-# ╟─b3c88a20-d092-40e8-9e01-95f093048318
+# ╠═b3c88a20-d092-40e8-9e01-95f093048318
 # ╟─e133c0fe-39b7-400e-9e20-f7506603e17d
 # ╟─b28ecc8b-c27f-4446-961d-a187f28cf97a
 # ╟─2675d602-810c-4320-971c-902c3327a5cb
@@ -408,3 +424,15 @@ md"""
 # ╟─e022f21e-7f18-4690-99d4-0141403b3b38
 # ╟─1416a80e-dbda-4185-8984-7f5de3c58f02
 # ╟─cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
+# ╟─75a587fc-cd2d-4205-bd2e-8fc770a63dcf
+# ╠═dbb04803-2fc3-4455-99e6-ac78360a200f
+# ╠═533bf41f-0dc3-42e3-af5c-344163e950b1
+# ╠═624bd571-c51e-4f52-848b-7cdefebbd42a
+# ╠═e186986e-ae37-47ad-b44c-2d7d1078b3cd
+# ╟─84ecbeb2-f601-4945-8ed0-6dcf103d97da
+# ╟─f124d454-a47e-446a-95f4-6793e9fd5b13
+# ╠═0fe8eafe-871b-40a2-ad45-3a27e0566533
+# ╟─650767d3-3e8e-4351-a249-8e11c1037385
+# ╟─3c71a06d-924a-4403-98df-4bf167ee8520
+# ╠═cd7d2daf-d625-4c76-a27d-3153721b339a
+# ╠═0c30be39-0c5b-44cf-9a64-518080da07a7

@@ -4,6 +4,18 @@
 using Markdown
 using InteractiveUtils
 
+# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
+macro bind(def, element)
+    #! format: off
+    return quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
+        local el = $(esc(element))
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
+        el
+    end
+    #! format: on
+end
+
 # ╔═╡ 189ec852-bf0b-11f0-a069-2def1b4d4791
 using DrWatson
 
@@ -14,7 +26,10 @@ using DrWatson
 using Markdown
 
 # ╔═╡ d1a478f0-5282-4a8c-b44f-d3297748e9c3
-using PlutoUI, HypertextLiteral
+using Dates, PlutoUI, HypertextLiteral
+
+# ╔═╡ 6714345c-947e-45c7-a4ed-bd7b668ac4ef
+md" ##### Begin New Coding Here"
 
 # ╔═╡ c8a117d7-790b-433f-9993-9e2f09357b25
 md"""
@@ -85,16 +100,65 @@ md"""
 """
 
 # ╔═╡ 488e18dd-a795-457f-a78c-36090a63d1a1
-notebookName = "1-5: Types";
+notebookName = "1-5: Types"
+
+# ╔═╡ d8f48cb6-9278-4b42-aa99-ad093e49e263
+timestamp = Dates.format(today(), dateformat"d u Y")
 
 # ╔═╡ 520278e3-1521-438a-bdbd-088956a4cc42
-"# $notebookName" |> Markdown.parse
+"""
+!!! note "$notebookName"
+	**Last Updated: $(timestamp)**
+""" |> Markdown.parse
 
 # ╔═╡ 56d5d99d-88a6-4e35-92da-3a7a8ba3a0a6
-TableOfContents(title = notebookName)
+TableOfContents(title = notebookName; depth = 4)
+
+# ╔═╡ c8f4b433-f298-4f8d-8f36-814f62fbb905
+md"""
+Widening sliders
+"""
+
+# ╔═╡ 03432019-214a-43ac-990a-63bf3ddc1ae2
+cellWidthSlider = @bind cellWidth Slider(500:25:1500, show_value=true, default=800);
+
+# ╔═╡ 7ab9c901-080f-4179-a552-6dfdd6e6e699
+leftMarginSlider = @bind leftMargin Slider(-250:25:100, show_value=true, default=0);
+
+# ╔═╡ a4f60d04-459d-4dc8-ab38-1a6195b846d3
+md"""
+###### Cell width sliders
+- cell width: $cellWidthSlider
+- left margin: $leftMarginSlider
+"""
+
+# ╔═╡ 39ad66e4-7474-47e9-b7e9-026c888c5434
+begin
+	@bind screenWidth @htl("""
+	<div>
+		<script>
+			var div = currentScript.parentElement
+			div.value = screen.width
+		</script>
+	</div>
+	""")
+	# cellWidth = min(1000, screenWidth * 0.50)
+	@htl("""
+	<style>
+	pluto-notebook {
+		margin-left: $(leftMargin)px;
+		# margin: auto;
+		width: $(cellWidth)px;
+	}
+	</style>
+	Widening cell.
+	""")
+end
 
 # ╔═╡ Cell order:
 # ╟─520278e3-1521-438a-bdbd-088956a4cc42
+# ╟─a4f60d04-459d-4dc8-ab38-1a6195b846d3
+# ╟─6714345c-947e-45c7-a4ed-bd7b668ac4ef
 # ╟─c8a117d7-790b-433f-9993-9e2f09357b25
 # ╟─33a3c28c-7b98-4fa9-8603-d9f8848a523b
 # ╠═fd423ae4-fd20-46dd-9a92-369d69242dde
@@ -113,5 +177,10 @@ TableOfContents(title = notebookName)
 # ╠═169ccf8b-5f34-4e1c-9596-a50c6153b9f1
 # ╠═d5c060c2-f0eb-4829-baa2-abf595983adf
 # ╠═d1a478f0-5282-4a8c-b44f-d3297748e9c3
-# ╠═488e18dd-a795-457f-a78c-36090a63d1a1
+# ╟─488e18dd-a795-457f-a78c-36090a63d1a1
+# ╟─d8f48cb6-9278-4b42-aa99-ad093e49e263
 # ╠═56d5d99d-88a6-4e35-92da-3a7a8ba3a0a6
+# ╟─39ad66e4-7474-47e9-b7e9-026c888c5434
+# ╟─c8f4b433-f298-4f8d-8f36-814f62fbb905
+# ╠═03432019-214a-43ac-990a-63bf3ddc1ae2
+# ╠═7ab9c901-080f-4179-a552-6dfdd6e6e699
