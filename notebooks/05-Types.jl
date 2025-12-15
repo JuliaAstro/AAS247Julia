@@ -108,7 +108,7 @@ timestamp = Dates.format(today(), dateformat"d u Y")
 # ╔═╡ 520278e3-1521-438a-bdbd-088956a4cc42
 """
 !!! note "$notebookName"
-	**Last Updated: $(timestamp)**
+    **Last Updated: $(timestamp)**
 """ |> Markdown.parse
 
 # ╔═╡ 56d5d99d-88a6-4e35-92da-3a7a8ba3a0a6
@@ -134,25 +134,25 @@ md"""
 
 # ╔═╡ 39ad66e4-7474-47e9-b7e9-026c888c5434
 begin
-	@bind screenWidth @htl("""
-	<div>
-		<script>
-			var div = currentScript.parentElement
-			div.value = screen.width
-		</script>
-	</div>
-	""")
-	# cellWidth = min(1000, screenWidth * 0.50)
-	@htl("""
-	<style>
-	pluto-notebook {
-		margin-left: $(leftMargin)px;
-		# margin: auto;
-		width: $(cellWidth)px;
-	}
-	</style>
-	Widening cell.
-	""")
+    @bind screenWidth @htl("""
+    <div>
+        <script>
+            var div = currentScript.parentElement
+            div.value = screen.width
+        </script>
+    </div>
+    """)
+    # cellWidth = min(1000, screenWidth * 0.50)
+    @htl("""
+    <style>
+    pluto-notebook {
+        margin-left: $(leftMargin)px;
+        # margin: auto;
+        width: $(cellWidth)px;
+    }
+    </style>
+    Widening cell.
+    """)
 end
 
 # ╔═╡ Cell order:

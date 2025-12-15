@@ -36,9 +36,9 @@ Introduction to the contruction of Julia functions and their implementation by J
 If you come from Python or Java, functions are attached to classes. In Julia, functions are standalone citizens, and they define the behavior of the language. We will cover the syntax, the argument system, and introduce a key Julia feature: Multiple Dispatch.
 
 !!! note ""
-	1. Defining functions
-	1. Function arguments and keywords
-	1. Multiple dispatch
+    1. Defining functions
+    1. Function arguments and keywords
+    1. Multiple dispatch
 """
 
 # ╔═╡ c78da21b-40ad-42d1-8516-b91d16982c77
@@ -54,16 +54,16 @@ md"""
 
 ```julia
 function hypotenuse(a, b)
-	result = sqrt(a^2 + b^2)
-	return result
+    result = sqrt(a^2 + b^2)
+    return result
 end
 ```
 
 !!! note ""
-	Two things to note here:
+    Two things to note here:
 
-	A. The indentation helps for readability, of course, but Julia does not use indentation to define code blocks.\
-	B. Julia automatically returns the result of the last expression evaluated, but for definitiveness and clarity we have used it in the example above.
+    A. The indentation helps for readability, of course, but Julia does not use indentation to define code blocks.\
+    B. Julia automatically returns the result of the last expression evaluated, but for definitiveness and clarity we have used it in the example above.
 """
 
 # ╔═╡ cd420030-32d1-4eef-9630-2d526566081c
@@ -75,7 +75,7 @@ hypotenuse(a, b) = sqrt(a^2 + b^2)
 ```
 
 !!! note
-	The compiler will automatically inline functions to improve performance, i.e., unlike in C or Python, there is no function call performance hit.
+    The compiler will automatically inline functions to improve performance, i.e., unlike in C or Python, there is no function call performance hit.
 """
 
 # ╔═╡ d87b2eed-922f-4c9b-8fcd-6a015d9d35d3
@@ -178,16 +178,16 @@ d) Note that Dispatch happens on positional arguments only. Keyword arguments do
 # ╔═╡ d8ba51b9-2d28-4d97-8704-c56c44e04a62
 md"""
 !!! note "Summary of Dispatch"
-	- Python: `dog.bark(at_stranger)` -> Logic lives in `dog`.\
-	- Julia: `bark(dog, stranger)` -> Logic lives in the `bark` function, selected specifically for the combination of `Dog` and `Stranger`.
+    - Python: `dog.bark(at_stranger)` -> Logic lives in `dog`.\
+    - Julia: `bark(dog, stranger)` -> Logic lives in the `bark` function, selected specifically for the combination of `Dog` and `Stranger`.
 """
 
 # ╔═╡ 09abe51d-ed7d-4f8a-b49c-193dbf188e02
 md"""
 !!! note "Recap"
-	1. Definitions: You can use multiline blocks, one-liners, or lambdas.
-	2. Arguments: Use :: for types and ; to separate keyword arguments.
-	3. Multiple Dispatch: The compiler chooses the most specific method based on the types of all arguments, allowing for incredibly composable and high-performance code.
+    1. Definitions: You can use multiline blocks, one-liners, or lambdas.
+    2. Arguments: Use :: for types and ; to separate keyword arguments.
+    3. Multiple Dispatch: The compiler chooses the most specific method based on the types of all arguments, allowing for incredibly composable and high-performance code.
 
 """
 
@@ -223,7 +223,7 @@ timestamp = Dates.format(today(), dateformat"d u Y")
 # ╔═╡ afe988c7-c708-4fdb-bf82-54edeb9db708
 """
 !!! note "$notebookName"
-	**Last Updated: $(timestamp)**
+    **Last Updated: $(timestamp)**
 """ |> Markdown.parse
 
 # ╔═╡ 83ab9733-5969-4d0c-a3c0-b8f4d2402fde
@@ -249,25 +249,25 @@ md"""
 
 # ╔═╡ 3aa7166e-3e82-41c3-8618-859c1d8fbe5a
 begin
-	@bind screenWidth @htl("""
-	<div>
-		<script>
-			var div = currentScript.parentElement
-			div.value = screen.width
-		</script>
-	</div>
-	""")
-	# cellWidth = min(1000, screenWidth * 0.50)
-	@htl("""
-	<style>
-	pluto-notebook {
-		margin-left: $(leftMargin)px;
-		# margin: auto;
-		width: $(cellWidth)px;
-	}
-	</style>
-	Widening cell.
-	""")
+    @bind screenWidth @htl("""
+    <div>
+        <script>
+            var div = currentScript.parentElement
+            div.value = screen.width
+        </script>
+    </div>
+    """)
+    # cellWidth = min(1000, screenWidth * 0.50)
+    @htl("""
+    <style>
+    pluto-notebook {
+        margin-left: $(leftMargin)px;
+        # margin: auto;
+        width: $(cellWidth)px;
+    }
+    </style>
+    Widening cell.
+    """)
 end
 
 # ╔═╡ Cell order:

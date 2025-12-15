@@ -170,7 +170,7 @@ timestamp = Dates.format(today(), dateformat"d u Y")
 # ╔═╡ d046592d-9786-4675-b8bd-26848fcb6a50
 """
 !!! note "$notebookName"
-	**Last Updated: $(timestamp)**
+    **Last Updated: $(timestamp)**
 """ |> Markdown.parse
 
 # ╔═╡ 56274a04-6ace-477a-a4f4-3acad1a85809
@@ -198,9 +198,9 @@ md"""
 @htl("""
 <style>
 pluto-notebook {
-	margin-left: $(leftMargin)px;
-	# margin: auto;
-	width: $(cellWidth)px;
+    margin-left: $(leftMargin)px;
+    # margin: auto;
+    width: $(cellWidth)px;
 }
 </style>
 Widening cell

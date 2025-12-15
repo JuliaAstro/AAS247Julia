@@ -50,7 +50,7 @@ Julia automatically creates a default constructor function:
 
 ```julia
 function MyType(a::Integer, b::Integer)
-	new(a, b)
+    new(a, b)
 end
 ```
 
@@ -58,7 +58,7 @@ Now assume the second argument `b` is often `0`, then we can define a function o
 
 ```julia
 function MyType(a::Integer, b::Integer=0)
-	MyType(a, b)
+    MyType(a, b)
 end
 ```
 
@@ -131,31 +131,31 @@ Functors are nameless functions. They are defined by their argument type, usuall
 # ╔═╡ 0c5d2b23-fb2b-4ce0-a7fc-e706eafd7751
 md"""
 !!! note "Summary"
-	* Abstract types allow you to write functions for specific set of types.
-	* Julia create a new version of the function based on the argument types.
-	* Functions can be used to simplify composite type constructors.
-	* Julia is not an object-oriented language, but is behaves like one.
-	* Functors are nameless functions that use the composite type for dispatch.
+    * Abstract types allow you to write functions for specific set of types.
+    * Julia create a new version of the function based on the argument types.
+    * Functions can be used to simplify composite type constructors.
+    * Julia is not an object-oriented language, but is behaves like one.
+    * Functors are nameless functions that use the composite type for dispatch.
 """
 
 # ╔═╡ b2df24b4-8557-444c-8946-00b2ddf9fab6
 md"""
 !!! danger "Problems"
-	Solution are hidden below each problem.
+    Solution are hidden below each problem.
 """
 
 # ╔═╡ 2d156a39-9fa7-4c16-9fcb-beccfd318c03
 md"""
 ### Problem 1: A function with one abstract type
 !!! warning ""
-	* Create a function having one argument being an abstract float type.
-	* Use the function with a `Float64` (double precision) type, e.g., `1.0`
-	* Use the function with a `Float32` (single precision) type, e.g., `1.0f0`.
-	  * Note: the `f` means Float32, whereas `e` means Float64.
-	* How many methods does it have?
-	  * Hint: use the `methods()` function, e.g., `methods(myfunc)`.
-	* Use the function with a `BigFloat` type
-	* How many methods are there now?
+    * Create a function having one argument being an abstract float type.
+    * Use the function with a `Float64` (double precision) type, e.g., `1.0`
+    * Use the function with a `Float32` (single precision) type, e.g., `1.0f0`.
+      * Note: the `f` means Float32, whereas `e` means Float64.
+    * How many methods does it have?
+      * Hint: use the `methods()` function, e.g., `methods(myfunc)`.
+    * Use the function with a `BigFloat` type
+    * How many methods are there now?
 """
 
 # ╔═╡ 660de134-abd4-4fd5-af7f-0f78f1e23727
@@ -167,9 +167,9 @@ md"""
 md"""
 ### Problem 2: A function with two abstract types
 !!! warning ""
-	* Create a `add` function having two arguments, the first being an abstract float and the second an abstract integer.
-	* Use the function with float and integer arguments.
-	* Use the function with integer and float arguments. What happens?
+    * Create a `add` function having two arguments, the first being an abstract float and the second an abstract integer.
+    * Use the function with float and integer arguments.
+    * Use the function with integer and float arguments. What happens?
 """
 
 # ╔═╡ d9c9c0c8-6484-4c95-9949-656a5de83762
@@ -181,10 +181,10 @@ md"""
 md"""
 ### Problem 3: A constructor function
 !!! warning ""
-	* Create a composite type with two fields.
-	* Instantiate the type.
-	* Create a function of the same name having a default second argument.
-	* Use the function with one and two arguments.
+    * Create a composite type with two fields.
+    * Instantiate the type.
+    * Create a function of the same name having a default second argument.
+    * Use the function with one and two arguments.
 """
 
 # ╔═╡ 94952bbc-8e78-4daa-9186-b4d87ffb1697
@@ -245,7 +245,7 @@ timestamp = Dates.format(today(), dateformat"d u Y")
 # ╔═╡ 70c42e39-490a-4fc2-acfc-c4c0553a4e1e
 """
 !!! note "$(notebook_name)"
-	**Last Updated: $(timestamp)**
+    **Last Updated: $(timestamp)**
 """ |> Markdown.parse
 
 # ╔═╡ Cell order:

@@ -19,13 +19,13 @@ using Dates, PlutoUI
 
 # ╔═╡ 6001288a-7a9d-4020-bf7d-02a0fa250c04
 begin
-	notebook_name = "1-1: Introduction"
-	timestamp = string("Last updated: ", Dates.format(today(), dateformat"d u Y"))
+    notebook_name = "1-1: Introduction"
+    timestamp = string("Last updated: ", Dates.format(today(), dateformat"d u Y"))
 
-	"""
-	!!! note "$(notebook_name)"
-		**$(timestamp)**
-	""" |> Markdown.parse
+    """
+    !!! note "$(notebook_name)"
+        **$(timestamp)**
+    """ |> Markdown.parse
 end
 
 # ╔═╡ 38ead816-0375-4605-a833-6464485aa0d6
@@ -202,7 +202,7 @@ julia> String(take!(io))
 ```
 
 !!! note
-	Pluto has a **Live docs** tab in the lower right corner that will display the current Julia function or command. The **Help**, **Shell**, and **Package Manager** examples require the REPL, i.e., running Julia in a terminal.
+    Pluto has a **Live docs** tab in the lower right corner that will display the current Julia function or command. The **Help**, **Shell**, and **Package Manager** examples require the REPL, i.e., running Julia in a terminal.
 
 ---
 """
@@ -428,7 +428,7 @@ md"""
 The variable β's value now has an associated error and unit.
 
 !!! note
-	Some care must be taken when using Greek characters to not override their predefined values. For example, π is the constant π, ie., 3.1415926... .
+    Some care must be taken when using Greek characters to not override their predefined values. For example, π is the constant π, ie., 3.1415926... .
 
 ```julia
 π
@@ -568,9 +568,9 @@ Create three large arrays.
 
 ```julia
 begin
-	xlarge = rand(2^20)
-	ylarge = rand(2^20)
-	outlarge = rand(2^20)
+    xlarge = rand(2^20)
+    ylarge = rand(2^20)
+    outlarge = rand(2^20)
 end
 ```
 
@@ -584,9 +584,9 @@ md"""
 Now let's load our array onto the GPU. For CUDA:
 ```julia
 begin
-	xlarge_gpu   = cu(xlarge)
-	ylarge_gpu   = cu(ylarge)
-	outlarge_gpu = cu(outlarge)
+    xlarge_gpu   = cu(xlarge)
+    ylarge_gpu   = cu(ylarge)
+    outlarge_gpu = cu(outlarge)
 end
 ```
 
@@ -624,9 +624,9 @@ md"""
 
     * Julia packages are **composable**. It means that independent packages are compatible and work together without modification, as demonstrated by the `Measurements` and `Unitful` packages.
 
-	* Julia can perform symbolic manipulation using the `Symbolics` package.
+    * Julia can perform symbolic manipulation using the `Symbolics` package.
 
-	* Julia can perform calculations on the GPU without resorting to compiled languages such as C/C++.
+    * Julia can perform calculations on the GPU without resorting to compiled languages such as C/C++.
 """
 
 # ╔═╡ 11645d9e-637b-47c4-b2e6-8c4a7d9747cb
