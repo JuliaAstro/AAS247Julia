@@ -208,11 +208,11 @@ md"""
 ### Problem 4: Object-oriented behaviour
 !!! warning ""
     * `import Base.*`
-	* Create a 2D point type
+    * Create a 2D point type
       * Hint: `struct Point{R} x::R, y::R end`
     * Create a variable using the Point type
     * Create add function for the Point type
-      * Hint: function +(a, b)
+      * Hint: `function +(a, b)`
     * Add the two points together
     * Create a norm function for the Point type
     * Evaluate the norm for a point
@@ -227,9 +227,9 @@ md"""
 md"""
 ### Problem 5: Functors
 !!! warning ""
-	* Create a polynomial type
+    * Create a polynomial type
     * Create a function to evaluate the polynomial at a value x
-      * Hint: use the sum() function and an array comprehension
+      * Hint: use the `sum()` function and an array comprehension
     * Create the polynomial
     * Evaluate the polynomial
 """
