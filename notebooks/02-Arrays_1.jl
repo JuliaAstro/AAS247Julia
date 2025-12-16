@@ -28,9 +28,6 @@ using PlutoUI, HypertextLiteral, Revise
 # ╔═╡ 624bd571-c51e-4f52-848b-7cdefebbd42a
 using Dates
 
-# ╔═╡ f7cd76de-4427-4dc3-9d12-9931b27a2956
-md" [Julia Markdown Doc](https://docs.julialang.org/en/v1/stdlib/Markdown)"
-
 # ╔═╡ e133c0fe-39b7-400e-9e20-f7506603e17d
 md" ##### Begin New Coding Here"
 
@@ -399,9 +396,8 @@ begin
 end
 
 # ╔═╡ Cell order:
-# ╟─f7cd76de-4427-4dc3-9d12-9931b27a2956
 # ╟─e984391b-0c01-4dc8-85aa-3593027e8530
-# ╠═b3c88a20-d092-40e8-9e01-95f093048318
+# ╟─b3c88a20-d092-40e8-9e01-95f093048318
 # ╟─e133c0fe-39b7-400e-9e20-f7506603e17d
 # ╟─b28ecc8b-c27f-4446-961d-a187f28cf97a
 # ╟─2675d602-810c-4320-971c-902c3327a5cb
