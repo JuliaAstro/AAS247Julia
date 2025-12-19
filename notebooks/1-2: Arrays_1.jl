@@ -27,7 +27,7 @@ md" ##### Begin New Coding Here"
 
 # ╔═╡ b28ecc8b-c27f-4446-961d-a187f28cf97a
 md"""
-### 0. Array Topics
+# 0. Array Topics
 !!! note ""
 	Julia is built for high-performance scientific computing, and at the heart of that is its array implementation. Understanding how Julia thinks about arrays will make your code simpler, more readable, and fast.
 
@@ -51,7 +51,7 @@ md"""
 
 # ╔═╡ 2675d602-810c-4320-971c-902c3327a5cb
 md"""
-### 1. Multidimensional Arrays
+# 1. Multidimensional Arrays
 In Julia, an array is a collection of objects stored in a multi-dimensional grid.
 
 1. A 1D array is a Vector, i.e., as a single list or column of numbers.
@@ -65,7 +65,7 @@ We interact with these using square brackets `[]` for indexing, e.g., `A[2]` get
 
 # ╔═╡ 346cb64d-3c89-44d1-9edb-06354152243a
 md"""
-### 2. The Julia "Mathematics Protocol"
+# 2. The Julia "Mathematics Protocol"
 
 Julia's arrays behave differently from arrays in languages like Python, C, or Java. Julia's design follows the conventions of mathematics and linear algebra, which has two major consequences.
 
@@ -106,7 +106,7 @@ end
 
 # ╔═╡ 11832b60-4906-4d22-960b-0b16b6634011
 md"""
-### 3. Array Creation
+# 3. Array Creation
 1. You can create arrays with functions like `zeros(2, 3)` or `rand(3, 3)`. But for literal arrays, we use `[]` with two simple rules:
 
    1. Commas (`,`) separate elements in a 1D Vector.
@@ -165,7 +165,7 @@ end
 
 # ╔═╡ d5268417-62f9-4fa8-beac-c4d4b9007223
 md"""
-### 4. Array Broadcasting (The Dot: "`.`")
+# 4. Array Broadcasting (The Dot: "`.`")
 This is arguably the most important feature for clean, fast array code.
 
 What if you have a vector `A = [1, 2, 3]` and you want to add 1 to every element? Or what if you want to multiply every element in an array by its corresponding element in another array?
@@ -181,7 +181,7 @@ You can "dot" any function, including your own: `my_function.(my_array)`.
 # ╔═╡ 8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
 md"""
 
-### 5. Array Fusion (Performance vs. Python)
+# 5. Array Fusion (Performance vs. Python)
 This is where the magic happens. What happens if you chain multiple "dotted" operations?
 
 ```julia
@@ -215,7 +215,7 @@ end
 
 # ╔═╡ 65151aba-d946-401d-8cca-1874f38146f2
 md"""
-### 6. Matrix Multiplication (`*`)
+# 6. Matrix Multiplication (`*`)
 We just learned that `A .* B` is the element-wise product.
 
 So, how do we do standard, linear algebra matrix multiplication?
@@ -248,7 +248,7 @@ md"""
 
 # ╔═╡ f4c82ed6-bfb7-4600-b9c6-b29627de74f4
 md"""
-## Problems
+# Problems
 """
 
 # ╔═╡ 974bb44d-420c-460d-b626-707909568554
@@ -259,7 +259,7 @@ md"""
 
 # ╔═╡ e3b1c6c2-5631-42c0-9a1b-d5a5520466c8
 md"""
-### Problem 1: Creation and Indexing (Column-Major)
+## 1: Creation and Indexing (Column-Major)
 !!! warning ""
 	1. Create a 3×3 matrix named `M` containing the numbers 1 through 9. Important: The numbers should fill the matrix column-by-column (i.e., 1, 2, 3 should be in the first column).
 	   - Hint: The function `reshape(A, rows, cols)` is your friend here. Try `reshape(1:9, 3, 3)`.
@@ -270,7 +270,7 @@ md"""
 
 # ╔═╡ ff17e921-4522-4ab3-8282-9d9aafecdbe9
 md"""
-### Problem 2: Broadcasting and Fusion
+## 2: Broadcasting and Fusion
 !!! warning ""
 	1. Create a 1D vector `x` containing five evenly spaced points from 0 to $\pi$, inclusive.
 	   - Hint: `pi` is a built-in constant. The `range()` function might be useful: `range(start, stop, length)`. Or just type it manually.
@@ -282,7 +282,7 @@ md"""
 
 # ╔═╡ 23069d06-9d74-4a39-912e-e6372ac03abb
 md"""
-### Problem 3: Array Creation and Slicing
+## 3: Array Creation and Slicing
 !!! warning ""
 	1. Create a 4×2 matrix named `A` containing the numbers 1-8, filling by columns. (Again, `reshape` is great for this).
 	1. Create a 1D Vector named `v` containing the elements 10, 20, 30 using comma (`,`) syntax.
@@ -294,7 +294,7 @@ md"""
 
 # ╔═╡ e022f21e-7f18-4690-99d4-0141403b3b38
 md"""
-### Problem 4: Matrix Math vs. Element-wise Math
+## 4: Matrix Math vs. Element-wise Math
 !!! warning ""
 	1. Create two 2×2 matrices:
 	   - `X = [1 2; 3 4]`
@@ -307,7 +307,7 @@ md"""
 
 # ╔═╡ 1416a80e-dbda-4185-8984-7f5de3c58f02
 md"""
-### Problem 5: Broadcasting and Fusion
+## 5: Broadcasting and Fusion
 !!! warning ""
 	1. Create three 1D vectors, `a`, `b`, and `c`, each of length 4.
 	   - `a = [1.0, 2.0, 3.0, 4.0]`
@@ -320,7 +320,7 @@ md"""
 
 # ╔═╡ cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
 md"""
-### Problem 6: Column-Major Thinking (A Thought Experiment)
+## 6: Column-Major Thinking (A Thought Experiment)
 !!! warning ""
 	1. Imagine you have a 10,000 × 10,000 matrix called `DATA`.
 	1. You need to write a for loop to calculate the sum of every element in the second column. (One might use the `size` command.)
@@ -330,7 +330,7 @@ md"""
 
 # ╔═╡ 75a587fc-cd2d-4205-bd2e-8fc770a63dcf
 md"""
-## Notebook setup
+# Notebook setup
 """
 
 # ╔═╡ dbb04803-2fc3-4455-99e6-ac78360a200f
