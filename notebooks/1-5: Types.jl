@@ -20,7 +20,7 @@ end
 md"""
 # Type Declarations
 
-Similar to Python, Julia will infer the type of a variable based on its value. For example, `1.0` is a 64-bit floating pointing value (Float64), `"hello!"` is a string (String), and `[1, 2, 3]` is a one-dimensional integer array (Vector{Int64}). If Julia cannot infer the type, then it will be assigned a type of `Any`.
+Similar to Python, Julia will infer the type of a variable based on its value. For example, `1.0` is a 64-bit floating pointing value (of type Float64), `"hello!"` is a string (of type String), and `[1, 2, 3]` is a one-dimensional integer array (of type Vector{Int64}). If Julia cannot infer the type, then it will be assigned a type of `Any`.
 
 In many cases, such as simple data analysis, letting Julia infer the type is fine. However, in cases where high performance is needed, such as the analysis of large datasets or complex numerical simulations, using type annotations is preferable, because it ensures that the compiler has sufficient information to know the types of all variables and therefore, generate highly optimized machine code.
 
@@ -36,7 +36,7 @@ Julia uses a type hierarchy that defines the relations between different types.
 * For example, the `Signed` type has the **subtypes**: `Int8`, `Int16`, Int32`, Int64`, `Int128`, and `BigInt`.
 * Alternatively, the `Signed` type is the **supertype** of `Int8`, `Int16`, `Int32`, ...
 
-Julia's type hierarchy is similar to the concept of inheritance in object-oriented (OO) languages. However, it is only associated with types, not with methods or function of an OO language.
+Julia's type hierarchy is similar to the concept of inheritance in object-oriented (OO) languages. However, it is only associated with types, not with methods or functions of an OO language.
 """
 
 # ╔═╡ 97ba81c9-bb21-4cb6-94a8-99f52e6535ca
@@ -48,11 +48,11 @@ Julia has various classes of types, namely:
 ## Concrete
 * Are types that can be instantiated or created.
 * Concrete types cannot have subtypes.
-* E.g., `zero(Float64)`, `one(Int32)`
+* E.g., `Float64`, `Int32`
 
 ## Non-concrete
 * Are types that cannot be instantiated.
-* E.g., `Integer`
+* E.g., `Integer`, `AbstractArray`
 
 ---
 
@@ -70,7 +70,7 @@ Julia has various classes of types, namely:
 ## Parametric
 * Are qualified types.
 * Can be concrete types.
-* E.g., `Vector{Int34}`, `Array{Int64, 3}`, `MyType{Float32}`, ...
+* E.g., `Vector{Int32}`, `Array{Int64, 3}`, `MyType{Float32}`, ...
 
 ## Composite
 * Are heterogeneous types.
@@ -79,19 +79,28 @@ Julia has various classes of types, namely:
 * The fields can be annotated.
 * Can be parametric types.
 * E.g.,
-```
+```julia
 	struct Foo
 		bar
 		baz::Int
-		qux:: Float64
+		qux::Float64
 	end
+```
+
+Or
+
+```julia
+	struct Bar{R} where R<:Real
+		barb::R
+		bazb::R
+		qux::String
 ```
 
 ## Singleton
 * Are types with only one instance.
 * Are Composite types with no fields.
 * Are concrete types.
-* E.g., `Nothing` or `Missing`
+* E.g., `Nothing`, `Missing`
 
 ## Union
 * Are unions of types.
@@ -108,7 +117,7 @@ md"""
 
 The `<:` or `>:` operators are subtype operators. They return a boolean value when comparing two types. For example, `SubType <: SuperType`.
 
-The related `isa` operator returns a boolean value when `x` is of type `T`. For example, `isa(1, Int)` or `1 isa Int`.
+The related `isa` operator returns a boolean value when value `x` is of type `T`. For example, `isa(1, Int)` or `1 isa Int`.
 """
 
 # ╔═╡ b344fb14-7a78-4893-ae10-bc8d8026fc63
@@ -121,7 +130,7 @@ md"""
     * Abstract types cannot be instantiated.
     * Primitive types can be instantiated.
     * Primitive types are at the bottom of the hierarchy.
-	  - I.e., they have a supertype, but not subtypes.
+	  - I.e., they have a supertype, but no subtypes.
     * Composite types are structs or a group of related types.
     * Types can have parameters.
 """
@@ -191,26 +200,27 @@ md"""
 md"""
 ## 5: Type Comparisons
 
-* Test if `1` is an `Integer` type.
-  - Hint: Use the `isa` operator.
-* Test if `1` is a `Signed` type.
-* Test if `1` is an `AbstractFloat` type.
-* Test if `1` is a `Real` type.
-* Test if `1.0` is a `Float64` type.
-* Test if `1f0` is a `Float64` type.
-  - What is `1f0`?
-* Test if `Int32` is a `Signed` type.
-  - Hint: Use the `<:` operator.
-* Test if `UInt64` is a `Signed` type.
-* Test if `1` is a `Signed` type without using the `isa` operator.
-  - Hint: Use the `typeof()` function.
-* Test if `[1, 2, 3]` is a `Vector` type.
-* Test if `[1, 2, 3]` is a `Matrix` type.
-* Test if `[1, 2, 3]` is an `AbstractArray` type.
-* Test if `[1.0, 2.0, 3.0]` is a `Vector{Float64}` type.
-* Test if `[1f0, 2f0, 3f0]` is a `Vector{Float64}` type.
-* Test if `[1f0, 2f0, 3f0]` is a `Vector{Float32}` type.
-* Test if `[1f0, 2f0, 3f0]` is a `Vector{<:AbstractFloat}`
+!!! warning ""
+	* Test if `1` is an `Integer` type.
+	  - Hint: Use the `isa` operator.
+	* Test if `1` is a `Signed` type.
+	* Test if `1` is an `AbstractFloat` type.
+	* Test if `1` is a `Real` type.
+	* Test if `1.0` is a `Float64` type.
+	* Test if `1f0` is a `Float64` type.
+	  - What is `1f0`?
+	* Test if `Int32` is a `Signed` type.
+	  - Hint: Use the `<:` operator.
+	* Test if `UInt64` is a `Signed` type.
+	* Test if `1` is a `Signed` type without using the `isa` operator.
+	  - Hint: Use the `typeof()` function.
+	* Test if `[1, 2, 3]` is a `Vector` type.
+	* Test if `[1, 2, 3]` is a `Matrix` type.
+	* Test if `[1, 2, 3]` is an `AbstractArray` type.
+	* Test if `[1.0, 2.0, 3.0]` is a `Vector{Float64}` type.
+	* Test if `[1f0, 2f0, 3f0]` is a `Vector{Float64}` type.
+	* Test if `[1f0, 2f0, 3f0]` is a `Vector{Float32}` type.
+	* Test if `[1f0, 2f0, 3f0]` is a `Vector{<:AbstractFloat}`
 """
 
 # ╔═╡ 847fd889-a8da-4a9c-829d-b899e8446d82

@@ -4,237 +4,233 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ 157fdc89-ff6f-4e6c-99b0-fc952daa24ef
+# ╔═╡ fd7dfb64-279e-415d-9fa7-09ac2229e38a
 begin
-	using Markdown, Dates, PlutoUI, InteractiveUtils
-	TableOfContents(title = "1-3: Arrays 2", depth = 4)
+	using Dates, PlutoUI, HypertextLiteral
+	TableOfContents(title = "2-1: Calling Python", depth = 4)
 end
 
-# ╔═╡ d046592d-9786-4675-b8bd-26848fcb6a50
+# ╔═╡ 24a6f370-224b-4cb4-8350-f60c99300b35
 """
-!!! note "1-3: Arrays 2"
+!!! note "2-1: Calling Python"
     **Last Updated: $(Dates.format(today(), dateformat"d u Y"))**
 """ |> Markdown.parse
 
-# ╔═╡ 5c45b5c1-d4c7-40e5-b765-9917078b715f
+# ╔═╡ 4c788b44-77e1-11ed-0ce7-5914857ba421
 md"""
-# Slice Operator
+# Calling Python from Julia
 
-The slice operators are `b:e` and `b:s:e`, where `b`, `s`, and `e` are the beginning, step, and ending values. The step (or three value) variation differs slightly from the Python syntax of `b:e:s`.
+Julia has two packages for calling Python code from Julia: PyCall & PythonCall. PyCall has an easier learning curve, but has a few limitations. Whereas, PythonCall has better performance, because it is more complete and allows for more control.
 
+Both packages have symmetric interfaces, so the user can call Python from Julia and Julia from Python. This session will only focus on calling Python from Julia.
+"""
+
+# ╔═╡ f0c6b09d-8b64-4175-aacd-6b3ac72078f6
+md"""
+# PyCall & PyJulia
+
+This session assumes that the PyCall package has already been added using the package manager and invoked using the `using` statement.
+
+## PyCall String Macros
+
+The easiest way to call Python from Julia is to use string macros. There are two variations: the single-line, single-quote variation `py"..."` and the multi-line triple-quote vatiation `py\"""...\"""`.
+
+For example:
+
+```julia-repl
+julia> py"x = arange(1,100)"
+
+julia> py"y = sin(3 * x + 4 * cos(2 * x))"
+
+```
+
+Or
+
+```julia-repl
+julia> py\"""
+x = arange(1,100)
+y = sin(3 * x + 4 * cos(2 * x))
+\"""
+```
+
+## Built-In Python Packages
+
+Like Python, built-in Python packages are required to be imported: 
+
+```julia-repl
+julia> math = pyimport("math")
+```
+
+They can then be used to perform calculations using more complex functions:
+
+```julia-repl
+julia> math.sin(math.pi /4)
+```
+
+## Python Site Packages
+
+Site packages, such as the `matplotlib.pyplot` package, also require importing the package. This can be done using the `pyimport_conda` function.
+
+In the following example, the `x` and `y` values are calculated using Julia and are plotted using Python.
+
+```julia-repl
+julia> let
+	plt = pyimport_conda("matplotlib.pyplot", "matplotlib")
+	x = range(0; stop=2pi, length=1000)
+	y = sin.(3 .* x + 4 .* cos.(2. * x))
+	plt.plot(x, y, color="red", linewidth=2.0, linestyle="--")
+	plt.savefig("plt_example.png")
+	LocalResource("plt_example.png")
+end
+```
 !!! note
-	Originally, Python did not have the three value slice operator. It only had the two value operator. Therefore, when the three value operator was added, it was made to be backward compatible with the two value version.
-
-The slice operator is also an **iterator** and can be used to generate an array of values. It does not generate the array until a value is requested. For example:
-
-```julia-repl
-julia> 1:2:10
-1:2:9
-```
-!!! note
-	The slice operator calculates the begin and end values, but does not generate an array. It just returns itself. This behavior means that a value is only created or returned when needed.
+	If `matplotlib.pyplot` fails because `matplotlib` hasn't been installed, then it will automatically install `matplotlib`, which may take a few minutes. It may also be necessary to retry importing the package a second time.
 """
 
-# ╔═╡ 2788d2f9-a6b9-4169-85c9-014e5dd565bc
+# ╔═╡ ac1d7b07-27b7-4d81-90f0-73d43fb1285f
 md"""
-# Array and Tuple Comprehensions
+# PythonCall & JuliaCall
 
-In Julia, much like in Python, you can use **comprehensions** to create arrays. The syntax is borrowed from set-builder notation in mathematics, where you can define new sets from existing ones, e.g.:
-```math
-E = \{2n \mid n ∈ \mathbb{Z} \},
-```
-where ``\mathbb{Z}`` is the set of all integers, and so ``E`` is the set of all even numbers.
+The section also assumes that PythonCall has been added and invoked using the package manager and the `using` statement.
 
-In Julia, the comprehension syntax is similar to Python
-```julia-repl
-julia> [... for x in myarray]
-```
-or
-```julia-repl
-julia> [... for x=myarray]
-```
-For example,
-```julia-repl
-julia> [x^2 for x in 1:10]
-[1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
-```
-where `x_arr` doesn't necessarily have to be an array itself, it can be any iterable object, such as a Tuple or Slice (i.e., `1:2:10`).
+## Python Macros
 
-Or,
+PythonCall has a similar feature to PyCall's Python string. It has the Python macro that can be used to evaluate Python expressions and return them as Python objects.
+
+For Example:
 
 ```julia-repl
-julia> Tuple(2n for n=1:10)
-(2, 4, 6, 8, 10, 12, 14, 16, 18, 20)
-```
-
-Array comprehensions can contained multiple and nested `for` loops.
-
-A multiple `for` loop with a ',' will create a multi-dimensional array:
-
-```julia-repl
-julia> [(j, k) for j=1:2, k=1:4]
-2×4 Matrix{Tuple{Int64, Int64}}:
- (1, 1)  (1, 2)  (1, 3)  (1, 4)
- (2, 1)  (2, 2)  (2, 3)  (2, 4)
-```
-
-And a nested `for` loop without a ',' will create a one dimensional array:
-
-```julia-repl
-julia> [(j, k) for j=1:2 for k=1:4]
-8-element Vector{Tuple{Int64, Int64}}:
- (1, 1)
- (1, 2)
- (1, 3)
- (1, 4)
- (2, 1)
- (2, 2)
- (2, 3)
- (2, 4)
-```
-
-There ia also Tuple comprehension. Its syntax is similar to the array comprehension, except the `[]` is replaced by Tuple(). And, of course, they are limited to one dimension.
-
-```julia-repl
-julia> Tuple((j, k) for j=1:2 for k=1:4)
-((1, 1), (1, 2), (1, 3), (1, 4), (2, 1), (2, 2), (2, 3), (2, 4))
-```
-"""
-
-# ╔═╡ 7a634fe5-2a4e-4abd-90c8-5a4da31bba1e
-md"""
-# Comprehensions and `if`
-
-We can also filter out elements by using a conditional after the statement part. The following two examples calculates the squares of the even and odd numbers respectively from 1 to 10:
-
-```julia-repl
-julia> [x^2 for x in 1:10 if x%2 == 0]
-[4, 16, 36, 64, 100]
-```
-
-and
-
-```julia-repl
-julia> [x^2 for x=1:10 if isodd(x)]
-[1, 9, 25, 49, 81]
-```
-
-Of course, this syntax also applies to Tuples.
-
-The built-in `filter()` function is also an option.
-"""
-
-# ╔═╡ bfa7975e-f206-4179-93eb-e0236855c981
-md"""
-# Array Indexing and Slicing
-
-Indexing an array is similar to Python array syntax, e.g.,
-
-```julia-repl
-julia> A = [1 2 3 4; 5 6 7 8]
-2×4 Matrix{Int64}:
- 1  2  3  4
- 5  6  7  8
-
-julia> A[1,3]
-3
-```
-
-The slice operator can be used to create subarrays of an equal or larger array. A colon by itself can be used as a shortcut for all indices of a dimension. The `end` word can be used into indicate the last index of an array dimension. It must be used if the beginning and step values are given. The ending index cannot be larger than largest index of a dimension. Otherwise, there will be an error.
-
-```julia-repl
-julia> A[1,1:3]
-3-element Vector{Int64}:
- 1
- 2
- 3
-
-julia> A[:,1:2:end]
-2×2 Matrix{Int64}:
- 1  3
- 5  7
-```
-
-A multiple dimensional array can be treated as a flattened or one dimensional array by using a single slice operator, e.g.:
-
-```julia-repl
-julia> A[1:2:end]
-4-element Vector{Int64}:
- 1
- 2
- 3
- 4
+julia> @py x = 1
 ```
 
 !!! note
-	In the previous example, one iterates down the column first, then the row.
-"""
+	PythonCall macros are considered experimental and may possibly be removed in a future version.
 
-# ╔═╡ d1e8e027-ce75-4cee-bbbd-f977e7c4d442
-md"""
-# Array Masking Using a Boolean Array
+## Python Objects
 
-In addition to slicing arrays, subarrays can be created using boolean arrays. For example, a subarray of all values between 6 and 10 can be created by using comparison operators.
+The usual syntax for interacting with Python is via Python objects, which are Julia types that represent Python objects. In the following example, `re`, `words`, and `sentence` are Python objects and the execution is done in Python. Only in the last `pyconvert` statement is the Python string converted to a Julia String.
 
 ```julia-repl
-julia> B = collect(1:20);
-
-julia> B[6 .<= B .<= 10]
-9-element Vector{Int64}:
-  6
-  7
-  8
-  9
- 10
+julia> begin
+	re = PythonCall.pyimport("re")
+	words = re.findall("[a-zA-Z]+", "PythonCall.jl is great")
+	sentence = Py(" ").join(words)
+	pyconvert(String, sentence)  # convert Python string to Julia string
+end
 ```
 
-!!! note
-	Comparison operators can be chained, i.e., they do not need to be separated by a boolean operator.
+## Wrapper Types
+
+A wrapper is a Julia type that wraps a Python object, but gives it Julia semantics. For example, the PyList type wraps Python's list object. In the following example, all of the execution is in Julia. Compare to the previous example.
+
+```julia-repl
+julia> begin
+	x = pylist([3,4,5])
+	y = PyList{Union{Nothing, Int64}}(x)
+	push!(y, nothing)
+	append!(y, 1:2)
+	x
+end
+```
+
+There are wrappers for other container types, such as PyDict and PySet.
+
+```julia-repl
+julia> let
+	x = PythonCall.pyimport("array").array("i", [3,4,5])
+	y = PythonCall.PyArray(x)
+	println(sum(y))
+	y[1] = 0
+	x
+end
+```
+
+PyArray directly wraps the underlying data buffer, so array operations such as indexing are about as fast as an ordinary Array.
 """
 
-# ╔═╡ b59e0ee5-2496-4b7c-a6b0-a06f1ebada24
+# ╔═╡ 7535b82b-67f2-4ef2-9b91-d8151e0bce16
+md"""
+# Configuration
+
+PyCall and PythonCall can be used in the same Julia session on Unix (Linux, OS X, etc.) as long as the same interpreter is used for both. On Windows, it appears separate interpreters can be used.
+
+To use the same interpreter for PyCall and PythonCall, several environment variables must be set before adding the package. Otherwise, the package will need to be rebuilt.
+
+## Configuring PythonCall
+
+By default importing the module will initialize a conda environment in your Julia environment, install Python into it, load the corresponding Python library, and initialize an interpreter.
+
+## Using your current Python installation
+
+```julia-repl
+julia> ENV["JULIA_CONDAPKG_BACKEND"] = "Null"
+julia> ENV["JULIA_PYTHONCALL_EXE"] = "/path/to/python"   # optional
+julia> ENV["JULIA_PYTHONCALL_EXE"] = "@PyCall"   # optional
+```
+
+By setting the CondaPkg backend to Null, no Conda packages will be installed. PythonCall will use your current Python installation.
+
+If Python is not in your `PATH`, you will need to set the `JULIA_PYHTHONCALL_EXE` environment variable to include it in your path.
+
+If you also use PyCall, you can set the `JULIA_PYTHONCALL_EXE` environment variable to use the same interpreter.
+
+## Using your current Conda environment
+
+```julia-repl
+julia> ENV["JULIA_CONDAPKG_BACKEND"] = "Current"
+julia> ENV["JULIA_CONDAPKG_EXE"] = "/path/to/conda"   # optional
+```
+
+Note that this configuration will still install any required Conda packages into your Conda envirnment.
+
+If `conda`, `mamba`, and `micromamba` are not in your `PATH` you will need to set `JULIA_CONDAPKG_EXE` to include them.
+
+## Using your current Conda, Mamba, and MicroMamba environment
+
+```julia-repl
+julia> ENV["JULIA_CONDAPKG_BACKEND"] = "System"
+julia> ENV["JULIA_CONDAPKG_EXE"] = "/path/to/conda"   # optional
+```
+
+The System backend will use your preinstalled Conda environment.
+
+## Installing Python packages
+
+Assuming you are using `CondaPkg.jl`, PythonCall uses it to automatically install any Python packages. For example,
+
+```julia-repl
+julia> using CondaPkg
+
+julia> ] # enter package manager
+
+pkg> conda add some_package
+```
+"""
+
+# ╔═╡ ab31c637-f1fd-4e7d-981a-5d06319c1314
 md"""
 # Summary
-
-!!! info ""
-	* Arrays and Tuples can be created by embedding a `for` loop within brackets or parentheses. This is called an array or tuple comprehension.
-	* comprehensions can include an if statement.
-	* Comprehensions can contain nested `for` loops.
-	* Subarrays can be created by using the slice operator or a boolean array.
+!!! note ""
+	* Two packages are available for calling Python from Julia and Julia from Python.
+	* PyCall provides an easy way to call Python.
+	* PythonCall provides more features and greater performance.
+	* Both packages use `CondaPkg.jl` to install and maintain Python packages.
+    * Calling Python from Julia can provide functionality not currently available in Julia.
+    * Calling Julia from Python can provide a way to improve the performance of critical Python code.
+	* Calling Julia from Python can provide a way to incrementally migrate Python to Julia.
 """
 
-# ╔═╡ 68240605-d3c1-4ba0-b938-a1785d466456
+# ╔═╡ 6d943185-2305-4d44-9007-3fc63a84f987
 md"""
 # Problems
 !!! tip "Remember that you can get help either through `?` in a REPL or with "Live Docs" right here in Pluto (lower right-hand corner)"
 """
 
-# ╔═╡ 59e1b957-ec35-48ba-8349-216750ead10f
+# ╔═╡ 68a1de02-8b0f-4b83-9f7d-965508791e94
 md"""
-## 1. A Simple Identity matrix
+## 1: Install PythonCall
 !!! warning ""
-	* Create a 10x10 identity matrix I1 using nested `for` loops.
-	  * Hint: use `reshape()` to convert a 1D array to a 2D array.
-	* Create a 10x10 identity matrix I2 using multiple `for` loops.
-      * Hint: use the tertiary operator: ` <comparison> ? <true value> : <false value>`
-	* Display the size of the identity matrix I2.
-	  * Hint: use `sizeof(I2)`
-"""
-
-# ╔═╡ 90b215d2-733e-4a7c-a9f6-f2d3c6ef3cd5
-md"""
-## 2. A LinearAlgebra.jl Identity Matrix
-
-!!! warning ""
-	* Add the LinearAlgebra package.
-	* Create a 10x10 identity matrix I3 using the LinearAlgebra package.
-	* Display the size of the identity matrix I3
-"""
-
-# ╔═╡ cee1d2fd-cea3-4fbf-bdd6-1d0286f84f69
-md"""
-## 3. Cartesian indexing
-!!! warning ""
+	* Install the PythonCall package.
 	* 
 """
 
@@ -242,11 +238,11 @@ md"""
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
-InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
-Markdown = "d6f4376e-aef5-505a-96c1-9c027394607a"
+HypertextLiteral = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
+HypertextLiteral = "~0.9.5"
 PlutoUI = "~0.7.77"
 """
 
@@ -256,7 +252,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.12.3"
 manifest_format = "2.0"
-project_hash = "97fd6d5108c03ab30fcf42eda928f7525bf6da7f"
+project_hash = "f749cd606c6cd84ecc39dc356399db0dd53ab1ce"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -517,17 +513,14 @@ version = "17.7.0+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─d046592d-9786-4675-b8bd-26848fcb6a50
-# ╟─5c45b5c1-d4c7-40e5-b765-9917078b715f
-# ╟─2788d2f9-a6b9-4169-85c9-014e5dd565bc
-# ╟─7a634fe5-2a4e-4abd-90c8-5a4da31bba1e
-# ╟─bfa7975e-f206-4179-93eb-e0236855c981
-# ╟─d1e8e027-ce75-4cee-bbbd-f977e7c4d442
-# ╟─b59e0ee5-2496-4b7c-a6b0-a06f1ebada24
-# ╟─68240605-d3c1-4ba0-b938-a1785d466456
-# ╟─59e1b957-ec35-48ba-8349-216750ead10f
-# ╟─90b215d2-733e-4a7c-a9f6-f2d3c6ef3cd5
-# ╟─cee1d2fd-cea3-4fbf-bdd6-1d0286f84f69
-# ╟─157fdc89-ff6f-4e6c-99b0-fc952daa24ef
+# ╟─24a6f370-224b-4cb4-8350-f60c99300b35
+# ╟─4c788b44-77e1-11ed-0ce7-5914857ba421
+# ╟─f0c6b09d-8b64-4175-aacd-6b3ac72078f6
+# ╟─ac1d7b07-27b7-4d81-90f0-73d43fb1285f
+# ╟─7535b82b-67f2-4ef2-9b91-d8151e0bce16
+# ╟─ab31c637-f1fd-4e7d-981a-5d06319c1314
+# ╟─6d943185-2305-4d44-9007-3fc63a84f987
+# ╠═68a1de02-8b0f-4b83-9f7d-965508791e94
+# ╟─fd7dfb64-279e-415d-9fa7-09ac2229e38a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

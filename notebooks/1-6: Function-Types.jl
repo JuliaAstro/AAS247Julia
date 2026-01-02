@@ -18,7 +18,7 @@ end
 
 # ╔═╡ 2614efc4-c4a5-11f0-b6f8-5fb2b6ceb0de
 md"""
-# Let Julia write and compile the code
+# Let Julia Do It
 
 Let's assume that we have to write a function `myfunc` to do some data analysis. The function has one argument `a`. It has the same implementation for all floating point data types.
 
@@ -28,17 +28,17 @@ Let's assume that we have to write a function `myfunc` to do some data analysis.
 
 * For Julia, only one version of the function is needed, assuming the argument type is an `AbstractFloat`, i.e., `myfunc(a::AbstractFloat)`
 
-`AbstractFloat` tells Julia to only allow floating point types for the argument. Integers are not allowed. A new version of the function is compiled for each new data type. Thus, the user only needs to write **one version** of the function. Julia will create new versions of the function for each new argument type when needed.
+`AbstractFloat` tells Julia to only allow floating point types for the argument. `Integer`s or `String`s are not allowed. A new version or method of the function is compiled for each new data type. Thus, the user only needs to write **one version** of the function. Julia will create new versions of the function for each new argument type when needed.
 
-This feature makes Julia a very productive language by reducing the number of lines of code that need to be written. Julia is typically twice as productive as Python and ten times as productive as C/C++ without loss of performance.
+This feature makes Julia a very productive language by reducing the number of lines of code that need to be written. Julia is typically twice as productive as Python and ten times as productive as C/C++ with similar or better performance.
 
 !!! note
-	Productivity is inversely proporational to the number of lines of code. Fewer lines results in greater productivity.
+	Productivity is inversely proportional to the number of lines of code. Fewer lines of code result in greater productivity.
 """
 
 # ╔═╡ dbf2d122-5751-447e-9a6b-6997fe9a07fc
 md"""
-# Constructor functions
+# Constructor Functions
 
 Functions can be constructors for composite types. Assume a composite type `MyType` has two fields `a` and `b`:
 
@@ -55,6 +55,12 @@ Julia automatically creates a default constructor function:
 function MyType(a::Integer, b::Integer)
     new(a, b)
 end
+```
+
+with usage of:
+
+```julia
+MyType(1, 3)
 ```
 
 Now assume the second argument `b` is often `0`, then we can define a function of the same name with the second argument having a default value of `0`.
@@ -74,9 +80,9 @@ MyType(1)
 
 # ╔═╡ bcc0cb23-ea14-477c-8e3c-2c04d7fd00d8
 md"""
-# Object-oriented behaviour
+# Object-Oriented Behaviour
 
-Object-oriented languages tightly couple the class (or composite type) and the method (or function). This is achieved via single dispatch, which means that only the first argument is used to detemine which function to call or execute. Python is a good example of a single dispatch language.
+Object-oriented languages tightly couple the class (or composite type) and the method (or function). This is achieved via **single dispatch**, which means that only the first argument is used to detemine which function to call or execute. Python is a good example of a single dispatch language.
 
 * For Python, the method may look like the following, where `self` is the class (composite type):
   ```python
@@ -87,7 +93,7 @@ Object-oriented languages tightly couple the class (or composite type) and the m
   self.mymethod(a, b)
   ```
 
-Julia loosely couples composite types (classes) and functions (methods) because of multiple dispatach, which means that all arguments are used to determine which function to call or execute. Therefore, Julia is not an object-oriented language.
+Julia loosely couples composite types (classes) and functions (methods) because of **multiple dispatach**, which means that all positional arguments, or type signature, are used to determine which function to call or execute. Therefore, Julia is not an object-oriented language.
 
 * For Julia, the function may look like the following, where `mytype` is the composite type (class):
 

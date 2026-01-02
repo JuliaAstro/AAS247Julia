@@ -24,7 +24,7 @@ end
 md"""
 # Historical Context
 
-Twenty-nine years ago at the Astronomical Data Analysis Software and Systems (ADASS) VI meeting (1996), Harrington and Barrett hosted a Birds-of-a-Feather session entitled [Interactive Data Analysis Environments](https://www.cv.nrao.edu/adass/adassVI/harringtonj.html). Based on their review of [21 interpreted programming languages](https://htmlpreview.github.io/?https://github.com/barrettp/AAS245Julia/blob/main/Interactive%20Data%20Analysis%20Environments.html) such as Glish, GUILE, IDL, IRAF, Matlab, Perl, Python, and Tcl; they recommended that Python be considered the primary language for astronomical data analysis. The primary reasons were that the language was simple to learn, yet powerful; well supported by the programming community; and had FORTRAN-like arrays. However, for good performance, the multi-dimensional arrays needed to be written in a compiled language, namely C. So Numerical or Scientific Python suffers from the **two language problem**: an interpreted language for interactive use and a compiled language for performance.
+Nearly thirty years ago at the Astronomical Data Analysis Software and Systems (ADASS) VI meeting (1996), Harrington and Barrett hosted a Birds-of-a-Feather session entitled [Interactive Data Analysis Environments](https://www.cv.nrao.edu/adass/adassVI/harringtonj.html). Based on their review of [21 interpreted programming languages](https://htmlpreview.github.io/?https://github.com/barrettp/AAS245Julia/blob/main/Interactive%20Data%20Analysis%20Environments.html) such as Glish, GUILE, IDL, IRAF, Matlab, Perl, Python, and Tcl; they recommended that Python be considered the primary language for astronomical data analysis. The primary reasons were that the language was simple to learn, yet powerful; well supported by the programming community; and had FORTRAN-like arrays. However, for good performance, the multi-dimensional arrays needed to be written in a compiled language, namely C. So Numerical or Scientific Python suffers from the **two language problem**: an interpreted language for interactive use and a compiled language for performance.
 """
 
 # ╔═╡ 95cfbabc-5e7c-481b-853c-6d06baa577b6
@@ -33,13 +33,10 @@ md"""
 
 In 2009, four faculty and staff members[^1] at MIT, who were not satisfied with the state of scientific computing, decided to develop a general purpose, high performance, scientific programming language. After ten years of development, they release Julia Version 1.0 on August 8, 2018. Their aim was to create an open-source interpreted language that was concise, extensible, and high performance.
 
-!!! info
+!!! info "Jeff Bezanson, 2012"
 	We are greedy.
 	
 	We want a language that's open source, with a liberal license. We want the speed of C with the dynamism of Ruby. We want a language that's homoiconic, with true macros like Lisp, but with obvious, familiar mathematical notation like Matlab. We want something as usable for general programming as Python, as easy for statistics as R, as natural for string processing as Perl, as powerful for linear algebra as Matlab, as good at gluing programs together as the shell. Something that is dirt simple to learn yet, keeps the most serious hackers happy. We want it interactive and we want it compiled.
-
-	(Jeff Bezanson, 2012)
-
 
 [^1]: [Alan Edelman](https://math.mit.edu/~edelman/), Professor of Applied Mathematics and Computer Science, MIT; [Viral B. Shah](https://en.wikipedia.org/wiki/Viral_B._Shah), Co-Founder, Chief Executive Officer (CEO), JuliaHub; [Jeff Bezanson](https://en.wikipedia.org/wiki/Jeff_Bezanson), Co-Founder, Chief Technology Officer (CTO), JuliaHub; [Stefen Karpinski](https://karpinski.org/), Co-Founder, Chief Product Officer (CPO), JuliaHub
 """
@@ -60,7 +57,7 @@ md"""
 md"""
 ## Why Have I migrated to Julia?
 
-Although an early advocate and developer of Numerical Python (now NumPy), Matplotlib, and PyFits (now astropy.io.fits), I knew its limitations, namely, the two language problem. Therefore, once a better scientific programming language came along, I was prepared to migrate to that language. I believe that **Julia is that language.** It is the language that I envisioned thirty years ago.
+Although an early advocate and developer of Numerical Python (now NumPy), Matplotlib, and PyFits (now astropy.io.fits), I knew its limitations, namely, the **two language problem**. Therefore, once a better scientific programming language came along, I was prepared to migrate to that language. I believe that **Julia is that language.** It is the language that I envisioned thirty years ago.
 """
 
 # ╔═╡ b1ed2c4e-f5fa-4e5e-87d8-7af6f80a83ca
@@ -100,7 +97,7 @@ julia>
 md"""
 ## Stopping Julia
 
-To exit Julia, enter `<Ctrl-D>` or `exit()`
+To exit Julia, enter `<Ctrl-D>`, like Python, or `exit()`
 
 ```julia-repl
 julia> <Ctrl-D>
@@ -118,8 +115,8 @@ md"""
 
 Our first command:
 
-```julia
-println("Hello World")
+```julia-repl
+julia> println("Hello World")
 ```
 """
 
@@ -133,8 +130,8 @@ md"""
 
 Our first calculation
 
-```julia
-a = 4
+```julia-repl
+julia> a = 4
 ```
 """
 
@@ -142,16 +139,16 @@ a = 4
 
 
 # ╔═╡ 27208179-35c3-43c1-9548-3620c8aa7680
-md"""```julia
-b = 2
+md"""```julia-repl
+julia> b = 2
 ```"""
 
 # ╔═╡ 40d8d18c-3713-4e77-812d-9d77a4e1ac50
 
 
 # ╔═╡ aa3e9db7-49d1-40f8-b745-6c4faa2197e1
-md"""```julia
-a + b
+md"""```julia-repl
+julia> a + b
 ```"""
 
 # ╔═╡ 8eb9630a-44b2-4ac8-b243-0c2ce5b16f50
@@ -161,7 +158,7 @@ a + b
 md"""
 # Other REPL Modes
 
-The Julia REPL supports several different modes, outlined below, accessible by a keystroke. Hit the `delete` or `backspace` key to return to the normal `julia>` REPL.
+The Julia REPL supports several different modes, outlined below, accessible by a keystroke. Hit the `delete` or `backspace` key to return to the REPL.
 
 ---
 """
@@ -235,7 +232,7 @@ pkg>
 For package manager help,
 
 ```julia-repl
-pkg> ? `return`
+pkg> ? <return>
 ```
 
 returns a brief summary of package commands.
@@ -248,9 +245,9 @@ pkg> add <package>
 pkg> add <package1>, <package2>
 ```
 
-When adding a package, the Julia online repository (aka the "registry") will be searched. The package and its dependencies will then be downloaded, compiled, and installed. This may take anywhere from a few seconds to a few minutes depending on the size of the package and its dependencies.
+When adding a package, the Julia online repository (aka the "registry" or "General Registry") will be searched. The package and its dependencies will then be downloaded, compiled, and installed. This may take anywhere from a few seconds to a few minutes depending on the size of the package and its dependencies.
 
-To use or load a package (after it has been added):
+To use or load a package (after it has been added), return to the REPL:
 
 ```julia-repl
 julia> using <package>
@@ -258,7 +255,8 @@ julia> using <package>
 julia> using <package1>, <package2>
 ```
 
-A feature of the `using` command is that it will add the package, if it hasn't already been added.
+!!! note
+	A feature of the `using` command is that it will add the package, if it hasn't already been added.
 """
 
 # ╔═╡ b27578b2-f5f5-4e46-82e6-0007be187ba6
@@ -314,8 +312,8 @@ md"""
 
 The [Measurements.jl](https://juliaphysics.github.io/Measurements.jl/stable/) package enables variables to have both values and errors. Let's add Measurements using the `using` statement:
 
-```julia
-using Measurements
+```julia-repl
+julia> using Measurements
 ```
 """
 
@@ -326,8 +324,8 @@ using Measurements
 md"""
 Let's do some calculations.
 
-```julia
-m1 = measurement(4.5, 0.1)
+```julia-repl
+julia> m1 = measurement(4.5, 0.1)
 ```
 """
 
@@ -337,8 +335,8 @@ m1 = measurement(4.5, 0.1)
 # ╔═╡ 094b6f30-cbd6-46b1-8e0c-3fdb1ef18261
 md"""Typing `measurements` is rather awkward. There must be a better way. How about the following?
 
-```julia
-m2 = 15 ± 0.3
+```julia-repl
+julia> m2 = 15 ± 0.3
 ```
 
 where the plus-minus character is entered using LaTeX syntax followed by tab, i.e., `\pm<tab>`.
@@ -352,8 +350,8 @@ where the plus-minus character is entered using LaTeX syntax followed by tab, i.
 md"""
 One of the features of Julia is that it understands unicode. For example, expressions in a printed document that contain greek characters can be entered as greek characters in your code, e.g., `\alpha<tab>`. Let's calculate the following expression:
 
-```julia
-α = m1 + m2
+```julia-repl
+julia> α = m1 + m2
 ```
 """
 
@@ -375,8 +373,8 @@ md"""
 
 Let's add another package called [Unitful.jl](https://juliaphysics.github.io/Unitful.jl/stable/), which enables attaching units to variables:
 
-```julia
-using Unitful
+```julia-repl
+julia> using Unitful
 ```
 """
 
@@ -387,8 +385,8 @@ using Unitful
 md"""
 Now let's create a velocity `m3` with attached units:
 
-```julia
-m3 = (32 ± 0.1)u"m/s"
+```julia-repl
+julia> m3 = (32 ± 0.1)u"m/s"
 ```
 """
 
@@ -399,8 +397,8 @@ m3 = (32 ± 0.1)u"m/s"
 md"""
 Let's create a duration `m4` with attached units:
 
-```julia
-m4 = (9.8 ± 0.3)u"s"
+```julia-repl
+julia> m4 = (9.8 ± 0.3)u"s"
 ```
 """
 
@@ -411,8 +409,8 @@ m4 = (9.8 ± 0.3)u"s"
 md"""
 Let's calculate `β` by multiplying `m3` and `m4`:
 
-```julia
-β = m3 * m4
+```julia-repl
+julia> β = m3 * m4
 ```
 """
 
@@ -425,24 +423,18 @@ md"""
 The variable β's value now has an associated error and unit.
 
 !!! note
-    Some care must be taken when using Greek characters to not override their predefined values. For example, π is the constant π, ie., 3.1415926... .
+    Some care must be taken when using Greek characters to not override their predefined values. For example, π is the predefined constant π, ie., 3.1415926... .
 
-```julia
-π
+```julia-repl
+julia> π
 ```
-"""
 
-# ╔═╡ d961b128-bd38-40dd-8942-da6b7c150c42
-md"""
 And 2π is the constant 2π:
 
-```julia
-2π
+```julia-repl
+julia> 2π
 ```
-"""
 
-# ╔═╡ 56f7266f-507f-403c-9875-4aa8f9bb04aa
-md"""
 !!! note
     As in the case of `2π`, the multiplication operator is inferred from the context and is not necessary. There cannot be a space between the number and variable.
 
@@ -455,8 +447,8 @@ md"""
 
 Let's see if this works with one dimensional arrays or vectors:
 
-```julia
-γ = [10 ± 0.1, 20 ± 0.2, 30 ± 0.3]u"m/s" .* [15 ± 0.01, 25 ± 0.02, 25 ± 0.03]u"s"
+```julia-repl
+julia> γ = [10 ± 0.1, 20 ± 0.2, 30 ± 0.3]u"m/s" .* [15 ± 0.01, 25 ± 0.02, 25 ± 0.03]u"s"
 ```
 
 Note the dot '`.`' before the multiplication character '`*`'.  This means element-wise multiplication, whereas the multiplication character '`*`' by itself means matrix multiplication. If you are coming from Python, this difference may take a little time to get used to.
@@ -470,16 +462,13 @@ md"""
 See the [dot syntax](https://docs.julialang.org/en/v1/manual/functions/#man-vectorized) section of the Julia manual for more.
 
 ---
-"""
 
-# ╔═╡ 3e8ee79c-c315-4c19-88ad-9b58caa86c40
-md"""
 ## Symbolics
 
 Julia can also do symbolic manipulation. We will need the [Symbolics.jl](https://docs.sciml.ai/Symbolics/stable/) package for this and [Latexify.jl](https://korsbo.github.io/Latexify.jl/stable) for optional pretty printing in the notebook:
 
-```julia
-using Symbolics, Latexify
+```julia-repl
+julia> using Symbolics, Latexify
 ```
 """
 
@@ -490,14 +479,12 @@ using Symbolics, Latexify
 md"""
 We will use rotation matrices as an example, where `Rx`, `Ry`, and `Rz` are rotations about the ``x``, ``y``, and ``z``-axes:
 
-```julia
-begin
-    Rx(θ) = [1. 0. 0.; 0. cos(θ) sin(θ); 0. -sin(θ) cos(θ)]
+```julia-repl
+julia> Rx(θ) = [1. 0. 0.; 0. cos(θ) sin(θ); 0. -sin(θ) cos(θ)]
 
-    Ry(θ) = [cos(θ) 0. -sin(θ); 0. 1. 0.; sin(θ) 0. cos(θ)]
+julia> Ry(θ) = [cos(θ) 0. -sin(θ); 0. 1. 0.; sin(θ) 0. cos(θ)]
 
-    Rz(θ) = [cos(θ) sin(θ) 0.; -sin(θ) cos(θ) 0.; 0. 0. 1.]
-end
+julia> Rz(θ) = [cos(θ) sin(θ) 0.; -sin(θ) cos(θ) 0.; 0. 0. 1.]
 ```
 """
 
@@ -508,8 +495,8 @@ end
 md"""
 Now create symbolic variables for the three equatorial precession angles: `z`, `θ`, and `ζ` defined by *Lieske et al. (1977)*:
 
-```julia
-@variables z, θ, ζ
+```julia-repl
+julia> @variables z, θ, ζ
 ```
 """
 
@@ -520,13 +507,18 @@ Now create symbolic variables for the three equatorial precession angles: `z`, `
 md"""
 Let's see what the rotation matrix looks like for the three-angle formulation of the precession matrix:
 
-```julia
-Rz(-z)Ry(θ)Rz(-ζ)
+```julia-repl
+julia> Rz(-z)Ry(θ)Rz(-ζ)
 ```
 """
 
 # ╔═╡ 856a6279-6354-48de-85ca-c5638be68c9e
 
+
+# ╔═╡ 481ffbf7-d2b9-44cd-9f18-834e1344f977
+md"""
+Replacing the symbolic variables, `z`, `θ`, and `ζ` with numerical values in the above precession formula will return a numerical result.  The rotation matrices work without needing any changes for both numerical and symbolic variables.
+"""
 
 # ╔═╡ 5767f17a-a101-4e02-b4f6-b11ee777882b
 md"""
@@ -539,20 +531,14 @@ md"""
 
 Depending on the GPU that your laptop has, you will need to load one of the following packages:
 
-```julia
-using CUDA                 # for NVIDIA
-```
+```julia-repl
+julia> using CUDA                 # for NVIDIA
 
-```julia
-using oneAPI               # for Intel (linux only)
-```
+julia> using oneAPI               # for Intel (linux only)
 
-```julia
-using AMDGPU               # for AMD
-```
+julia> using AMDGPU               # for AMD
 
-```julia
-using Metal                # Apple Silicon, i.e., M1-4 Mac
+julia> using Metal                # Apple Silicon, i.e., M1-4 Mac
 ```
 """
 
@@ -563,12 +549,12 @@ using Metal                # Apple Silicon, i.e., M1-4 Mac
 md"""
 Create three large arrays.
 
-```julia
-begin
-    xlarge = rand(2^20)
-    ylarge = rand(2^20)
-    outlarge = rand(2^20)
-end
+```julia-repl
+julia> xlarge = rand(2^20)
+
+julia> ylarge = rand(2^20)
+
+julia> outlarge = zero(xlarge)
 ```
 
 """
@@ -578,33 +564,50 @@ end
 
 # ╔═╡ b186c2fa-0ce2-4941-a9fa-a055de7f4ebf
 md"""
-Now let's load our array onto the GPU. For CUDA:
-```julia
-begin
-    xlarge_gpu   = cu(xlarge)
-    ylarge_gpu   = cu(ylarge)
-    outlarge_gpu = cu(outlarge)
-end
+Let's load our array onto the GPU. For CUDA:
+```julia-repl
+
+julia> xlarge_gpu   = cu(xlarge)
+
+julia> ylarge_gpu   = cu(ylarge)
+
+julia> outlarge_gpu = cu(outlarge)
 ```
 
 For other GPU providers replace `cu` with:
-```julia
-ROCArray(xlarge)              # AMD
+```julia-repl
+julia> ROCArray(xlarge)              # AMD
+
+julia> oneArray(xlarge)              # Intel
+
+julia> MtlArray(xlarge)              # Apple Silicon
 ```
-```julia
-oneArray(xlarge)              # Intel
-```
-```julia
-MtlArray(xlarge)              # Apple Silicon
+
+And add them together.
+
+```julia-repl
+julia> outlarge_gpu .= xlarge_gpu .+ ylarge_gpu
 ```
 """
 
 # ╔═╡ ec8dbfe4-15f2-41f6-93be-48486c2bf8fb
 
 
+# ╔═╡ 61e2fed6-b5e1-4a13-b8af-441ae3484cbb
+md"""
+Then tranfer the result back to RAM.
+
+```julia-repl
+julia> outlarge .= Array(outlarge_gpu)
+```
+"""
+
+# ╔═╡ 73c36af8-cf09-4058-bac2-b6394dcc555b
+
+
 # ╔═╡ da2c5d76-2dd3-4f1c-834e-11189793c56f
 md"""
-For more on GPU programming in Julia, see the [JuliaGPU website](https://juliagpu.org/).
+For more information about GPU programming in Julia, see session *2-4: Parallel-Computing* and the [JuliaGPU website](https://juliagpu.org/).
 """
 
 # ╔═╡ 8401d5df-ccb5-4c98-a952-6d71b7a74fa8
@@ -619,11 +622,14 @@ md"""
 
     * Julia understands **unicode**.
 
-    * Julia packages are **composable**. It means that independent packages are compatible and work together without modification, as demonstrated by the `Measurements` and `Unitful` packages.
+	* Julia is a **concise** language and therefore very **productive**.
 
-    * Julia can perform symbolic manipulation using the `Symbolics` package.
+    * Julia packages are **composable**.
+	  - I.e., independent packages are compatible and work together without modification.
 
-    * Julia can perform calculations on the GPU without resorting to compiled languages such as C/C++.
+    * Julia can perform **symbolic manipulation**.
+
+    * Julia can perform **GPU calculations** without resorting to C/C++.
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -998,7 +1004,7 @@ version = "17.7.0+0"
 # ╔═╡ Cell order:
 # ╟─6001288a-7a9d-4020-bf7d-02a0fa250c04
 # ╟─38ead816-0375-4605-a833-6464485aa0d6
-# ╠═95cfbabc-5e7c-481b-853c-6d06baa577b6
+# ╟─95cfbabc-5e7c-481b-853c-6d06baa577b6
 # ╟─8e597a38-6e41-499f-af06-f9223b8827de
 # ╟─1cc401a1-6d3a-40e5-a4fc-012caa913369
 # ╟─b1ed2c4e-f5fa-4e5e-87d8-7af6f80a83ca
@@ -1037,12 +1043,9 @@ version = "17.7.0+0"
 # ╟─c07f9493-b867-485b-87f2-50348bb9eaa6
 # ╠═70f08712-002c-4adc-84b1-73a8655d8a44
 # ╟─6cc63679-6352-4ffa-ae6a-3066431cfd10
-# ╟─d961b128-bd38-40dd-8942-da6b7c150c42
-# ╟─56f7266f-507f-403c-9875-4aa8f9bb04aa
 # ╟─cf4a0e8f-9210-4f1e-84d4-ee7ff09aaf61
 # ╠═fdba7211-e480-4948-8435-76a7608e7e63
 # ╟─1f90de4b-790b-41f8-9a7b-3a54e9fff472
-# ╟─3e8ee79c-c315-4c19-88ad-9b58caa86c40
 # ╠═94d323b9-554f-4620-8900-da7c89ad338d
 # ╟─746e3dae-4bbb-410b-899f-ef95c8afb1b0
 # ╠═d7169595-d401-4fab-8554-d25e3b367583
@@ -1050,13 +1053,16 @@ version = "17.7.0+0"
 # ╠═8f5f7d12-38eb-49c9-90c6-81d27eda13fe
 # ╟─1b9553dd-149c-4e48-aacf-10d6ca4756c2
 # ╠═856a6279-6354-48de-85ca-c5638be68c9e
+# ╟─481ffbf7-d2b9-44cd-9f18-834e1344f977
 # ╟─5767f17a-a101-4e02-b4f6-b11ee777882b
 # ╟─f80f1bdd-5147-4a6c-8280-09329ed6dba1
 # ╠═d308df6b-14ec-49ec-8270-a3b9efd88517
 # ╟─cfc57dc3-bb97-4bf2-99e8-241e3f552f1e
 # ╠═d7ecfac4-8b9b-4b4b-b258-429f417380cc
-# ╟─b186c2fa-0ce2-4941-a9fa-a055de7f4ebf
+# ╠═b186c2fa-0ce2-4941-a9fa-a055de7f4ebf
 # ╠═ec8dbfe4-15f2-41f6-93be-48486c2bf8fb
+# ╟─61e2fed6-b5e1-4a13-b8af-441ae3484cbb
+# ╠═73c36af8-cf09-4058-bac2-b6394dcc555b
 # ╟─da2c5d76-2dd3-4f1c-834e-11189793c56f
 # ╟─8401d5df-ccb5-4c98-a952-6d71b7a74fa8
 # ╟─7c4ebc32-9b8e-4b2a-8f39-f4c351283843

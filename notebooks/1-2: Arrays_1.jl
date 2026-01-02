@@ -32,7 +32,7 @@ We interact with these using square brackets `[]` for indexing, e.g., `A[2]` get
 
 # ╔═╡ 346cb64d-3c89-44d1-9edb-06354152243a
 md"""
-# The Julia "Mathematics Protocol"
+# Matrix Protocol
 
 Julia's arrays behave differently from arrays in languages like Python, C, or Java. Julia's design follows the conventions of mathematics and linear algebra, which has two major consequences.
 
@@ -40,32 +40,42 @@ Julia's arrays behave differently from arrays in languages like Python, C, or Ja
 
    The first element of an array is at index 1.
 
+
    1. `my_vector[1]` is the first element.
+
 
    2. `my_matrix[1, 1]` is the top-left element.
 
    Python and C use 0-based indexing (where `my_array[0]` is the first element). This 1-based system may be more intuitive for mathematicians and scientists who are used to notation such as ``A_{ij}``, where $i$ and $j$ start at 1.
 
+
 2. Column-Major Order
 
    This is one secret to Julia's performance. It describes how arrays are physically laid out in your computer's memory.
 
-   1. Row-major order (used by Python's NumPy, C): Elements of a row are grouped together in memory. The computer stores [row1, row2, row3].
 
-   2. Column-major order (used by Julia, MATLAB, Fortran): Elements of a column are grouped together. The computer stores [col1, col2, col3].
+   1. Row-major order: Elements of a row are grouped together in memory. The computer stores [row1, row2, row3] (e.g., used by NumPy and C)
+
+
+   2. Column-major order: Elements of a column are grouped together. The computer stores [col1, col2, col3]. (used by e.g., Julia, MATLAB, and FORTRAN)
 
 Why does this matter? Accessing memory that is close together is typically much faster (due to CPU caching) than accessing memory that is spread out.
 
 In Julia, this means that looping down a column, i.e., through the rows, is fast.
 
-``` julia
-# Accessing memory sequentially is better, e.g.,
-for j in 1:numCols
+```julia-repl
+julia> for j in 1:numCols
 	for i in 1:numRows
+		# Accessing memory sequentially is better, e.g.,
 		A[i, j] ...
 	end
 end
 ```
+
+!!! note
+	`#` character begins a single comment, i.e., the comment string is between the `#` character and the newline character.
+
+	`#=` and `=#` is a string block that can span multiple lines.
 """
 
 # ╔═╡ 11832b60-4906-4d22-960b-0b16b6634011
@@ -74,77 +84,155 @@ md"""
 
 ## Functions
 
-You can create arrays with functions like `zeros(2, 3)` or `rand(3, 3)`. But for literal arrays, we use `[]` with two simple rules:
+You can create arrays with functions like `zeros(2, 3)` or `rand(3, 3)`, where the integers in parentheses specify the dimensions.
 
-   1. Commas (`,`) separate elements in a 1D Vector.
-   2. Spaces separate elements in a row (i.e., new columns).
+## Array Literals
+
+For literal arrays, we use `[]` with two simple rules:
+
+1. Commas (`,`) signify a 1D column Vector.
+2. Spaces ( ) signify a 1D row Vector or a 1×N Matrix.
+
+```julia-repl
+julia> x = [1., 2., 3.]
+3-element Vector{Float64}:
+ 1.0
+ 2.0
+ 3.0
+
+julia> y = [1. 2. 3.]
+1×3 Matrix{Float64}:
+ 1.0  2.0  3.0
+```
 
 ## Semicolon Syntax
 
 Semicolons (`;`) separate rows.
 
-The four following examples show array creation.
+The four following examples show array creation:
+
+1: A 1D Vector (using commas) produces a 3-element Vector{Int64}:
+
+```julia-repl
+julia> v = [1, 2, 3]
+3-element Vector{Int64}:
+ 1
+ 2
+ 3
+```
+
+2: A 2D Matrix (using spaces for columns and semicolons for rows) produces a 2×3 Matrix{Int64}:
+
+```julia-repl
+julia> m = [1 2 3; 4 5 6]
+2×3 Matrix{Int64}:
+ 1  2  3
+ 4  5  6
+```
+
+A 1x3 Row Vector (Matrix) produces a 1×3 Matrix{Int64}:
+```julia-repl
+julia> row_vec = [1 2 3]
+1×3 Matrix{Int64}:
+ 1  2  3
+```
+
+A 3x1 Column Vector (Matrix) produces a 3×1 Matrix{Int64}:
+
+```julia-repl
+julia> col_vec = [1; 2; 3]
+3-element Vector{Int64}:
+ 1
+ 2
+ 3
+```
+
 !!! note ""
 	`[1, 2, 3]`, with commas, gives a 1D Vector, while `[1; 2; 3]`, with semicolons, gives a 2D, 3×1 Matrix. The 1D Vector is "dimensionless" and often acts like a column vector in math operations, which is very convenient.
 
-1: A 1D Vector (using commas) produces a 3-element Vector{Int64}, `v = [1, 2, 3]`, yields"
+## Array Elements
+
+Array elements do not need to be homogeneous. They can be heterogeneous, meaning that they can have any type. For example:
+
+```julia-repl
+julia> a = [1, 2f0, "three", :four, nothing, missing]
+4-element Vector{Any}:
+ 1
+ 2.0f0
+  "three"
+  :four
+  nothing
+  missing
+```
+
+!!! note
+	The `nothing` value is of type `Nothing` and is synonymous with Python's `none` object. The `missing` value is of type `Missing` and means that the value is missing. Statistical functions will ignore the `missing` value during computations, unlike the `nothing` value, so the results will be statistically correct.
 """
 
-# ╔═╡ 5a1ad46c-d500-4762-920f-812ebff350e4
-begin
-	v = [1, 2, 3]
-	display(v)
-	println()
-	println("typeof(v) = $(typeof(v)))")
-end
+# ╔═╡ 21190213-dc6e-4206-b516-338d5922b30e
+md"""
+# Tuple Creation
 
-# ╔═╡ f542c713-f23d-4d9d-a271-e54d77c600d3
-md"2: A 2D Matrix (using spaces for columns and semicolons for rows) produces a 2×3 Matrix{Int64}: `m = [1 2 3; 4 5 6]` yields "
+Like Python, Julia has Tuples. Tuples differ from arrays in two aspects:
 
-# ╔═╡ 40481932-af01-4981-8911-e6e35121ff9e
-begin
-	m = [1 2 3; 4 5 6]
-	display(m)
-	println()
-	println("typeof(m) =  $(typeof(m))")
-end
+1. A Tuple is **immutable**. That means that once created the values cannot be changed.
+2. A Tuple is **one-dimensional**.
+2. A Tuple is **non-allocating**. Therefore, they have better performance that Arrays.
 
-# ╔═╡ 35a57b0a-87c6-448a-a3a9-5a8abca24bfd
-md"3: A 1x3 Row Vector (Matrix) produces a 1×3 Matrix{Int64}: `row_vec = [1 2 3]` yields"
+## Tuple Literals
 
-# ╔═╡ 8e2946d7-bdd1-4c87-9831-2b4bf2d53a0f
-begin
-	row_vec = [1 2 3]
-	display(row_vec)
-	println()
-	println("typeof(row_vec) = ", typeof(row_vec))
-end
+Literal tuples are create by using `()` (paratheses) whose elements are separated by '`,`' (commas). For example:
 
-# ╔═╡ 1d9f1425-ea25-4392-b681-9660217d25d2
-md"4: A 3x1 Column Vector (Matrix) produces a 3×1 Matrix{Int64}: `col_vec = [1; 2; 3]` yields"
+```julia-repl
+julia> t = (1, 2., "three")
+(1, 2.0, "three")
 
-# ╔═╡ 3230a371-8901-41a0-8bd8-36965851eaca
-begin
-	col_vec = [1; 2; 3]
-	display(col_vec)
-	println()
-	println("typeof(col_vec) = ", typeof(col_vec))
-end
+julia> typeof(t)
+Tuple{Int64, Float64, String}
+```
+
+## NamedTuples
+
+Julia also has a named tuple type. They are basically identical to Tuples, except that the elements can have names or labels by preceeding the value with a character or string and an '`=`' (equal sign). For example:
+
+```julia-repl
+julia> n = (a=1, b=2, c="three")
+(a = 1, b = 2, c = "three")
+```
+
+There is also a syntatic variation the begins with '`(;`' (parenthesis - semi-colon).
+
+```julia-repl
+julia> n = (; a=1, b=2, c="three")
+(a = 1, b = 2, c = "three")
+```
+
+Tuples and NamedTuples can also be created using the `Tuple` and `NamedTuple` types. See the help documents for details.
+"""
 
 # ╔═╡ d5268417-62f9-4fa8-beac-c4d4b9007223
 md"""
-# Array Broadcasting ( `.` Operator)
+# Broadcasting ( `.` Operator)
 
-This is arguably the most important feature for clean, fast array code.
+This is arguably the most important feature for clean, fast code using arrays or tuples.
+
+## Arrays
 
 What if you have a vector `A = [1, 2, 3]` and you want to add 1 to every element? Or what if you want to multiply every element in an array by its corresponding element in another array?
 
-The dot (`.`) operator tells Julia: "Apply this operation to _every single element_ of the array." We call using the dot operator "broadcasting".
+The dot (`.`) operator tells Julia: "Apply this operation to _every single element_ of the array." The dot operator is called the **broadcast** operation. As we will see in session 1-4, it applies to more than just arrays.
 
- 1. `A .+ 1` means `[A[1]+1, A[2]+1, A[3]+1]` $\rightarrow$ `[2, 3, 4]`
- 2. `A .* B` means element-by-element multiplication.
+1. `A .+ 1` means `[A[1]+1, A[2]+1, A[3]+1]` $\rightarrow$ `[2, 3, 4]`
+2. `A .* B` means element-by-element multiplication.
 
-You can "dot" any function, including your own: `my_function.(my_array)`.
+## Tuples
+
+The broadcast operator also applies to Tuples. For example:
+
+```julia-repl
+julia> (1, 2, 3) .+ (4, 5, 6)
+(5, 7, 9)
+```
 """
 
 # ╔═╡ 8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
@@ -154,33 +242,38 @@ md"""
 
 This is where the magic happens and the power of Juila. What happens if you chain multiple "dotted" operations?
 
-```julia
-A = rand(1000)
-B = rand(1000)
-C = rand(1000)
-D = A .* B .+ C
+```julia-repl
+julia> A = rand(1000)
+julia> B = rand(1000)
+julia> C = rand(1000)
+julia> D = A .* B .+ C
 ```
-Let's compare how Python (with NumPy) and Julia handle this.
+Let's compare how Python (sp., Numpy) and Julia compare.
 
-In Python (NumPy): `D = A * B + C`
+In Python: `D = A * B + C`
 
-1. Python first calculates `T = A * B`. It creates a new temporary array `T` in memory to store this result.
-2. Then, it calculates `D = T + C`. It creates the final array `D`.
-3. This took two passes over the data and allocated a temporary array `T` of 1000 elements, which is then thrown away. This is slow and memory-intensive.
+1. Python first calculates `T = A * B`, where `T` is a temporary array to store the result of the multiplication.
+2. It then calculates the final array `D = T + C`.
+3. This took two passes over the data and allocated a temporary array `T` of N-elements, which is then discarded. Allocating memory, especially large amounts of memory (say ~ GBs) signifantly impacts performance and may result in the calculation returning an "Out of memory" error.
 
 In Julia: `D = A .* B .+ C`
 
 1. Julia sees the "chain of dots" and performs loop fusion.
 2. It knows you want to do `D[i] = A[i] * B[i] + C[i]` for every element.
-3. It compiles this down to a single, efficient for-loop:
+3. It compiles this down to a single, performant for-loop that elimanates the need for the temporary array `T`.
 
-```julia
-# This is what Julia effectively runs:
-D = similar(A) # Allocate D *once*
-for i in 1:length(A)
+The above array expression is effectively:
+
+```julia-repl
+julia> # This is what Julia effectively runs:
+julia> D = similar(A) # Allocate D *once*
+julia> for i in 1:length(A)
 	D[i] = A[i] * B[i] + C[i]
 end
 ```
+
+!!! note
+	In Julia, the array expression can also benefit from vectorization or single-instruction-multiple-data (SIMD), where a single operation is simultaneously applied to multiple data. This will be discussed in more detail in session *2-4: Parallel-Computating*. It can also benefit from vector pipelining, where the multiply and add operations are performed simultaneously and in succession. That is, the multiplication operation is performed first on multiple values and the result is followed by the addition operation on multiple values. While the addition operation is being performed, the next multiplication operation is done, resulting in a multiplication-addition pipeline.
 """
 
 # ╔═╡ 65151aba-d946-401d-8cca-1874f38146f2
@@ -189,62 +282,52 @@ md"""
 
 We just learned that `A .* B` is the element-wise product.
 
-So, how do we do standard, linear algebra matrix multiplication?
+So, how is matrix multiplication performed, as in linear algebra?
 
 We use the asterisk (`*`) operator without the dot.
 """
 
 # ╔═╡ 116911ed-cc32-41ea-a495-a3117815d669
 md"""
+```julia-repl
+julia> A = [1 2; 3 4]
+2×2 Matrix{Int64}:
+ 1  2
+ 3  4
+
+julia> B = [5 6; 7 8]
+2×2 Matrix{Int64}:
+ 5  6
+ 7  8
 ```
-A = [1 2; 3 4]
+
+Element-wise multiplication
+
+```julia-repl
+julia> C = A .* B
+2×2 Matrix{Int64}:
+  5  12
+ 21  32
 ```
-"""
 
+Matrix multiplication
 
-# ╔═╡ 97449f19-bc7f-4f61-91b0-375a35c900ee
-A = [1 2; 3 4]
-
-# ╔═╡ fdedd9a7-40de-43d2-a1cf-df7090469177
-md"""
-```
-B = [5 6; 7 8]
-```
-"""
-
-# ╔═╡ ab454f32-dc6a-4251-95f0-4b62cc779e14
-B = [5 6; 7 8]
-
-# ╔═╡ 1330515c-7cac-478a-9406-5134205bc2e5
-md"""
-Element-wise product
-
-```
-C = A .* B
-```
-"""
-
-# ╔═╡ 2f6a898d-3312-4e81-89b5-6b4d3fab253c
-C = A .* B
-
-# ╔═╡ c5f425d6-3be2-4dc7-8b5f-c4487ba32d51
-md"""
-Matrix Multiplication
-```
-D = A * B
+```julia-repl
+julia> D = A * B
+2×2 Matrix{Int64}:
+ 19  22
+ 43  50
 ```
 """
-
-# ╔═╡ 9ff79fb3-7415-44db-9427-853296f9fb6e
-# Matrix multiplication
-D = A * B
 
 # ╔═╡ 29e28885-d969-4e27-b5d3-866eb25302ab
 md"""
-!!! note "Summary"
-	a) `.*` (dot): Broadcasting, i.e., use for element-wide operations.
+# Summary
 
-	b) `*` (no dot): use for Linear Algebra / Matrix Multiplication.
+!!! note ""
+	a) `.*` (dot): broadcast operator, i.e., use for element-wide operations.
+
+	b) `*` (no dot): matix operator, i,e., use for matrix multiplication.
 
 	c) (But also use `*` to join strings.)
 """
@@ -259,22 +342,26 @@ md"""
 md"""
 ## 1: Creation and Indexing (Column-Major)
 !!! warning ""
-	1. Create a 3×3 matrix named `M` containing the numbers 1 through 9. Important: The numbers should fill the matrix column-by-column (i.e., 1, 2, 3 should be in the first column).
-	   - Hint: The function `reshape(A, rows, cols)` is your friend here. Try `reshape(1:9, 3, 3)`.
-	2. Print the element at the 1st row, 3rd column. (What do you expect it to be?)
-	3. Print the entire 2nd column of `M`.
-	   - Hint: The `:` operator means "all". `M[row_index, col_index]`.
+	* Create a 3×3 matrix named `M` containing the numbers 1 through 9.
+	  - The integers should progess down the column (i.e., 1, 2, 3 should be in column 1).
+	   - Hint: The function `reshape` may be useful.
+	* Print the element at the 1st row, 3rd column.
+	* What is it?
+	* Print the entire 2nd column of `M`.
+	   - Hint: The slice (`:`) operator may be useful, `M[:, row]`.
 """
 
 # ╔═╡ ff17e921-4522-4ab3-8282-9d9aafecdbe9
 md"""
 ## 2: Broadcasting and Fusion
 !!! warning ""
-	1. Create a 1D vector `x` containing five evenly spaced points from 0 to $\pi$, inclusive.
-	   - Hint: `pi` is a built-in constant. The `range()` function might be useful: `range(start, stop, length)`. Or just type it manually.
-	1. Define a simple function `my_poly(x) = x^2 - 2*x + 1`.
-	1. Using broadcasting, apply your function `my_poly` to every element in `x`. Store the result in `y`.
-	1. Print both `x` and `y`.
+	* Create a 1D vector `x` containing five evenly spaced points from 0 to $\pi$, inclusive.
+	  - Note: `pi` is a built-in constant.
+	  - Hint: The `range()` function might be useful.
+	* Define a simple function `my_poly(x) = x^2 - 2*x + 1`.
+	* Using broadcasting, apply your function `my_poly` to every element in `x`.
+	* Store the result in `y`.
+	* Print both `x` and `y`.
 
 """
 
@@ -282,11 +369,11 @@ md"""
 md"""
 ## 3: Array Creation and Slicing
 !!! warning ""
-	1. Create a 4×2 matrix named `A` containing the numbers 1-8, filling by columns. (Again, `reshape` is great for this).
-	1. Create a 1D Vector named `v` containing the elements 10, 20, 30 using comma (`,`) syntax.
-	1. Create a 2×1 Matrix (a column matrix) named `c` containing the elements 40 and 50 using semicolon (`;`) syntax.
-	1. Create a new matrix `B` that consists of the last two rows of `A`.
-	   - Hint: You can use the `end` keyword for indexing, like `A[end-1, :]`.
+	* Create a 4×2 matrix named `A` containing the numbers 1-8, filling by columns.
+	  - Hint: `reshape` may be helpful.
+	* Create a 1D Vector named `v` containing the elements 10, 20, 30 using comma (`,`) syntax.
+	* Create a 2×1 Matrix (a column matrix) named `c` containing the elements 40 and 50 using semicolon (`;`) syntax.
+	* Create a new matrix `B` that consists of the last two rows of `A`.
 """
 
 
@@ -294,36 +381,33 @@ md"""
 md"""
 ## 4: Matrix Math vs. Element-wise Math
 !!! warning ""
-	1. Create two 2×2 matrices:
+	* Create two 2×2 matrices:
 	   - `X = [1 2; 3 4]`
 	   - `Y = [2 0; 0 2] # This is a scaling matrix.`
-	2. Calculate the matrix multiplication `M = X * Y`.
-	3. Calculate the element-wise multiplication `E = X .* Y`.
-	4. Print both `M` and `E`. Look at `M[1, 1]` and `E[1, 1]`. Why are they different? (You just need to think about this; you don't need to write the answer).
-
+	* Perform matrix multiplication on `X` and `Y`.
+	* Perform element-wise multiplication on `X` and `Y`.
+	* Print both `M` and `E`.
+	* Are `M[1, 1]` and `E[1, 1]` different?
 """
 
 # ╔═╡ 1416a80e-dbda-4185-8984-7f5de3c58f02
 md"""
-## 5: Broadcasting and Fusion
+## 5: Broadcasting and Array Fusion
 !!! warning ""
-	1. Create three 1D vectors, `a`, `b`, and `c`, each of length 4.
-	   - `a = [1.0, 2.0, 3.0, 4.0]`
-	   - `b = [0.1, 0.2, 0.3, 0.4]`
-	   - `c = [10.0, 10.0, 10.0, 10.0]`
-	2. Using a single, "fused" broadcast expression, calculate the value y for each element according to the formula: $y = {(a^2 + b)}/{c}$
-	3. Print the resulting vector `y`.
-	   - Hint: Remember to "dot" (`.`) every operation (`^`, `+`, `/`) to apply it element-wise.
+	* Create three 1D vectors, `a`, `b`, and `c`, each of length 4.
+	* Using a single, "fused" broadcast expression, calculate $y = {(a^2 + b)}/{c}$
+	* Print `y`.
 """
 
 # ╔═╡ cc640d51-f3d1-4d9e-bd6d-4fd7aa338f07
 md"""
 ## 6: Column-Major Thinking (A Thought Experiment)
 !!! warning ""
-	1. Imagine you have a 10,000 × 10,000 matrix called `DATA`.
-	1. You need to write a for loop to calculate the sum of every element in the second column. (One might use the `size` command.)
-	1. Write this loop.
-	   - Hint: You only need one loop. Which index (row or column) should be fixed? Which one should your loop iterate over? Will this loop be fast or slow according to Julia's memory layout?
+	* Imagine you have a 10,000 × 10,000 matrix called `DATA`.
+	* You need to write a `for` loop to calculate the sum of every element in the second column.
+	* Write this loop.
+	  - The `size` function may be helpful.
+	  - Hint: You only need a single `for` loop.
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -609,24 +693,11 @@ version = "17.7.0+0"
 # ╟─2675d602-810c-4320-971c-902c3327a5cb
 # ╟─346cb64d-3c89-44d1-9edb-06354152243a
 # ╟─11832b60-4906-4d22-960b-0b16b6634011
-# ╟─5a1ad46c-d500-4762-920f-812ebff350e4
-# ╟─f542c713-f23d-4d9d-a271-e54d77c600d3
-# ╟─40481932-af01-4981-8911-e6e35121ff9e
-# ╟─35a57b0a-87c6-448a-a3a9-5a8abca24bfd
-# ╟─8e2946d7-bdd1-4c87-9831-2b4bf2d53a0f
-# ╟─1d9f1425-ea25-4392-b681-9660217d25d2
-# ╟─3230a371-8901-41a0-8bd8-36965851eaca
+# ╟─21190213-dc6e-4206-b516-338d5922b30e
 # ╟─d5268417-62f9-4fa8-beac-c4d4b9007223
 # ╟─8a5d4ccf-a3b2-4373-822d-dbf5254bf4b0
 # ╟─65151aba-d946-401d-8cca-1874f38146f2
 # ╟─116911ed-cc32-41ea-a495-a3117815d669
-# ╟─97449f19-bc7f-4f61-91b0-375a35c900ee
-# ╟─fdedd9a7-40de-43d2-a1cf-df7090469177
-# ╟─ab454f32-dc6a-4251-95f0-4b62cc779e14
-# ╟─1330515c-7cac-478a-9406-5134205bc2e5
-# ╟─2f6a898d-3312-4e81-89b5-6b4d3fab253c
-# ╟─c5f425d6-3be2-4dc7-8b5f-c4487ba32d51
-# ╟─9ff79fb3-7415-44db-9427-853296f9fb6e
 # ╟─29e28885-d969-4e27-b5d3-866eb25302ab
 # ╟─e26b69c9-d37d-449d-90d4-cdce4dff2362
 # ╟─e3b1c6c2-5631-42c0-9a1b-d5a5520466c8

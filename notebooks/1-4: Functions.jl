@@ -22,88 +22,91 @@ md"""
 
 Introduction to the contruction of Julia functions and their implementation by Julia.
 
-If you come from Python or Java, functions are attached to classes. In Julia, functions are standalone citizens, and they define the behavior of the language. We will cover the syntax, the argument system, and introduce a key Julia feature: Multiple Dispatch.
+If you come from Python or Java, functions are attached to classes. In Julia, functions are standalone citizens, and they define the behavior of the language. We will cover the syntax, the argument system, and introduce a key Julia feature: **multiple dispatch**.
 """
 
 # ╔═╡ c74cace1-0e96-48e7-82d3-12f3af3d8591
 md"""
 # Defining Functions
 
-Julia offers three syntactic ways to define a function. They all compile down to the same thing, so choose because of context or preferred style.
+Julia offers three syntactic ways to define a function. They all compile down to the same code, so choose the syntax that is most convenient or appropriate.
 
 ## Default Syntax
 
-The standard multiline looks similar to Python or MATLAB: we use the `function` keyword and close with `end`.
+The standard multi-line version looks similar to other languages. It uses the `function` statement and closes with the `end` statement.
 
-```julia
-function hypotenuse(a, b)
+```julia-repl
+julia> function hypotenuse(a, b)
     result = sqrt(a^2 + b^2)
     return result
 end
 ```
 
-!!! note ""
-    Two things to note here:
+!!! note
+    * Julia does not use indentation to define code blocks. It is used for readability.
 
-    A. The indentation helps for readability, of course, but Julia does not use indentation to define code blocks.\
-    B. Julia automatically returns the result of the last expression evaluated, but for definitiveness and clarity we have used it in the example above.
+
+	* Julia automatically returns the result of the last expression. Therefore, the `return` statement is optional for the last line of a function.
 
 ## Single-Line Syntax
 
 The single-line assignment form may be unique to Julia and is perfect for short operations. While functionally identical to the multiline version, it reduces visual clutter for simple logic.
 
-```julia
-hypotenuse(a, b) = sqrt(a^2 + b^2)
+```julia-repl
+julia> hypotenuse(a, b) = sqrt(a^2 + b^2)
 ```
 
 !!! note
-    The compiler will automatically inline functions to improve performance, i.e., unlike in C or Python, there is no function call performance hit.
+    The compiler will automatically inline functions to improve performance, unlike C or Python. Therefore, there is no performance hit by using functions and their use is encouraged for convenience and readability.
 
 ## Anonymous Functions (Lambdas)
 
-Used often in functional programming contexts such as `map`, `filter` or `findall`, an anonymous function uses the arrow syntax:  -> .
+An anonymous function uses the arrow syntax: `->`. The variables before the `->` are the arguments to be used and the expression afterward is the function body. They are often used in functional programming contexts such as `map`, `filter` or `findall` to define a filter.
 
-```julia
-# Equivalent to Python's: lambda x: x^2 + 2x - 1
-f = x -> x^2 + 2x - 1
+```julia-repl
+julia> # Equivalent to Python's: lambda x: x^2 + 2x - 1
+julia> f = x -> x^2 + 2x - 1
 
-# Usage in a map function
-map(x -> x^2, [1, 2, 3])
+julia> # Usage in a map function
+julia> map(x -> x^2, [1, 2, 3])
+
+julia> # Two arrays zipped together returning a Tuple with two values.
+julia> map(((x, y),) -> x > 2 && y > 4, zip(1:5, 2:6))
 ```
 """
 
 # ╔═╡ 70b70576-0c49-4e5b-b7c1-dd400f3fbcca
 md"""
-# Arguments and Keywords
+# Function Arguments
 
-## Positional vs. Keyword Arguments
+## Positional and Keyword
 
-A crucial syntax distinction: in a Julia function, a semicolon (;) strictly separates positional arguments from keyword arguments.
+Functions have two types of arguments, positional and keyword. They are separated using a '`;`' (semi-colon). Positional arguments are required, whereas keyword arguments are optional. The next section will show the importance of positional arguments.
 
-```julia
-# a and b are positional
-# scale and offset are keyword arguments
-function transform(a, b; scale=1.0, offset=0.0)
+```julia-repl
+julia> # a and b are positional, while scale and offset are keywords
+julia> function transform(a, b; scale=1.0, offset=0.0)
     return (a + b) * scale + offset
 end
 
-# Usage
-transform(10, 20; scale=2.0)
+julia> # Usage
+julia> transform(10, 20; scale=2.0)
 ```
 
 ## Default Values and Methods
 
-You can provide default values for positional arguments. Interestingly, behind the scenes, Julia actually generates multiple methods.
+Positional arguments can have default values, which means the default value will be used if the argument is missing.
 
-```julia
-# This function defines a default value for the y.
-myfunc(x, y=10) = x * y
+```julia-repl
+julia> # This function defines a default value for the y.
+julia> myfunc(x, y=10) = x * y
 ```
 
-Julia sees this function as two separate possibilities and creates two different methods:
-```julia
-myfunc(x) # (which calls the internal version with 10)
-myfunc(x, y)
+Julia creates two versions or methods of this function, one with two arguments and one with one argument.
+
+```julia-repl
+julia> myfunc(x, y)
+julia> myfunc(x)    # The 2nd positional argument will have the value 10.
 ```
 """
 
@@ -113,33 +116,31 @@ md"""
 
 !!! note "The most important part and a core reason for Julia's existence."
 
-## Single Dispatch (The Python/OO Way)
+## Single Dispatch
 
-In Object-Oriented languages such as Python or Java, functions or methods are tightly bound to classes. In non-OO languages, methods are loosely bound to classes.  When you call `obj.method(arg)` --- equivalent in Julia to `method(obj, arg)` --- the language decides which code to run based on the type of the first argument (`obj`) only, which creates the "Expression Problem."
+Object-oriented languages such as Python and Java use single dispatch for choosing the function or method to execute. That means that the function is determined using the function name and the type of the first argument. This is called **single dispatch**. Therefore, the functions or methods are tightly bound to the object or class. When you call `obj.method(arg)`, the language transforms that expression into `method(obj, arg)`.
 
-Think about addition. If you write `a + b` in Python, it effectively calls `a.__add__(b)`.
-If `a` doesn't know how to add `b`, Python tries `b.__radd__(a)` (reverse add).
-You have to write specific logic inside the class of `a` to handle every possible `b`.
+Single dispatch creates the **Expression Problem**. For example, `a + b` calls `a.__add__(b)` in Python. If the object `a` is known, but not `b`, there is no problem; the `__add__` function can still be called. However, if `a` is unknown, what do we do now? In Python this problem is solved by the `__radd__` function. Python will try `__add__`, if that fails, then it will try `__radd__`. Therefore, when we add an `__add__` operator to a new class in Python, the new class must implement the `__radd__` method too, because other classes do not know about our new classs. 
 
-## Multiple Dispatch (The Julia Way)
+## Multiple Dispatch
 
-Julia is not Object-Oriented; it is Function-Oriented. When you call `f(arg1, arg2)`, Julia looks at the types of all arguments involved to decide which implementation to run. We call the abstract definition a Function and the specific implementation for specific types a Method. Let's look at a (perhaps silly) example of addition.
+Julia is not an object-oriented language. It is functional language. When you call `func(arg1, arg2)`, Julia looks at the types of the function's positional arguments to determine the version of the function to execute. This is called **multiple dispatch**. Julia will look at the argument types of all positional arguments, i.e., `arg1` and `arg2`, and choose the function that has that exact type signature. Multiple dispatch makes it easier for a new Julia type to extend the functional interface of another type.
 
-```julia
-# Define additon for an integer and a float, and the other way around:
-fAdd(a::Int, b::Float64) = a + b
-fAdd(a::Float64, b::Int) = a + b
+The example below illustrates that situation. Two `fAdd` functions are implemented, one for each situation. Julia then determines which version of that function to execute. The situation is similar to Python's `__add__` and `__radd__`, except that Python first tries to use `__add__` and when that fails, tries `__radd__`. Whereas, Julia just chooses the correct function the first time. The following is an example of how Julia may implement this situation.
+
+```julia-repl
+julia> # Define additon for an integer and a float, and the other way around:
+julia> fAdd(a::Int, b::Float64) = a + b
+julia> fAdd(a::Float64, b::Int) = a + b
 ```
 
 Why is this powerful?
 
-a) Symmetry: You don't need __radd__ because compared with (a::Float, b::Int), (a::Int, b::Float) is just a different method.
+1. Symmetry: You don't need __radd__ because compared with (a::Float, b::Int), (a::Int, b::Float) is just a different method.
 
-b) Extensibility: If you import a library that defines a `Planet` type, and another library that defines a `Satellite` type, you can define a `collide(p::Planet, s::Satellite)` function in your own code without modifying the source code of either library.
+2. Extensibility: If you import a library that defines a `Planet` type, and another library that defines a `Satellite` type, you can define a `collide(p::Planet, s::Satellite)` function in your own code without modifying the source code of either library.
 
-c) Trying to add two integers or two floating points fails, e.g., "ERROR: MethodError: no method matching fAdd(::Float64, ::Float64)."  If you know, for example, that a particular function is only supposed to be called with an integer and a float, and you don't want to worry about the order, you now have a check on your code.
-
-d) Note that Dispatch happens on positional arguments only. Keyword arguments do not participate in dispatch.
+3. Trying to add two integers or two floating points fails, e.g., "ERROR: MethodError: no method matching fAdd(::Float64, ::Float64)."  If you know, for example, that a particular function is only supposed to be called with an integer and a float, and you don't want to worry about the order, you now have a check on your code.
 """
 
 # ╔═╡ d8ba51b9-2d28-4d97-8704-c56c44e04a62
@@ -151,11 +152,13 @@ md"""
 
 # ╔═╡ 09abe51d-ed7d-4f8a-b49c-193dbf188e02
 md"""
-!!! note "Summary"
-    * Definitions: You can use multiline blocks, one-liners, or lambdas.
-    * Arguments: Use :: for types and ; to separate keyword arguments.
-    * Multiple Dispatch: The compiler chooses the most specific method based on the types of all arguments, allowing for incredibly composable and high-performance code.
+# Summary
 
+!!! note ""
+    * Three versions of function definitions: multi-line blocks, one-liners, or anonymous (lambdas).
+    * Positional and keyword arguments are separated by a `;`.
+	* Positional arguments are required. Keyword arguments are optional.
+    * Multiple Dispatch is used to determine the correct function to execute, making the language composable and highly performant.
 """
 
 # ╔═╡ 8e6406dd-e58c-4aef-8bc9-a57984f90884
