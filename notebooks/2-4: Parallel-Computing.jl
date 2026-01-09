@@ -37,7 +37,7 @@ Julia will vectorize array compuations whenever possible and as discussed in ses
 
 # ╔═╡ 4473cae3-9350-4741-8457-6bacb1def61b
 html"""
-<img src="https://github.com/JuliaAstro/AAS247Julia/blob/main/data/vectorization.jpeg?raw=true"/>
+<img src="https://github.com/JuliaAstro/workshop/blob/main/data/vectorization.jpeg?raw=true"/>
 """
 
 # ╔═╡ 54d083d4-3bf8-4ed7-95b5-203e13cc3249
